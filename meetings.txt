@@ -13,7 +13,14 @@ Meeting 3
 Attended: Luke, Peter, Brad(X), Nishan
 Topic: Progress updates, figuring out database issues, dicussing about working on designs.
 Goals (for next meet): Build on learning language, fix database issues, designs/frontend for next meeting.
-
 Basic designs sorted
 Organise getting db working on all devices/setup
 Meeting to be had with all 4 for work.
+
+
+_______________________________________________________________________________________________________________________________________________________________________________________________
+
+Meeting 1, 22 October 2023
+Attended: Luke, Peter, Brad, Nishan
+Topic: updates, figuring out databases making sure everyones installed, talking about backend node / implementing mysql into server.
+Goals (for next meet): db setup, connect backend
