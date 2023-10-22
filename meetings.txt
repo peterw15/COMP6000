@@ -1,4 +1,4 @@
-X = represents abscents due to illness.
+X = represents absence due to illness.
 Meeting 1 
 Attended: Luke, Peter, Brad, Nishan
 Topic: Figuring out our approach to the project, Sergey checking our apporach to idea
