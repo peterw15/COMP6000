@@ -1,10 +1,9 @@
 import logo from './logo.svg';
-import ChessSet from './ChessSet.jpg';
+import ChessSet from './homepage/images/ChessSet.jpg';
 import './App.css';
-import NavBar from './NavBar.js';
-import PersonalCalendar from './PersonalCalendar.js';
-import ActivityCard from './ActivityCard.js';
-import PopularActivities from './PopularActivities.js';
+import NavBar from './homepage/components/NavBar/NavBar.js';
+import PersonalCalendar from './homepage/components/PersonalCalendar/PersonalCalendar.js';
+import PopularActivities from './homepage/components/PopularActivities/PopularActivities.js';
 
 function App() {
   const ActivityList = [
