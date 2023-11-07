@@ -1,4 +1,4 @@
-import logo from './logo.svg';
+import logo from './images/logo.svg';
 import ChessSet from './images/ChessSet.jpg';
 import './homePageStyleSheet.css';
 import NavBar from './components/NavBar/NavBar.js';
