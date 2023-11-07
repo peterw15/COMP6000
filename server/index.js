@@ -9,3 +9,10 @@ const app = express();
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });
+
+
+app.post('/login', function (req, res) {
+  res.redirect('/loginPage');
+});
+
+
