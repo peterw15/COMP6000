@@ -1,4 +1,5 @@
 import './loginPageStyleSheet.css';
+import {Link} from "react-router-dom";
 
 function LoginPage() {
     return (
@@ -12,7 +13,9 @@ function LoginPage() {
                     <input id="password" /> <br />
                     <button id="submit" className="btn"> Submit </button> <br /> <br /> <br />
                     <button id="forgotPassword" className="btn"> Forgot Login </button>
-                    <button id="createAccount" className="btn"> Create Account </button>
+                    <Link to="/register" >
+                        <button id="createAccount" className="btn"> Create Account </button>
+                    </Link>
                 </div>
             </div>
         </>
