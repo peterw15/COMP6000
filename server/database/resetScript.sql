@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS Registration;
+DROP TABLE IF EXISTS EventRegistration;
 DROP TABLE IF EXISTS EventTags;
 DROP TABLE IF EXISTS Authentication;
 DROP TABLE IF EXISTS Event;
@@ -29,7 +29,7 @@ CREATE TABLE Event (
 );
 
 
-CREATE TABLE Registration (
+CREATE TABLE EventRegistration (
   EventID bigint unsigned NOT NULL,
   UserID bigint unsigned NOT NULL,
   PRIMARY KEY (EventID,UserID),
