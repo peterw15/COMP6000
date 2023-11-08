@@ -11,8 +11,5 @@ app.listen(PORT, () => {
 });
 
 
-app.post('/login', function (req, res) {
-  res.redirect('/loginPage');
-});
 
 
