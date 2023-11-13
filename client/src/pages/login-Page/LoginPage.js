@@ -1,20 +1,23 @@
 import './loginPageStyleSheet.css';
 import {Link} from "react-router-dom";
+import {Navigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import Axios from 'axios';
 
 
 function LoginPage() {
 
+    const navigate = useNavigate();
+
     const handleClick = () => {
         Axios.post('http://localhost:3001/login', {
             username : document.getElementById("username").value,
             password : document.getElementById("password").value
-        }).then(res => isRegistered(res.data)).catch(error => console.log(error));
+        }).then(res => isAuthenticated(res.data)).catch(error => console.log(error));
     }
 
-    const isRegistered = (registered) => registered ? console.log("VALIDATED") : console.log("NOT VALIDATED");
+    const isAuthenticated = (authenticated) => authenticated ? navigate("/home")  : console.log("NOT VALIDATED");
  
-
     return (
         <>
             <div className="loginPage">
