@@ -4,8 +4,25 @@ import './homePageStyleSheet.css';
 import NavBar from './components/NavBar/NavBar.js';
 import PersonalCalendar from './components/PersonalCalendar/PersonalCalendar.js';
 import PopularActivities from './components/PopularActivities/PopularActivities.js';
+import { useLocation, useNavigate } from 'react-router-dom';
+import {useEffect} from 'react';
 
-function HomePage() {
+function HomePage(props) {
+
+  const navigate = useNavigate();
+  const {state} = useLocation();
+  const loggedIn = false;
+  console.log(state);
+  //state.isAuthenticated = false;
+  useEffect(() => {
+    if(state == null ||state.isAuthenticated == null || state.isAuthenticated == false || state.isAuthenticated == undefined) {
+      navigate("/login");
+    }
+    else {
+      loggedIn = true;
+    }
+  });
+  
   const ActivityList = [
     {ActivityPic : ChessSet,
     ActivityTitle : 'Chess',
@@ -34,7 +51,7 @@ function HomePage() {
   ]
   return (
     <div className="App" >
-        <NavBar profilePic={logo} userName='Bradley Morris'></NavBar>
+        <NavBar profilePic={logo} userName={"test"}></NavBar>
         <PersonalCalendar></PersonalCalendar>
         <PopularActivities activities={ActivityList}></PopularActivities>
     </div>

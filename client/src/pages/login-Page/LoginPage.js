@@ -5,6 +5,7 @@ import {useNavigate} from "react-router-dom";
 import Axios from 'axios';
 
 
+
 function LoginPage() {
 
     const navigate = useNavigate();
@@ -13,7 +14,7 @@ function LoginPage() {
         Axios.post('http://localhost:3001/login', {
             username : document.getElementById("username").value,
             password : document.getElementById("password").value
-        }).then(res => isAuthenticated(res.data)).catch(error => console.log(error));
+        }).then(res => res.data.isAuthenticated ? navigate("/home", {state : {isAuthenticated : true, userID : res.data.UserID}}) : console.log(res)).catch(error => console.log(error));
     }
 
     const isAuthenticated = (authenticated) => authenticated ? navigate("/home")  : console.log("NOT VALIDATED");

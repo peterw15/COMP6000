@@ -31,7 +31,7 @@ app.post('/login', (req,res) => {
   const body = req.body;
   const results = con.query("SELECT * FROM Authentication WHERE username = ? AND password = SHA2(?,256)", [body.username, body.password], function (err, result, fields) {
     if (err) throw err;
-    result.length == 0 ? res.send(false) : res.send(true);
+    result.length == 0 ? res.send({isAuthenticated : false, UserID : null}) : res.send({isAuthenticated : true, UserID : results._rows[0][0].UserID});
   });
   console.log(results);
 });
