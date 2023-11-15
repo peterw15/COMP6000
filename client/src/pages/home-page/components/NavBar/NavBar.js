@@ -6,7 +6,8 @@ function Navbar(props) {
     return (
         <div style={{display: 'flex', borderBottom : '1px solid grey', width:'100%'}}>
             <NameCard profilePic={props.profilePic} userName={props.userName}></NameCard>
-            <SearchBar onClick={props.onClick}></SearchBar>
+            <SearchBar onClick={props.handleClick}></SearchBar>
+            <button onClick={props.logout}>Logout</button>
         </div>
     );
 }

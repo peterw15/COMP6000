@@ -27,14 +27,23 @@ app.get("/", function(req, res) {
 })
 
 app.post('/login', (req,res) => {
-  console.log(req.body);
   const body = req.body;
   const results = con.query("SELECT * FROM Authentication WHERE username = ? AND password = SHA2(?,256)", [body.username, body.password], function (err, result, fields) {
     if (err) throw err;
     result.length == 0 ? res.send({isAuthenticated : false, UserID : null}) : res.send({isAuthenticated : true, UserID : results._rows[0][0].UserID});
   });
-  //console.log(results);
 });
+
+app.post('/home', (req,res) => {
+  const body = req.body;
+  if(body.information == "User Details") {
+    const results = con.query("SELECT * FROM User WHERE UserID = ?", [body.UserID], function (err,result,fields) {
+      if (err) throw err;
+      res.send(results._rows[0][0]);
+    });
+  }
+
+})
 
 
 app.listen(PORT, () => {
