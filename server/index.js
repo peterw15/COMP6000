@@ -33,7 +33,7 @@ app.post('/login', (req,res) => {
     if (err) throw err;
     result.length == 0 ? res.send({isAuthenticated : false, UserID : null}) : res.send({isAuthenticated : true, UserID : results._rows[0][0].UserID});
   });
-  console.log(results);
+  //console.log(results);
 });
 
 

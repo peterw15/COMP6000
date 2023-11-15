@@ -1,4 +1,5 @@
 import './registrationPageStyleSheet.css';
+import {Link} from "react-router-dom";
 
 
 function RegistationPage() {
@@ -18,6 +19,9 @@ function RegistationPage() {
                     <h2 className="subHeader"> Email </h2>
                     <input id="email" /> <br /> <br /> <br />
                     <button id="submit" className="btn"> Submit </button> <br /> <br /> <br />
+                    <Link to="/login" >
+                        <button id="Login" className="btn"> Login Instead </button>
+                    </Link>
                 </div>
             </div>
         </>
