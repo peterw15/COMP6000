@@ -4,8 +4,41 @@ import './homePageStyleSheet.css';
 import NavBar from './components/NavBar/NavBar.js';
 import PersonalCalendar from './components/PersonalCalendar/PersonalCalendar.js';
 import PopularActivities from './components/PopularActivities/PopularActivities.js';
+import { useLocation, useNavigate } from 'react-router-dom';
+import {useEffect, useState} from 'react';
+import Axios from 'axios';
 
-function HomePage() {
+function HomePage(props) {
+
+  const navigate = useNavigate();
+  const {state} = useLocation();
+  var loggedIn = false;
+  console.log(state);
+  //state.isAuthenticated = false;
+  useEffect(() => {
+    if(state == null ||state.isAuthenticated == null || state.isAuthenticated == false || state.isAuthenticated == undefined) {
+      navigate("/login");
+    }
+    else {
+      loggedIn = true;
+      getDetails();
+    }
+  });
+
+  const getDetails = () => {
+    Axios.post('http://localhost:3001/home', {
+      information : "User Details",
+      UserID : state.userID
+    }).then(res => setName(res.data.firstName + " " + res.data.lastName)).catch(error => console.log(error));
+  }
+
+  const logout = () => {
+    state.isAuthenticated = false;
+    navigate("/login");
+  }
+
+  const[fullName, setName] = useState("null");
+  
   const ActivityList = [
     {ActivityPic : ChessSet,
     ActivityTitle : 'Chess',
@@ -34,7 +67,7 @@ function HomePage() {
   ]
   return (
     <div className="App" >
-        <NavBar profilePic={logo} userName='Bradley Morris'></NavBar>
+        <NavBar profilePic={logo} userName={fullName} logout={logout}></NavBar>
         <PersonalCalendar></PersonalCalendar>
         <PopularActivities activities={ActivityList}></PopularActivities>
     </div>
