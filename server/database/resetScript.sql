@@ -9,6 +9,8 @@ DROP TABLE IF EXISTS User;
 
 CREATE TABLE User (
   UserID bigint unsigned NOT NULL AUTO_INCREMENT,
+  username varchar(255) NOT NULL,
+  password varchar(255) NOT NULL,
   firstName varchar(30) NOT NULL,
   lastName varchar(30) NOT NULL,
   email varchar(50),
