@@ -1,6 +1,5 @@
 var mysql2 = require('mysql2');
 
-
 // connecting to database with login details
 var connection = mysql2.createConnection({
     host: "dragon.kent.ac.uk",
