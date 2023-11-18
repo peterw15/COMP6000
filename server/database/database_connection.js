@@ -1,5 +1,4 @@
-
-//SQL2
+///
 var mysql2 = require('mysql2');
 
 // connecting to database with login details

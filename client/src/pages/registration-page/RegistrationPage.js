@@ -10,7 +10,7 @@ function RegistrationPage() {
         const email = document.getElementById('email').value;
 
         try {
-            // send request to server//
+            // send request to server///
             const response = await fetch('http://localhost:3002/register', {
                 method: 'POST',
                 headers: {
