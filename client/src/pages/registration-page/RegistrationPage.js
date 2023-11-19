@@ -1,6 +1,10 @@
 import './registrationPageStyleSheet.css';
+import {useNavigate } from 'react-router-dom';
 
 function RegistrationPage() {
+
+    const navigate = useNavigate();
+    
     const registerUser = async (event) => {
         event.preventDefault();
         const username = document.getElementById('username').value;
@@ -11,7 +15,7 @@ function RegistrationPage() {
 
         try {
             // send request to server///
-            const response = await fetch('http://localhost:3002/register', {
+            const response = await fetch('http://localhost:3001/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -21,6 +25,7 @@ function RegistrationPage() {
 
             if (response.ok) {
                 console.log('User registered successfully'); // successful msg
+                navigate("/login");
             } else {
                 console.error('Error registering user'); // error msg
             }

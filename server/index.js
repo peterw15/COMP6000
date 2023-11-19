@@ -2,9 +2,17 @@
 
 const express = require("express");
 const cors = require("cors");
-const connection = require('./database/database_connection');
+var mysql2 = require('mysql2');
 
-const PORT = process.env.PORT || 3002;
+var connection = mysql2.createConnection({
+  host: "dragon.kent.ac.uk",
+  user: "comp6000_09",
+  password: "p3oulla",
+  database: "comp6000_09"
+})
+
+
+const PORT = process.env.PORT || 3001;
 
 const app = express();
 
@@ -16,7 +24,7 @@ app.use(express.json());
 // creates a user, registers them to the database and website
 app.post('/register', (req, res) => {
   const { username, password, firstName, lastName, email } = req.body;
-  const query = 'INSERT INTO User (username, password, firstName, lastName, email) VALUES (?, ?, ?, ?, ?)';
+  const query = 'INSERT INTO User (username, password, firstName, lastName, email) VALUES (?, SHA2(?,256), ?, ?, ?)';
 
 
   connection.query(query, [username, password, firstName, lastName, email], (err, results) => {
@@ -29,7 +37,27 @@ app.post('/register', (req, res) => {
   });
 });
 
-console.log(connection); // check if query
+app.post('/login', (req,res) => {
+  const body = req.body;
+  const results = connection.query("SELECT * FROM User WHERE username = ? AND password = SHA2(?,256)", [body.username, body.password], function (err, result) {
+    if (err) throw err;
+    result.length == 0 ? res.send({isAuthenticated : false, UserID : null}) : res.send({isAuthenticated : true, UserID : results._rows[0][0].UserID});
+  });
+  //console.log(results);
+});
+
+app.post('/home', (req,res) => {
+  const body = req.body;
+  if(body.information == "User Details") {
+    const results = connection.query("SELECT * FROM User WHERE UserID = ?", [body.UserID], function (err,result,fields) {
+      if (err) throw err;
+      res.send(results._rows[0][0]);
+    });
+  }
+
+})
+
+//console.log(connection); // check if query
 
 
 app.listen(PORT, () => {

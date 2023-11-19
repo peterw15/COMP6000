@@ -1,6 +1,5 @@
 DROP TABLE IF EXISTS EventRegistration;
 DROP TABLE IF EXISTS EventTags;
-DROP TABLE IF EXISTS Authentication;
 DROP TABLE IF EXISTS Event;
 DROP TABLE IF EXISTS User;
 
@@ -9,8 +8,8 @@ DROP TABLE IF EXISTS User;
 
 CREATE TABLE User (
   UserID bigint unsigned NOT NULL AUTO_INCREMENT,
-  username varchar(255) NOT NULL,
-  password varchar(255) NOT NULL,
+  username varchar(50) NOT NULL UNIQUE, 
+  password varchar(8000) NOT NULL,
   firstName varchar(30) NOT NULL,
   lastName varchar(30) NOT NULL,
   email varchar(50),
@@ -47,11 +46,3 @@ CREATE TABLE EventTags (
   FOREIGN KEY (EventID) REFERENCES Event (EventID)
 );
 
-
-CREATE TABLE Authentication (
-UserID bigint unsigned NOT NULL, 
-username varchar(50) NOT NULL, 
-password varchar(8000) NOT NULL,
-PRIMARY KEY (`UserID`),
-FOREIGN KEY (`UserID`) REFERENCES `User` (`UserID`)
-);

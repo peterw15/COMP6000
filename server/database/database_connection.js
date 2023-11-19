@@ -20,7 +20,7 @@ connection.connect((err) => {
     console.log('Connected to DB successfully');
 
     // execute query once connection is established.
-    connection.query("SELECT * FROM User;", (err, result, fields) => {
+    /*connection.query("SELECT * FROM User;", (err, result, fields) => {
         if (err) {
             console.error("Error when executing query", err);
             return;
@@ -29,5 +29,6 @@ connection.connect((err) => {
         console.log('Query: ', result);
 
     });
+    */
 
 });
