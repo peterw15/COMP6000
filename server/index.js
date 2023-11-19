@@ -57,6 +57,14 @@ app.post('/home', (req,res) => {
 
 })
 
+app.post('/events',(req,res) => {
+  const body = req.body;
+  const results = connection.query("SELECT * FROM Event", function (err) {
+    if (err) throw err;
+    res.send(results._rows[0]);
+  })
+})
+
 //console.log(connection); // check if query
 
 
