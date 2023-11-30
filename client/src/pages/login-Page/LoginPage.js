@@ -27,7 +27,7 @@ function LoginPage() {
                     <h2 className="subHeader"> Username </h2>
                     <input id="username" />
                     <h2 className="subHeader"> Password</h2>
-                    <input id="password" /> <br />
+                    <input type="password" id="password" /> <br />
                     <button id="submit" className="btn" onClick={handleClick}> Submit </button>
                     <h2 className="invalidLogin" id="invalidLogin" style={{ visibility: "hidden" }} > Invalid Username Or Password </h2>
                     <button id="forgotPassword" className="btn"> Forgot Login </button>
