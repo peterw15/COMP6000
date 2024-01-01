@@ -14,7 +14,7 @@ function LoginPage() {
             username: document.getElementById("username").value,
             password: document.getElementById("password").value
         }).then(res => res.data.isAuthenticated ? navigate("/home",
-            { state: { isAuthenticated: true, userID: res.data.UserID } }) : console.log(res)).catch(error => console.log(error)); document.getElementById("invalidLogin").style.visibility = "visible";
+            { state: { isAuthenticated: true, userID: res.data.UserID } }) : console.log(res)).catch(error => console.log(error));
     }
 
     //const isAuthenticated = (authenticated) => authenticated ? navigate("/home")  : console.log("NOT VALIDATED");
@@ -27,7 +27,7 @@ function LoginPage() {
                     <h2 className="subHeader"> Username </h2>
                     <input id="username" />
                     <h2 className="subHeader"> Password</h2>
-                    <input type="password" id="password" /> <br />
+                    <input type="password" id="password"/> <br />
                     <button id="submit" className="btn" onClick={handleClick}> Submit </button>
                     <h2 className="invalidLogin" id="invalidLogin" style={{ visibility: "hidden" }} > Invalid Username Or Password </h2>
                     <button id="forgotPassword" className="btn"> Forgot Login </button>
