@@ -10,10 +10,10 @@ function Navbar(props) {
         <div style={{
             display: 'flex', 
             width:'100%', 
-            height: '50px', 
+            height: '100px', 
             justifyContent: 'space-around', 
             alignItems: 'center', 
-            backgroundColor: '#ffffff'
+            backgroundColor: '#ffffff',
         }}>
             <NameCard profilePic={props.profilePic} userName={props.userName} style={{flexGrow: 1}}></NameCard>
             <SearchBar onClick={props.handleClick} style={{flexGrow: 1}}></SearchBar>
