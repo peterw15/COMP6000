@@ -14,10 +14,11 @@ function EventsCard() {
                 console.error('There was an error!', error);
             });
     }, []);
+
     return (
-        <div style={{ fontFamily: "Rubik", backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+        <div>
             <header style={{ fontWeight: "bold", marginLeft: "10px", fontSize: "24px", marginBottom: "20px", textShadow: '2px 2px 4px #000000' }}>Your Events</header>
-            <div style={{ display: "flex", justifyContent: "center", flexWrap: "wrap" }}>
+            <div style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', backgroundPosition: 'center', display: "flex", justifyContent: "center", flexWrap: "wrap" }}>
                 {events.length > 0 ? (
                     events.map((event, index) => {
                         console.log(`ID: ${event.id}, Name: ${event.EventTitle}`); // Log the ID and name of the event
