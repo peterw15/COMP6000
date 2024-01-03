@@ -1,0 +1,52 @@
+body {
+   background-color: #1A2238;
+   color: hsl(231, 77%, 78%);
+   font-family: Arial, Helvetica, sans-serif;
+}
+
+.header {
+    margin-top: 50px;
+   font-family: Arial, Helvetica, sans-serif;
+   text-align: center;
+   color: hsl(231, 77%, 78%);
+   font-size: 50px;
+}
+
+.btn {
+   background-color: hsl(224, 35%, 25%);
+   color: hsl(231, 77%, 78%);
+   font-weight: 700;
+   font-size: 100%;
+   width: 10%;
+   height: 15%;
+   padding: 10px;
+   margin: 15px;
+   border: 1px solid hsl(231, 77%, 78%);
+   border-radius: 0.25em;
+   cursor: pointer;
+}
+ 
+.btn:hover {
+   transition: ease-in-out 0.06s;
+   font-size: 105%;
+   color: hsl(231, 100%, 86%);
+}
+
+.box {
+   border: 1px solid hsl(231, 77%, 78%); 
+   margin: 10px; 
+   padding-left: 10px;
+
+}
+
+.eventInfo {
+   color: hsl(231, 77%, 78%);
+   font-size: 25px;
+   font-weight: 100;
+ }
+ 
+ .eventInfoHeader {
+   color: hsl(231, 77%, 78%);
+   font-size: 40px;
+   font-weight: 200;
+ }

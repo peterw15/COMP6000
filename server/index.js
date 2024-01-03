@@ -16,6 +16,8 @@ const PORT = process.env.PORT || 3001;
 
 const app = express();
 
+var userIDGLOBAL;
+
 
 // middleware
 app.use(cors()); // CORS for all routes
@@ -48,6 +50,7 @@ app.post('/login', (req,res) => {
 
 app.post('/home', (req,res) => {
   const body = req.body;
+  userIDGLOBAL = body.UserID;
   if(body.information == "User Details") {
     const results = connection.query("SELECT * FROM User WHERE UserID = ?", [body.UserID], function (err,result,fields) {
       if (err) throw err;
@@ -58,15 +61,18 @@ app.post('/home', (req,res) => {
 })
 
 app.post('/events',(req,res) => {
-  const body = req.body;
   const results = connection.query("SELECT * FROM Event", function (err) {
     if (err) throw err;
     res.send(results._rows[0]);
   })
 })
 
-//console.log(connection); // check if query
-
+app.post('/myevents',(req,res) => {
+  const results = connection.query("SELECT * FROM Event INNER JOIN EventRegistration ON Event.EventID=EventRegistration.EventID WHERE EventRegistration.UserID = ?", [userIDGLOBAL], function (err) {
+    if (err) throw err;
+    res.send(results._rows[0]);
+  })
+})
 
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);

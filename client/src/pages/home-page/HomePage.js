@@ -15,6 +15,7 @@ function HomePage(props) {
   const navigate = useNavigate();
   const {state} = useLocation();
   var loggedIn = false;
+  console.log(state);
   //console.log(state);
   //state.isAuthenticated = false;
   useEffect(() => {
