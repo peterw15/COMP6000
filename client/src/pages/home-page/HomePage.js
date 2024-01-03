@@ -4,7 +4,6 @@ import './homePageStyleSheet.css';
 import NavBar from './components/NavBar/NavBar.js';
 import PersonalCalendar from './components/PersonalCalendar/PersonalCalendar.js';
 import PopularActivities from './components/PopularActivities/PopularActivities.js';
-
 import YourEvents from './components/YourEvents/eventsCard.js';
 
 import {useEffect, useState} from 'react';
@@ -71,10 +70,15 @@ function HomePage(props) {
   return (
     <div className="App" >
         <NavBar profilePic={logo} userName={fullName} logout={logout}></NavBar>
+
+        <div className="section-border">
+                <YourEvents></YourEvents>
+            </div>
+
         <PersonalCalendar></PersonalCalendar>
         <PopularActivities activities={ActivityList}></PopularActivities>
 
-        <YourEvents></YourEvents>
+
 
     </div>
   );
