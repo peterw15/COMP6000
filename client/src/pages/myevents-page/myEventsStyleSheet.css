@@ -1,5 +1,7 @@
 body {
    background-color: #1A2238;
+   color: hsl(231, 77%, 78%);
+   font-family: Arial, Helvetica, sans-serif;
 }
 
 .header {
@@ -29,3 +31,22 @@ body {
    font-size: 105%;
    color: hsl(231, 100%, 86%);
 }
+
+.box {
+   border: 1px solid hsl(231, 77%, 78%); 
+   margin: 10px; 
+   padding-left: 10px;
+
+}
+
+.eventInfo {
+   color: hsl(231, 77%, 78%);
+   font-size: 25px;
+   font-weight: 100;
+ }
+ 
+ .eventInfoHeader {
+   color: hsl(231, 77%, 78%);
+   font-size: 40px;
+   font-weight: 200;
+ }
