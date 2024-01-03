@@ -1,6 +1,5 @@
 import './myEventsStyleSheet.css';
 import React from 'react';
-import { Link } from "react-router-dom";
 import Axios from 'axios';
 import { useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useState } from 'react';
@@ -8,6 +7,8 @@ import { useEffect, useState } from 'react';
 function MyEvents() {
 
     const [events, setEvents] = useState([]);
+    const navigate = useNavigate();
+
 
     const getMyEvents = () => {
         Axios.post('http://localhost:3001/myevents').then(res => { 
@@ -32,9 +33,14 @@ function MyEvents() {
         getMyEvents();
     },[])
 
+    const goHome = () => {
+        navigate("/home");
+    }
+
     return (
         <>
             <div className="body">
+            <button className="btn" onClick={goHome}>Home</button>
                 <div className="header">Your Events</div>
                 {events}
             </div >

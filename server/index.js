@@ -50,7 +50,6 @@ app.post('/login', (req,res) => {
 
 app.post('/home', (req,res) => {
   const body = req.body;
-  console.log(body);
   userIDGLOBAL = body.UserID;
   if(body.information == "User Details") {
     const results = connection.query("SELECT * FROM User WHERE UserID = ?", [body.UserID], function (err,result,fields) {
@@ -69,17 +68,11 @@ app.post('/events',(req,res) => {
 })
 
 app.post('/myevents',(req,res) => {
-  const body = req.body;
-  console.log(body);
-
   const results = connection.query("SELECT * FROM Event INNER JOIN EventRegistration ON Event.EventID=EventRegistration.EventID WHERE EventRegistration.UserID = ?", [userIDGLOBAL], function (err) {
     if (err) throw err;
     res.send(results._rows[0]);
   })
 })
-
-//console.log(connection); // check if query
-
 
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
