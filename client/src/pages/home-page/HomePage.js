@@ -4,6 +4,9 @@ import './homePageStyleSheet.css';
 import NavBar from './components/NavBar/NavBar.js';
 import PersonalCalendar from './components/PersonalCalendar/PersonalCalendar.js';
 import PopularActivities from './components/PopularActivities/PopularActivities.js';
+
+import YourEvents from './components/YourEvents/eventsCard.js';
+
 import {useEffect, useState} from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Axios from 'axios';
@@ -70,6 +73,9 @@ function HomePage(props) {
         <NavBar profilePic={logo} userName={fullName} logout={logout}></NavBar>
         <PersonalCalendar></PersonalCalendar>
         <PopularActivities activities={ActivityList}></PopularActivities>
+
+        <YourEvents></YourEvents>
+
     </div>
   );
 }
