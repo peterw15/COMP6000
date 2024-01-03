@@ -4,7 +4,7 @@ import HomePage from "./pages/home-page/HomePage";
 import RegistrationPage from "./pages/registration-page/RegistrationPage";
 import SocietiesPage from "./pages/societies-page/SocietiesPage";
 import EventsPage from "./pages/events-page/EventsPage";
-import MyBookings from "./pages/myBookings-page/MyBookings";
+import MyEvents from "./pages/myevents-page/MyEvents";
 
 function App() {
 
@@ -18,7 +18,7 @@ function App() {
             <Route path="/register" element={<RegistrationPage />} />
             <Route path="/societies" element={<SocietiesPage />} />
             <Route path="/events" element={<EventsPage />} />
-            <Route path="/bookings" element={<MyBookings />} />
+            <Route path="/myevents" element={<MyEvents />} />
         </Routes>
     )
 }

@@ -67,7 +67,7 @@ app.post('/events',(req,res) => {
 
 app.post('/bookings',(req,res) => {
   const body = req.body;
-  const results = connection.query("SELECT * FROM  ")
+  const results = connection.query("SELECT * FROM Event")
 
 })
 
