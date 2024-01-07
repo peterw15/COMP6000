@@ -43,7 +43,13 @@ app.post('/login', (req,res) => {
   const body = req.body;
   const results = connection.query("SELECT * FROM User WHERE username = ? AND password = SHA2(?,256)", [body.username, body.password], function (err, result) {
     if (err) throw err;
-    result.length == 0 ? res.send({isAuthenticated : false, UserID : null}) : res.send({isAuthenticated : true, UserID : results._rows[0][0].UserID});
+    if (result.length == 0) {
+      res.send({isAuthenticated : false, UserID : null})
+    }
+    else {
+      userIDGLOBAL = results._rows[0][0].UserID;
+      res.send({isAuthenticated : true, UserID : results._rows[0][0].UserID});
+    }
   });
   //console.log(results);
 });
