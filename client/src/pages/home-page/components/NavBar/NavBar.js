@@ -33,7 +33,7 @@ function Navbar(props) {
                 onMouseOver={(e) => {e.target.style.backgroundColor = '#1A2238'; e.target.style.color = '#ffffff';}}
                 onMouseOut={(e) => {e.target.style.backgroundColor = '#ffffff'; e.target.style.color = '#000000';}}
             >Societies</button>
-            <button onClick={() => navigate('/EventsPage')} style={buttonStyle}
+            <button onClick={() => navigate('/myEvents')} style={buttonStyle}
                 onMouseOver={(e) => {e.target.style.backgroundColor = '#1A2238'; e.target.style.color = '#ffffff';}}
                 onMouseOut={(e) => {e.target.style.backgroundColor = '#ffffff'; e.target.style.color = '#000000';}}
             >Events</button>
