@@ -110,6 +110,25 @@ app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });
 
+app.post('/api/search', async (req, res) => {
+  try {
+      const searchTerm = req.body.searchTerm;
+      const query = `SELECT * FROM Event WHERE eventName LIKE '%${searchTerm}%'`;
+
+      connection.query(query, (err, results) => {
+          if (err) {
+              console.error("Error executing query", err);
+              res.status(500).json({ error: "Internal Server Error" });
+              return;
+          }
+
+          res.json({ results });
+      });
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 
 
 
