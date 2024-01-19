@@ -21,6 +21,8 @@ function App() {
             <Route path="/societies" element={<SocietiesPage />} />
             <Route path="/events" element={<EventsPage />} />
             <Route path="/myevents" element={<MyEvents />} />
+            <Route path="/createEvent" element={<CreateEventPage />} />
+            <Route path="/search" element={<SearchPage />} />
         </Routes>
     )
 }
