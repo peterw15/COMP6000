@@ -47,7 +47,7 @@ function CreateEventPage() {
                     <h2 className="subHeader"> Date/Time </h2>
                     <input id="eventDateTime" /> <br />
                     <h2 className="subHeader"> Location </h2>
-                    <input id="location" /> 
+                    <input id="location" height="50px"/> 
                     <h2 className="subHeader"> Description </h2>
                     <input id="description" />
                     <h2 className="subHeader"> Price </h2>

@@ -24,7 +24,6 @@ app.use(cors()); // CORS for all routes
 app.use(express.json());
 
 app.get('/loggedIn', (req,res) => {
-  console.log(userIDGLOBAL);
   res.send("" + userIDGLOBAL);
 });
 
@@ -67,9 +66,8 @@ app.post('/login', (req,res) => {
 
 app.post('/home', (req,res) => {
   const body = req.body;
-  userIDGLOBAL = body.UserID;
   if(body.information == "User Details") {
-    const results = connection.query("SELECT * FROM User WHERE UserID = ?", [body.UserID], function (err,result,fields) {
+    const results = connection.query("SELECT * FROM User WHERE UserID = ?", [userIDGLOBAL], function (err,result,fields) {
       if (err) throw err;
       res.send(results._rows[0][0]);
     });
@@ -78,8 +76,9 @@ app.post('/home', (req,res) => {
 })
 
 app.post('/events',(req,res) => {
-  const results = connection.query("SELECT * FROM Event", function (err) {
+  const results = connection.query("SELECT eventName,eventDateTime,location,description,price,firstName,lastName FROM Event JOIN User WHERE Event.organiser = User.UserID", function (err) {
     if (err) throw err;
+    console.log(results._rows[0]);
     res.send(results._rows[0]);
   })
 })
@@ -129,6 +128,16 @@ app.post('/api/search', async (req, res) => {
       res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+app.post('/infoFromID', (req,res) => {
+  query = 'SELECT * FROM User WHERE UserID = ?';
+  console.log(req);
+  const results = connection.query(query, req.body.ID, function (err)  {
+    if(err) throw err;
+    res.send(results._rows[0][0]);
+  })
+})
+
 
 
 

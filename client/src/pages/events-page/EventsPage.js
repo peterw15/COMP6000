@@ -20,8 +20,7 @@ function EventsPage() {
                 getEvents();
             }
         });
-      },[])
-
+    },[])
 
     const getEvents = () => {
         Axios.post('http://localhost:3001/events').then(res => {
@@ -32,6 +31,8 @@ function EventsPage() {
                         <div className="eventInfo">Location: {i.location}</div>
                         <div className="eventInfo">Date/Time: {i.eventDateTime}</div>
                         <div className="eventInfo">Price: {i.price}</div>
+                        <div className="eventInfo">Description: {i.description}</div>
+                        <div className="eventInfo">Organiser: {i.firstName + " " + i.lastName}</div>
                         <br />
                     </div>
                 );
