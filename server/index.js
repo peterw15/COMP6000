@@ -16,12 +16,25 @@ const PORT = process.env.PORT || 3001;
 
 const app = express();
 
-var userIDGLOBAL;
+var userIDGLOBAL = null;
 
 
 // middleware
 app.use(cors()); // CORS for all routes
 app.use(express.json());
+
+app.get('/loggedIn', (req,res) => {
+  if(userIDGLOBAL != undefined && userIDGLOBAL != null) {
+    //console.log(userIDGLOBAL);
+    res.send("1");
+    console.log(typeof userIDGLOBAL);
+  }
+  else {
+    //console.log(userIDGLOBAL.toString());
+    res.send("1");
+    console.log(typeof userIDGLOBAL);
+ }
+});
 
 // creates a user, registers them to the database and website
 app.post('/register', (req, res) => {
@@ -47,7 +60,8 @@ app.post('/login', (req,res) => {
       res.send({isAuthenticated : false, UserID : null})
     }
     else {
-      userIDGLOBAL = results._rows[0][0].UserID;
+      userIDGLOBAL = results._rows[0][0].UserID.toString();
+      console.log(userIDGLOBAL);
       res.send({isAuthenticated : true, UserID : results._rows[0][0].UserID});
     }
   });
@@ -78,6 +92,21 @@ app.post('/myevents',(req,res) => {
     if (err) throw err;
     res.send(results._rows[0]);
   })
+})
+
+app.post('/createEvent',(req,res) => {
+  const {eventName, eventDateTime, location, description, organiser, price} = req.body;
+
+  const query = "INSERT INTO Event (eventName,eventDateTime,location,description,organiser,price) VALUES (?,?,?,?,?,?)";
+
+  connection.query(query, [eventName, eventDateTime, location, description, organiser, price], (err) => {
+    if (err) {
+      console.error('Error creating event: ' + err.stack);
+      res.status(500).send(false);
+      return;
+    }
+    res.status(200).send(true);
+  });
 })
 
 app.listen(PORT, () => {
