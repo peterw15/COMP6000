@@ -7,6 +7,7 @@ function RegistrationPage() {
 
     const navigate = useNavigate();
     
+    
     const registerUser = async (event) => {
         event.preventDefault();
         const username = document.getElementById('username').value;

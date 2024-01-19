@@ -23,8 +23,9 @@ CREATE TABLE Event (
   eventDateTime datetime NOT NULL,
   location varchar(50) NOT NULL,
   description text,
-  organiser bigint unsigned,
+  organiser bigint unsigned NOT NULL,
   price decimal(10,2) NOT NULL,
+  UNIQUE (eventName, eventDateTime, location, organiser),
   PRIMARY KEY (EventID),
   FOREIGN KEY (organiser) REFERENCES User (UserID)
 );

@@ -24,16 +24,13 @@ app.use(cors()); // CORS for all routes
 app.use(express.json());
 
 app.get('/loggedIn', (req,res) => {
-  if(userIDGLOBAL != undefined && userIDGLOBAL != null) {
-    //console.log(userIDGLOBAL);
-    res.send("1");
-    console.log(typeof userIDGLOBAL);
-  }
-  else {
-    //console.log(userIDGLOBAL.toString());
-    res.send("1");
-    console.log(typeof userIDGLOBAL);
- }
+  console.log(userIDGLOBAL);
+  res.send("" + userIDGLOBAL);
+});
+
+app.get('/logout', (req,res) => {
+  userIDGLOBAL = null;
+  res.send('Logged out successfully');
 });
 
 // creates a user, registers them to the database and website
@@ -60,7 +57,7 @@ app.post('/login', (req,res) => {
       res.send({isAuthenticated : false, UserID : null})
     }
     else {
-      userIDGLOBAL = results._rows[0][0].UserID.toString();
+      userIDGLOBAL = results._rows[0][0].UserID;
       console.log(userIDGLOBAL);
       res.send({isAuthenticated : true, UserID : results._rows[0][0].UserID});
     }

@@ -9,6 +9,19 @@ function MyEvents() {
     const [events, setEvents] = useState([]);
     const navigate = useNavigate();
 
+    useEffect(() => {
+        Axios.get('http://localhost:3001/loggedIn', {}).then(res => {
+            console.log(res);
+            if(res.data == null) {
+                navigate("/login");
+            }
+            else {
+                getMyEvents();
+            
+            }
+        });
+      },[])
+
 
     const getMyEvents = () => {
         Axios.post('http://localhost:3001/myevents').then(res => { 
@@ -29,9 +42,6 @@ function MyEvents() {
         });
     }
 
-    useEffect(() => {
-        getMyEvents();
-    },[])
 
     const goHome = () => {
         navigate("/home");

@@ -1,5 +1,6 @@
 import './createEventPageStylesheet.css';
-import {useNavigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
+import {useEffect} from 'react';
 import { Link } from "react-router-dom";
 import Axios from 'axios';
 
@@ -9,18 +10,31 @@ function CreateEventPage() {
 
     const navigate = useNavigate();
     
+
+    useEffect(() => {
+        Axios.get('http://localhost:3001/loggedIn', {}).then(res => {
+            console.log(res);
+            if(res.data == null) {
+                navigate("/login");
+            }
+            else {
+              
+            }
+        });
+      } )
+
     const createEvent = () => {
-        Axios.post('http://localhost:3001/loggedIn', {}).then(res => console.log(res));
+    
         const eventName = document.getElementById('eventName').value;
         const eventDateTime = document.getElementById('eventDateTime').value;
         const location = document.getElementById('location').value; 
         const description = document.getElementById('description').value;
-        const organiser = 1;
-        //const organiser = Axios.get('http://localhost:3001/loggedIn');
         const price = parseFloat(document.getElementById('price').value);
-
-        Axios.post('http://localhost:3001/createEvent', {eventName, eventDateTime, location, description, organiser, price}).then(res =>
-        res.data ? console.log("SUCCESS") : console.log("FAIL")).catch(error => console.log(error));
+        Axios.get('http://localhost:3001/loggedIn', {}).then(res => {
+            const organiser = parseInt(res.data);
+            Axios.post('http://localhost:3001/createEvent', {eventName, eventDateTime, location, description, organiser, price}).then(res =>
+            res.data ? console.log("SUCCESS") : console.log("FAIL")).catch(error => console.log(error));
+        });
     }
 
     return (

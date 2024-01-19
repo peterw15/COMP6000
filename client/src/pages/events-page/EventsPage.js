@@ -10,6 +10,18 @@ function EventsPage() {
 
     const navigate = useNavigate();
 
+    useEffect(() => {
+        Axios.get('http://localhost:3001/loggedIn', {}).then(res => {
+            console.log(res);
+            if(res.data == null) {
+                navigate("/login");
+            }
+            else {
+                getEvents();
+            }
+        });
+      },[])
+
 
     const getEvents = () => {
         Axios.post('http://localhost:3001/events').then(res => {
@@ -32,10 +44,6 @@ function EventsPage() {
     const goHome = () => {
         navigate("/home");
     }
-
-    useEffect(() => {
-        getEvents();
-    },[]);
 
 
     const [listState, setListState] = useState([]);

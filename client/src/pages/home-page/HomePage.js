@@ -19,25 +19,26 @@ function HomePage(props) {
   //console.log(state);
   //state.isAuthenticated = false;
   useEffect(() => {
-    if(state == null ||state.isAuthenticated == null || state.isAuthenticated == false || state.isAuthenticated == undefined) {
-      navigate("/login");
-    }
-    else {
-      loggedIn = true;
-      getDetails();
-    }
-  });
+    Axios.get('http://localhost:3001/loggedIn', {}).then(res => {
+        console.log(res);
+        if(res.data == null) {
+            navigate("/login");
+        }
+        else {
+          getDetails(parseInt(res.data));
+        }
+    });
+  } )
 
-  const getDetails = () => {
+  const getDetails = (userID) => {
     Axios.post('http://localhost:3001/home', {
       information : "User Details",
-      UserID : state.userID
+      UserID : userID
     }).then(res => setName(res.data.firstName + " " + res.data.lastName)).catch(error => console.log(error));
   }
 
   const logout = () => {
-    state.isAuthenticated = false;
-    navigate("/login");
+    Axios.get('http://localhost:3001/logout', {}).then(res => {navigate("/login");});
   }
 
   const[fullName, setName] = useState("null");
