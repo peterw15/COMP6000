@@ -12,23 +12,23 @@ function MyEvents() {
     useEffect(() => {
         Axios.get('http://localhost:3001/loggedIn', {}).then(res => {
             console.log(res);
-            if(res.data == null) {
+            if (res.data == null) {
                 navigate("/login");
             }
             else {
                 getMyEvents();
-            
             }
         });
-      },[])
+    }, [])
 
 
     const getMyEvents = () => {
-        Axios.post('http://localhost:3001/myevents').then(res => { 
-            var eventsData = res.data.map(function(i) {
+        Axios.post('http://localhost:3001/myevents').then(res => {
+            var eventsData = res.data.map(function (i) {
                 return (
-                    <div style={{border: "1px solid hsl(231, 77%, 78%)", margin: "10px", paddingLeft: "10px"} }>
+                    <div style={{ border: "1px solid hsl(231, 77%, 78%)", margin: "10px", paddingLeft: "10px" }}>
                         <h1 className="eventInfoHeader">{i.eventName}</h1>
+                        <button onClick={() => leaveEvent(i.EventID, this)}> Leave! </ button>
                         <div className="eventInfo">{i.description}</div>
                         <div className="eventInfo">Location: {i.location}</div>
                         <div className="eventInfo">Date/Time: {i.eventDateTime}</div>
@@ -42,6 +42,19 @@ function MyEvents() {
         });
     }
 
+    function leaveEvent(EventID, button) {
+        console.log("eee");
+        Axios.post('http://localhost:3001/leaveEvent', {
+            EventID: EventID
+        }).then(res => {
+            getMyEvents();
+
+            console.log("AAAAAAAAAAAAAAAAAAA");
+        });
+        getMyEvents();
+        console.log({ events });
+    }
+
 
     const goHome = () => {
         navigate("/home");
@@ -50,7 +63,7 @@ function MyEvents() {
     return (
         <>
             <div className="body">
-            <button className="btn" onClick={goHome}>Home</button>
+                <button className="btn" onClick={goHome}>Home</button>
                 <div className="header">Your Events</div>
                 {events}
             </div >
