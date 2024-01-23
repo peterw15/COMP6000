@@ -1,8 +1,16 @@
-import './loginPageStyleSheet.css';
+//import './loginPageStyleSheet.css';
 import { Link } from "react-router-dom";
 import Axios from 'axios';
 import { Navigate } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
+import Image from 'react-bootstrap/Image';
+import library from './library.jpg';
+
 
 
 function LoginPage() {
@@ -13,29 +21,75 @@ function LoginPage() {
         Axios.post('http://localhost:3001/login', {
             username: document.getElementById("username").value,
             password: document.getElementById("password").value
-        }).then(res => res.data.isAuthenticated ? navigate("/home",
-            { state: { isAuthenticated: true, userID: res.data.UserID } }) : console.log(res)).catch(error => console.log(error));
+        }).then(res => res.data.isAuthenticated ? navigate("/home",) : console.log(res)).catch(error => console.log(error));
     }
 
     //const isAuthenticated = (authenticated) => authenticated ? navigate("/home")  : console.log("NOT VALIDATED");
 
     return (
-        <>
-            <div className="loginPage">
-                <div className="header"> Login </div>
-                <div className="form">
-                    <h2 className="subHeader"> Username </h2>
-                    <input id="username" />
-                    <h2 className="subHeader"> Password</h2>
-                    <input type="password" id="password"/> <br />
-                    <button id="submit" className="btn" onClick={handleClick}> Submit </button>
-                    <h2 className="invalidLogin" id="invalidLogin" style={{ visibility: "hidden" }} > Invalid Username Or Password </h2>
-                    <button id="forgotPassword" className="btn"> Forgot Login </button>
-                    <Link to="/register" >
-                        <button id="createAccount" className="btn"> Create Account </button>
-                    </Link>
-                </div>
-            </div >
+        <>  
+            <Container fluid style={{height:"100vh"}}>
+                <Row style={{width:"100%"}}>
+                    <Col style={{width:"50%", height: "100vh", backgroundImage: `url(${library})`, backgroundSize : "cover", backgroundPosition:"center", borderRight: "solid 5px", borderColor: "#1e1e1e"}}>
+                    </Col>
+                    <Col style={{width:"50%", backgroundColor: "#252526"}}>
+                        <Row style={{height:"20%"}}></Row>
+                        <Row style={{height:"33%"}}>
+                            <Container fluid>
+                                <Row>
+                                    <Col></Col>
+                                    <Col className="text-center">
+                                        <div className="header" style={{color: "#3299ff"}}>Login</div>
+                                    </Col>
+                                    <Col></Col>
+                                </Row>
+                                <Row style={{height:"10%"}}></Row>
+                                <Row>
+                                    <Col></Col>
+                                    <Col className="text-center">
+                                        <Form.Control type="text" id="username" placeholder="Username"/>
+                                    </Col>
+                                    <Col></Col>
+                                </Row>
+                                <Row style={{height:"5%"}}></Row>
+                                <Row>
+                                    <Col></Col>
+                                    <Col className="text-center">
+                                        <Form.Control type="password" id="password" placeholder="Password" />
+                                    </Col>
+                                    <Col></Col>
+                                </Row>
+                                <Row style={{height:"10%"}}></Row>
+                                <Row>
+                                    <Col style={{width:"33%"}}></Col>
+                                    <Col style={{width:"33%"}} className="text-center">
+                                        <Button variant="primary" id="submit" onClick={handleClick} style={{height: "45px", width:"30%"}}>Submit</Button>
+                                    </Col>
+                                    <Col style={{width:"33%"}}></Col>
+                                </Row>
+                                <Row style={{height:"1%"}}></Row>
+                                <Row>
+                                    <Col></Col>
+                                    <Col className="text-center">
+                                        <Button variant="primary" id="forgotPassword" className="btn" style={{height: "45px", width:"40%", marginLeft:"50%", fontSize:"80%"}}>Forgot Login</Button>
+                                    </Col>
+                                    <Col className="text-center">
+                                        <Link to="/register" >
+                                                <Button variant="primary" id="createAccount" className="btn" style={{height: "45px", width:"40%", marginRight:"50%", fontSize:"80%"}}>Create Account</Button>
+                                        </Link>
+                                    </Col>
+                                    <Col >
+                                    </Col>
+                                </Row>
+                                <Container>
+                                    <Row></Row>
+                                </Container>
+                            </Container>
+                        </Row>
+                        <Row style={{height:"33%"}}></Row>
+                    </Col>
+                </Row>
+            </Container>
         </>
     );
 }
