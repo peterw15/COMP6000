@@ -39,7 +39,7 @@ function LoginPage() {
                                 <Row>
                                     <Col></Col>
                                     <Col className="text-center">
-                                        <div className="header" style={{color: "#3299ff"}}>Login</div>
+                                        <div className="header" style={{color: "#3299ff"}}>Sign In</div>
                                     </Col>
                                     <Col></Col>
                                 </Row>
