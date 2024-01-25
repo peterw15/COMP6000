@@ -3,6 +3,8 @@ import React from 'react';
 import Axios from 'axios';
 import { useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useState } from 'react';
+import HeaderBar from '../general-components/HeaderBar/HeaderBar.js';
+
 
 function MyEvents() {
 
@@ -62,8 +64,8 @@ function MyEvents() {
 
     return (
         <>
+            <HeaderBar></HeaderBar>
             <div className="body">
-                <button className="btn" onClick={goHome}>Home</button>
                 <div className="header">Your Events</div>
                 {events}
             </div >
