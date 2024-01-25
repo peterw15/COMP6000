@@ -28,7 +28,7 @@ function HeaderBar(props) {
             <div className="mb-2">
                 <Navbar variant="dark" bg="dark" expand="lg">
                     <Container fluid>
-                        <Navbar.Brand href="home"><div class="brand">UniDex</div></Navbar.Brand>
+                        <Navbar.Brand href="home"><div class="brand">Ripple🌊</div></Navbar.Brand>
                         <Nav>
                             <Navbar.Brand><b>{props.name}</b></Navbar.Brand>
                         </Nav>
