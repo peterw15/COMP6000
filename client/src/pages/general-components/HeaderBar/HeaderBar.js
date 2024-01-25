@@ -1,26 +1,46 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
-import Button from 'react-bootstrap/Button';
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import Dropdown from 'react-bootstrap/Dropdown';
-import DropdownButton from 'react-bootstrap/DropdownButton';
-import SplitButton from 'react-bootstrap/SplitButton';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import NavItem from 'react-bootstrap/esm/NavItem';
 import "./HeaderStyleSheet.css"
 import Axios from 'axios';
+import { useEffect, useState } from 'react';
 
 
-function HeaderBar(props) {
+
+export default function HeaderBar(props) {
+
+    useEffect(() => {
+        Axios.get('http://localhost:3001/loggedIn', {}).then(res => {
+            console.log(res);
+            if (res.data == null) {
+                navigate("/login");
+            }
+            else {
+                getDetails(parseInt(res.data));
+            }
+        });
+    })
 
     const navigate = useNavigate();
 
     const logout = () => {
         Axios.get('http://localhost:3001/logout', {}).then(res => { navigate("/login"); });
     }
+
+    const getDetails = (userID) => {
+        Axios.post('http://localhost:3001/home', {
+            information: "User Details",
+            UserID: userID
+        }).then(res => setName("Welcome " + res.data.firstName + "!")).catch(error => console.log(error));
+    }
+
+
+
+    const [fullName, setName] = useState("null");
+
 
 
     return (
@@ -30,7 +50,7 @@ function HeaderBar(props) {
                     <Container fluid>
                         <Navbar.Brand href="home"><div class="brand">Ripple🌊</div></Navbar.Brand>
                         <Nav>
-                            <Navbar.Brand><b>{props.name}</b></Navbar.Brand>
+                            <Navbar.Brand><b>{fullName}</b></Navbar.Brand>
                         </Nav>
                         <Navbar.Toggle aria-controls="navbar-dark-example" />
                         <Navbar.Collapse id="navbar-dark-example">
@@ -59,9 +79,9 @@ function HeaderBar(props) {
                         </Nav>
                     </Container>
                 </Navbar>
-            </div >
+            </div>
         </>
     );
-}
 
-export default HeaderBar;
+
+}

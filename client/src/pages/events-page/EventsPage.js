@@ -4,6 +4,8 @@ import Axios from 'axios';
 import { Navigate } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from 'react';
+import HeaderBar from '../general-components/HeaderBar/HeaderBar.js';
+
 
 
 function EventsPage() {
@@ -65,6 +67,7 @@ function EventsPage() {
 
     return (
         <>
+            <HeaderBar></HeaderBar>
             <div className="eventsPage">
                 <div>
                     <button className="btn" onClick={goHome}>Home</button>

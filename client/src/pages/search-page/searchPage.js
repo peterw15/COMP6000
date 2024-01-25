@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import HeaderBar from '../general-components/HeaderBar/HeaderBar.js';
+
 
 function SearchPage() {
     const navigate = useNavigate();
@@ -24,6 +26,7 @@ function SearchPage() {
 
     return (
         <>
+            <HeaderBar></HeaderBar>
             <div className="searchPage">
                 <div className="header"> Search </div>
                 <div className="form">
@@ -49,7 +52,7 @@ function SearchPage() {
                                         <p>Event Location: {result.location}</p>
                                         <p>Event Description: {result.description}</p>
                                         <p>Event Organiser: {result.organiser}</p>
-                                        <p>Event Price: {result.price}</p>                        
+                                        <p>Event Price: {result.price}</p>
                                     </li>
                                 ))}
                             </ul>
