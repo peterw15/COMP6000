@@ -8,6 +8,7 @@ import MyEvents from "./pages/myevents-page/MyEvents";
 import CreateEventPage from "./pages/createEvent-page/CreateEventPage";
 import SearchPage from "./pages/search-page/searchPage";
 
+
 function App() {
 
     // To add a route: Create a new <Route />, Set the path to the URL Address, Set the element to the pages default function. (Peter 07/11/23)   
@@ -21,7 +22,7 @@ function App() {
             <Route path="/societies" element={<SocietiesPage />} />
             <Route path="/events" element={<EventsPage />} />
             <Route path="/myevents" element={<MyEvents />} />
-            <Route path="/createEvent" element={<CreateEventPage />} />
+            <Route path="/createevent" element={<CreateEventPage />} />
             <Route path="/search" element={<SearchPage />} />
         </Routes>
     )

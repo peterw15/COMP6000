@@ -52,6 +52,15 @@
   }
 }
 
+.buttonStyle {
+    flex-grow: 1;
+    padding: '10px';
+    font-size: '1em';
+    background-Color: '#ffffff';
+    border: 'none';
+    cursor: 'pointer';
+}
+
 
 
 

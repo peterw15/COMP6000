@@ -1,0 +1,31 @@
+.navbar-nav {
+    padding-left: 2%;
+    padding-right: 2%;
+    font-size: 20px;
+    color: rgba(255,255,255,0.55);
+    text-decoration: 'none'
+}
+
+.navlink {
+    padding-left: 2%;
+    padding-right: 2%;
+    font-size: 20px;
+    color: rgba(255,255,255,0.55);
+    text-decoration: 'none'
+}
+
+.navbar-nav:hover {
+    transition: ease-in-out;
+    cursor: pointer;
+    color: rgba(255,255,255,0.75);
+}
+
+.navbar-brand {
+    padding-right: 1%;
+    font-size: 20px;
+}
+
+.brand {
+    color:rgb(136, 136, 136);
+    font-weight:900;
+}
