@@ -10,9 +10,6 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 
-
-
-
 function CreateEventPage() {
 
     const navigate = useNavigate();
@@ -35,36 +32,31 @@ function CreateEventPage() {
 
     const onCheckboxChange = (event) => {
         const target = event.target;
-        if(target.checked) {
-            setBoxes(checkedBoxes + 1);
+        console.log(target.isChecked);
+        if(target.isChecked == "Unchecked" || target.isChecked == undefined) {
+            target.isChecked = "Checked"
         }
-        else {
-            setBoxes(checkedBoxes - 1);
-            if(checkedBoxes <4) {
-                for(let i=0;i<tags.length;i++) {
-                    const element = document.getElementById(tags[i]);
-                    if(element.disabled) {
-                        element.disabled = false;
-                    }
-        
-                }
-            }
+        else if(target.isChecked == "Checked"){
+            target.isChecked = "Unchecked";
         }
+        console.log(target.isChecked);
 
-        if(checkedBoxes == 4) {
-            for(let i=0;i<tags.length;i++) {
-                const element = document.getElementById(tags[i]);
-                if(!element.checked) {
-                    element.disabled = true;
-                }
-    
-            }
+        if(target.isChecked == "Checked") {
+            console.log("YES");
+            setBoxes(checkedBoxes + 1);
+            console.log(checkedBoxes);
         }
-        console.log(checkedBoxes);
+        else if(target.isChecked == "Unchecked") {
+            console.log(checkedBoxes);
+            console.log("NO")
+            setBoxes(checkedBoxes - 1);
+            console.log(checkedBoxes);
+        }
+        
     }
 
     const tags = ['Academic', 'Arts', 'Drinking', 'Mindfulness', 'Music', 'Off Campus', 'On Campus',
-        'Outdoors', 'Science', 'Social', 'Sports', ];
+        'Outdoors', 'Science', 'Social', 'Sports'];
 
     const checkTags = () => {
         const selectedTags = ["","","","",""];
@@ -135,7 +127,7 @@ function CreateEventPage() {
                                                                 id={`${tag}`}
                                                                 label={`${tag}`}
                                                                 onChange={onCheckboxChange}
-                                                                checked= "false"
+                                                                isChecked = "Unchecked"
                                                             />
                                                             <br />
                                                             </div>
