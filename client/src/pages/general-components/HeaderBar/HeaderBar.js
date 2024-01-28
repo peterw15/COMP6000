@@ -46,7 +46,7 @@ export default function HeaderBar(props) {
     return (
         <>
             <div className="mb-2">
-                <Navbar variant="dark" bg="dark" expand="lg">
+                <Navbar variant="dark" bg="dark" expand="lg" className="fixed-top">
                     <Container fluid>
                         <Navbar.Brand href="home"><div class="brand">Ripple🌊</div></Navbar.Brand>
                         <Nav>
@@ -54,9 +54,6 @@ export default function HeaderBar(props) {
                         </Nav>
                         <Navbar.Toggle aria-controls="navbar-dark-example" />
                         <Navbar.Collapse id="navbar-dark-example">
-                            <Nav>
-                                <Nav.Link href="/search">Search</Nav.Link>
-                            </Nav>
                             <Nav>
                                 <NavDropdown id="nav-dropdown-dark-example" title="Events" menuVariant="dark" >
                                     <NavDropdown.Item href="events">Browse Events</NavDropdown.Item>
@@ -70,6 +67,9 @@ export default function HeaderBar(props) {
                                     <NavDropdown.Item href="#action/3.2">Create Society </NavDropdown.Item>
                                     <NavDropdown.Item href="#action/3.3">Your Joined Societies</NavDropdown.Item>
                                 </NavDropdown>
+                            </Nav>
+                            <Nav>
+                                <Nav.Link href="/search">Search 🔍</Nav.Link>
                             </Nav>
                         </Navbar.Collapse>
                         <Nav className="justify-content-end">

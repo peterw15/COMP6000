@@ -90,6 +90,13 @@ app.post('/myevents', (req, res) => {
   })
 })
 
+app.post('/upcomingevents', (req, res) => {
+  const results = connection.query("SELECT * FROM Event INNER JOIN EventRegistration ON Event.EventID=EventRegistration.EventID WHERE EventRegistration.UserID = ? ORDER BY eventDateTime LIMIT 1", [userIDGLOBAL], function (err) {
+    if (err) throw err;
+    res.send(results._rows[0]);
+  })
+})
+
 app.post('/createEvent', (req, res) => {
   const { eventName, eventDateTime, location, description, organiser, price } = req.body;
 
