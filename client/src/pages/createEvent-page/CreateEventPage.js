@@ -27,56 +27,72 @@ function CreateEventPage() {
         });
     })
 
-    const [checkedBoxes, setBoxes] = useState(0);
+    var checkedBoxes = 0;
 
-
-    const onCheckboxChange = (event) => {
+    function onCheckboxChange(event) {
         const target = event.target;
-        console.log(target.isChecked);
-        if(target.isChecked == "Unchecked" || target.isChecked == undefined) {
-            target.isChecked = "Checked"
-        }
-        else if(target.isChecked == "Checked"){
-            target.isChecked = "Unchecked";
-        }
-        console.log(target.isChecked);
-
-        if(target.isChecked == "Checked") {
+        const label = target.id;
+        console.log(label);
+        var add = false;
+        if(checkState[label] == false) {
             console.log("YES");
-            setBoxes(checkedBoxes + 1);
+            checkState[label] = true;
+            checkedBoxes++;
             console.log(checkedBoxes);
         }
-        else if(target.isChecked == "Unchecked") {
+        else if(checkState[label] == true){
+            checkState[label] = false;
+            checkedBoxes--;
             console.log(checkedBoxes);
-            console.log("NO")
-            setBoxes(checkedBoxes - 1);
-            console.log(checkedBoxes);
+        }
+
+        if(checkedBoxes == 5) {
+            disableChecks();
+        }
+        else if(checkedBoxes == 4) {
+            enableChecks();
         }
         
     }
 
-    const tags = ['Academic', 'Arts', 'Drinking', 'Mindfulness', 'Music', 'Off Campus', 'On Campus',
-        'Outdoors', 'Science', 'Social', 'Sports'];
-
-    const checkTags = () => {
-        const selectedTags = ["","","","",""];
-        let index = 0;
+    function disableChecks() {
         for(let i=0;i<tags.length;i++) {
-            if(document.getElementById(tags[i]).checked) {
-                if (index < 5) {
-                    selectedTags[index] = tags[i];
-                    index++;
-                }
+            const element = document.getElementById(tags[i]);
+            if(!checkState[element.id]) {
+                element.disabled = true;
             }
-
         }
-        console.log(selectedTags);
     }
 
+    function enableChecks() {
+        for(let i=0;i<tags.length;i++) {
+            const element = document.getElementById(tags[i]);
+            if(element.disabled) {
+                element.disabled = false;
+            }
+        }
+    }
 
-    const createEvent = () => {
+    function gatherTags() {
+        const trueTags = [];
+        for(let i=0;i<tags.length;i++) {
+            const element = document.getElementById(tags[i]);
+            if(checkState[element.id]) {
+                trueTags.push(tags[i]);
+            }
+        }
+        return trueTags;
+    }
 
-        checkTags();
+    const tags = ['Academic', 'Arts', 'Drinking', 'Mindfulness', 'Music', 'Off_Campus', 'On_Campus',
+        'Outdoors', 'Science', 'Social', 'Sports'];
+
+    const checkState = {Academic : false , Arts : false, Drinking : false, Mindfulness : false, Music : false, Off_Campus : false, On_Campus : false,
+    Outdoors : false, Science : false, Social : false, Sports : false};
+
+    function createEvent () {
+
+        const finalTags = gatherTags();
 
         const eventName = document.getElementById('eventName').value;
         const eventDateTime = document.getElementById('eventDateTime').value;
@@ -84,13 +100,22 @@ function CreateEventPage() {
         const description = document.getElementById('description').value;
         const price = parseFloat(document.getElementById('price').value);
 
-        Axios.get('http://localhost:3001/loggedIn', {}).then(res => {
+            Axios.get('http://localhost:3001/loggedIn', {}).then(res => {
             const organiser = parseInt(res.data);
-            Axios.post('http://localhost:3001/createEvent', { eventName, eventDateTime, location, description, organiser, price }).then(res =>
-                res.data ? console.log("SUCCESS") : console.log("FAIL")).catch(error => console.log(error));
+            Axios.post('http://localhost:3001/createEvent', { eventName, eventDateTime, location, description, organiser, price }).then(res => 
+                res.data ? console.log("SUCCESS") : console.log("FAIL")).catch(error => console.log(error)).then(
+            Axios.post('http://localhost:3001/getEventID', { eventName, eventDateTime, location, description, organiser, price }).then(res => {
+                
+                const EventID = res.data[0].EventID;
+
+                for(let i=0;i<finalTags.length;i++) {
+                    const tag = finalTags[i];
+                    Axios.post('http://localhost:3001/addEventTag', {EventID,tag}).then(res =>
+                        res.data ? console.log("SUCCESS") : console.log("FAIL")).catch(error => console.log(error));
+                }
+            }));
         });
     }
-
 
 
     return (
@@ -127,7 +152,6 @@ function CreateEventPage() {
                                                                 id={`${tag}`}
                                                                 label={`${tag}`}
                                                                 onChange={onCheckboxChange}
-                                                                isChecked = "Unchecked"
                                                             />
                                                             <br />
                                                             </div>

@@ -112,6 +112,35 @@ app.post('/createEvent', (req, res) => {
   });
 })
 
+app.post('/getEventID', (req,res) => {
+  const { eventName, eventDateTime, location, description, organiser, price } = req.body;
+
+  const query = "SELECT EventID FROM Event WHERE eventName = ? AND eventDateTime = ? AND location = ? AND description = ? AND organiser = ? AND price = ?";
+  const results = connection.query(query, [eventName, eventDateTime, location, description, organiser, price], (err) => {
+    if (err) {
+      console.error('Error creating event: ' + err.stack);
+      res.status(500).send(false);
+      return;
+    }
+    res.status(200).send(results._rows[0]);
+  });
+
+})
+
+app.post('/addEventTag', (req,res) => {
+  console.log(req.body);
+  const { EventID, tag} = req.body;
+  const query = "INSERT INTO EventTags (EventID, tag) VALUES (?,?)";
+  connection.query(query, [EventID, tag], (err) => {
+    if (err) {
+      console.error('Error creating event: ' + err.stack);
+      res.status(500).send(false);
+      return;
+    }
+    res.status(200).send(true);
+  });
+})
+
 app.post('/joinEvent', (req, res) => {
   try {
     const { EventID } = req.body
