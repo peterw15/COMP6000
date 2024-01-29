@@ -1,6 +1,6 @@
 /* searchPageStyleSheet.css */
 .searchPage {
-    background-color: #1a2238;
+    background-color: #202020;
     font-family: Arial, Helvetica, sans-serif;
     height: 100vh;
     top: 0px;
@@ -51,14 +51,16 @@
 }
 
 .searchResults {
-    margin-top: 20px;
+    width: 100%;
+    border-collapse: collapse;
 }
 
-.searchResults ul {
-    list-style-type: none;
-    padding: 0;
+.searchResults th, .searchTable td {
+    padding: 8px;
+    border: 1px solid #ddd;
 }
 
-.searchResults li {
-    margin: 5px 0;
+.searchResults th {
+    text-align: left;
+    background-color: #f2f2f2;
 }
