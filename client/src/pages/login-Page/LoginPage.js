@@ -20,10 +20,11 @@ function LoginPage() {
     const navigate = useNavigate();
 
     const handleClick = () => {
+        const errorMessage = document.getElementById("errorMessage");
         Axios.post('http://localhost:3001/login', {
             username: document.getElementById("username").value,
             password: document.getElementById("password").value
-        }).then(res => res.data.isAuthenticated ? navigate("/home",) : console.log(res)).catch(error => console.log(error));
+        }).then(res => res.data.isAuthenticated ? navigate("/home",) : errorMessage.hidden = false).catch(error => console.log(error));
     }
 
     //const isAuthenticated = (authenticated) => authenticated ? navigate("/home")  : console.log("NOT VALIDATED");
@@ -55,7 +56,7 @@ function LoginPage() {
                                             label="Username"
                                             className="mb-1"
                                         >
-                                            <Form.Control type="text" id="username" placeholder="Username" size="sm"/>
+                                            <Form.Control type="text" id="username" placeholder="Username"/>
                                         </FloatingLabel>
                                     </Col>
                                     <Col style={{width:"33.33%"}}></Col>
@@ -70,7 +71,8 @@ function LoginPage() {
                                                 className="mb-1"
                                         >
                                             <Form.Control type="password" id="password" placeholder="Password" />
-                                        </FloatingLabel>
+                                        </FloatingLabel> 
+                                        <div id="errorMessage" hidden="true" style={{color:"#ee4949", marginTop:"10px"}}>Invalid Username/Password</div>
                                     </Col>
                                     <Col></Col>
                                 </Row>
