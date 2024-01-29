@@ -173,7 +173,21 @@ app.listen(PORT, () => {
 app.post('/api/search', async (req, res) => {
   try {
     const searchTerm = req.body.searchTerm;
-    const query = `SELECT * FROM Event WHERE eventName LIKE '%${searchTerm}%'`;
+    const descriptionTerm = req.body.description;
+    const locationTerm = req.body.location;
+    const organiserTerm = req.body.organiser;
+    const priceTerm = req.body.price;
+    
+    const query = `
+    SELECT * FROM Event 
+    WHERE 
+      eventName LIKE '%${searchTerm}%' OR
+      description LIKE '%${searchTerm}%' OR
+      location LIKE '%${searchTerm}%' OR
+      organiser LIKE '%${searchTerm}%' OR
+      price LIKE '%${searchTerm}%'
+  `;
+  
 
     connection.query(query, (err, results) => {
       if (err) {
@@ -189,6 +203,7 @@ app.post('/api/search', async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
 
 app.post('/infoFromID', (req, res) => {
   query = 'SELECT * FROM User WHERE UserID = ?';
