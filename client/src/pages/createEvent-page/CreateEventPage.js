@@ -1,6 +1,6 @@
-import './createEventPageStylesheet.css';
+//import './createEventPageStylesheet.css';
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Link } from "react-router-dom";
 import Axios from 'axios';
 import HeaderBar from '../general-components/HeaderBar/HeaderBar.js';
@@ -8,6 +8,8 @@ import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Carousel from 'react-bootstrap/Carousel';
+import Button from 'react-bootstrap/Button';
 
 
 function CreateEventPage() {
@@ -117,61 +119,94 @@ function CreateEventPage() {
         });
     }
 
+    const ref = useRef(0);
+
+    const onNext = () => {
+        ref.current.next();
+    }
+
+    const onPrev = () => {
+        ref.current.prev();
+    }
+
 
     return (
-        <html style={{height:"2000px", width:"100%"}}>
-            <body style={{height:"100%", width:"100%", backgroundColor : "blue"}}>
+            <>
                 <HeaderBar></HeaderBar>
-                <Container fluid style={{height:"90%", width: "100%", backgroundColor:"black", margin:"0"}}>
-                        <Row style={{width:"100%",height: "100%", margin:"0"}}>
-                            <Col></Col>
-                            <Col>
-                                <div className="createEventPage">
-                                    <div className="header"> Create Event </div>
-                                    <div className="form">
-                                        <h2 className="subHeader"> Event Name </h2>
-                                        <input id="eventName" />
-                                        <h2 className="subHeader"> Date/Time </h2>
-                                        <input id="eventDateTime" /> <br />
-                                        <h2 className="subHeader"> Location </h2>
-                                        <input id="location" height="50px" />
-                                        <h2 className="subHeader"> Description </h2>
-                                        <input id="description" />
-                                        <h2 className="subHeader"> Price </h2>
-                                        <input id="price" /> 
-                                        <h2 className="subHeader"> Please Select Up to 5 Tags: </h2>
-                                        <Container fluid>
-                                            <Row style={{width:"100%",height: "100%", margin:"0"}}>
-                                                <Col></Col>
-                                                <Col>
-                                                    {
-                                                        tags.map((tag) => (
-                                                            <div style={{width:"200px"}}>
-                                                            <Form.Check
-                                                                type="checkbox"
-                                                                id={`${tag}`}
-                                                                label={`${tag}`}
-                                                                onChange={onCheckboxChange}
-                                                            />
-                                                            <br />
-                                                            </div>
-                                                        ))
-                                                    }
-                                                </Col>
-                                                <Col></Col>
-                                            </Row>
+                <Container fluid style={{height:"100vh", width: "100%", backgroundColor:"#202020", margin:"0"}}>
+                        <Row style={{width:"100%",height: "100%", margin:"0"}} className="text-center">
+                                <Carousel style={{marginTop: "100px", height:"70%", width:"70%", marginLeft:"15%", marginRight: "15%", borderColor: "#18cdc6", border: "3px solid #18cdc6"}} ref={ref} interval={null} controls={true}>
+                                    <Carousel.Item>
+                                        <Container fluid style={{marginTop: "10%", marginBottom :"5%"}}>
+                                            <h2 className="subHeader" style={{color:"#18cdc6", fontSize:"70px"}}>Let's create an event!</h2>
+                                            <Button variant="outline-primary" id="begin" className="btn" onClick={onNext}>Begin</Button>
                                         </Container>
-                                        <br /> <br /> <br />
-                                        <button id="submit" className="btn" onClick={createEvent}> Submit </button> <br /> <br /> <br />
-                                    </div>
-                                </div>
-
-                            </Col>
-                            <Col></Col>
+                                    </Carousel.Item>
+                                    <Carousel.Item>
+                                        <Container fluid style={{marginTop: "10%", marginBottom :"5%"}}>
+                                            <h2 className="subHeader" style={{color:"#18cdc6"}}>What would you like your event to be called?</h2>
+                                            <input id="eventName" style={{marginTop:"5%"}} />
+                                        </Container>
+                                    </Carousel.Item>
+                                    <Carousel.Item>
+                                        <Container fluid style={{marginTop: "10%", marginBottom :"5%"}}>
+                                            <h2 className="subHeader" style={{color:"#18cdc6"}}>What is the date/time of your event?</h2>
+                                            <input id="eventDateTime" style={{marginTop:"5%"}} />
+                                        </Container>
+                                    </Carousel.Item>
+                                    <Carousel.Item>
+                                        <Container fluid style={{marginTop: "10%", marginBottom :"5%"}}>
+                                            <h2 className="subHeader" style={{color:"#18cdc6"}}>Where will your event be located?</h2>
+                                            <input id="location" style={{marginTop:"5%"}}/>
+                                        </Container>
+                                    </Carousel.Item>
+                                    <Carousel.Item>
+                                        <Container fluid style={{marginTop: "10%", marginBottom :"5%"}}>
+                                            <h2 className="subHeader" style={{color:"#18cdc6",}}>How would you describe your event?</h2>
+                                            <input id="description" style={{marginTop:"5%"}} />
+                                        </Container>
+                                    </Carousel.Item>
+                                    <Carousel.Item>
+                                        <Container fluid style={{marginTop: "10%", marginBottom :"5%"}}>
+                                            <h2 className="subHeader" style={{color:"#18cdc6"}}>How much will your event cost?</h2>
+                                            <input id="price" style={{marginTop:"5%"}} /> 
+                                        </Container>
+                                    </Carousel.Item>
+                                    <Carousel.Item>
+                                            <Container fluid style={{marginTop: "5%", marginBottom: "5%"}}>
+                                                <h2 className="subHeader" style={{color:"#18cdc6"}}> Please Select Up to 5 Tags: </h2>
+                                                <br/>
+                                                <Row style={{width:"100%",height: "100%", margin:"0"}}>
+                                                    <Col></Col>
+                                                    <Col>
+                                                        {
+                                                            tags.map((tag) => (
+                                                                <Row style={{width:"100%"}}>
+                                                                <Form.Check
+                                                                    type="checkbox"
+                                                                    id={`${tag}`}
+                                                                    label={`${tag}`}
+                                                                    onChange={onCheckboxChange}
+                                                                    style={{color:"#18cdc6"}}
+                                                                />
+                                                                <br />
+                                                                </Row>
+                                                            ))
+                                                        }
+                                                    </Col>
+                                                    <Col></Col>
+                                                </Row>
+                                            </Container>
+                                    </Carousel.Item>
+                                    <Carousel.Item>
+                                        <Container fluid style={{marginTop: "5%", marginBottom: "5%"}}> 
+                                            <Button variant="outline-primary" id="submit" className="btn" onClick={createEvent}>Submit</Button>
+                                        </Container>
+                                    </Carousel.Item>
+                                </Carousel>                             
                         </Row>
                 </Container>
-            </body>
-        </html>
+            </>
     );
 }
 
