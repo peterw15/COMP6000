@@ -9,8 +9,9 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Image from 'react-bootstrap/Image';
-import background from './background.png';
+import background from './background2.png';
 import logo from './logoAbove.png';
+import { FloatingLabel } from "react-bootstrap";
 
 
 
@@ -33,7 +34,7 @@ function LoginPage() {
                 <Row style={{width:"100%"}} className="text-center">
                     <Col style={{width:"33.33%", height: "100vh"}}>
                     </Col>
-                    <Col style={{width:"33.33%", backgroundColor: "#202020", marginTop:"50px", marginBottom:"50px", marginLeft:"20px"}} className="text-center" >
+                    <Col style={{width:"33.33%", marginTop:"50px", marginBottom:"50px", marginLeft:"20px"}} className="text-center" >
                         <Row style={{height:"15%"}}>
                         </Row>
                         <Row style={{height:"33%"}} className="text-center">
@@ -49,7 +50,13 @@ function LoginPage() {
                                 <Row>
                                     <Col style={{width:"33.33%"}}></Col>
                                     <Col className="text-center" style={{width:"33.33%", backgroundColor: "#202020"}}>
-                                        <Form.Control type="text" id="username" placeholder="Username"/>
+                                        <FloatingLabel
+                                            controlId="floatingInput"
+                                            label="Username"
+                                            className="mb-1"
+                                        >
+                                            <Form.Control type="text" id="username" placeholder="Username" size="sm"/>
+                                        </FloatingLabel>
                                     </Col>
                                     <Col style={{width:"33.33%"}}></Col>
                                 </Row>
@@ -57,7 +64,13 @@ function LoginPage() {
                                 <Row>
                                     <Col></Col>
                                     <Col className="text-center">
-                                        <Form.Control type="password" id="password" placeholder="Password" />
+                                        <FloatingLabel
+                                                controlId="floatingInput"
+                                                label="Password"
+                                                className="mb-1"
+                                        >
+                                            <Form.Control type="password" id="password" placeholder="Password" />
+                                        </FloatingLabel>
                                     </Col>
                                     <Col></Col>
                                 </Row>
