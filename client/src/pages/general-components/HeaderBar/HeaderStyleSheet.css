@@ -31,3 +31,19 @@
     color:rgb(136, 136, 136);
     font-weight:900;
 }
+
+img.logo {
+    height: 30px;
+}
+
+.bg-bgColor {
+    background-color : #202020;
+}
+
+.icon {
+    height:20px;
+    margin-left: 5px;
+    margin-top: auto;
+    margin-right: auto;
+    margin-bottom: auto;
+}

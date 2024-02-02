@@ -7,6 +7,10 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import "./HeaderStyleSheet.css"
 import Axios from 'axios';
 import { useEffect, useState } from 'react';
+import Image from 'react-bootstrap/Image';
+import logo from "./logoCropped2.png";
+import searchIcon from "./search.png";
+import eventIcon from "./event.png";
 
 
 
@@ -46,9 +50,9 @@ export default function HeaderBar(props) {
     return (
         <>
             <div className="mb-2">
-                <Navbar variant="dark" bg="dark" expand="lg" className="fixed-top">
+                <Navbar variant="dark" bg="bgColor" expand="lg" className="fixed-top">
                     <Container fluid>
-                        <Navbar.Brand href="home"><div class="brand">Ripple🌊</div></Navbar.Brand>
+                        <Navbar.Brand href="home"><div class="brand"><img class="logo" src={logo}></img></div></Navbar.Brand>
                         <Nav>
                             <Navbar.Brand><b>{fullName}</b></Navbar.Brand>
                         </Nav>
@@ -60,6 +64,7 @@ export default function HeaderBar(props) {
                                     <NavDropdown.Item href="createevent">Create Event </NavDropdown.Item>
                                     <NavDropdown.Item href="myevents">Your Joined Events</NavDropdown.Item>
                                 </NavDropdown>
+                                <img src={eventIcon} class="icon"></img>
                             </Nav>
                             <Nav>
                                 <NavDropdown id="nav-dropdown-dark-example" title="Societies" menuVariant="dark" >
@@ -69,7 +74,7 @@ export default function HeaderBar(props) {
                                 </NavDropdown>
                             </Nav>
                             <Nav>
-                                <Nav.Link href="/search">Search 🔍</Nav.Link>
+                                <Nav.Link href="/search">Search<img src={searchIcon} class="icon"></img></Nav.Link>
                             </Nav>
                         </Navbar.Collapse>
                         <Nav className="justify-content-end">

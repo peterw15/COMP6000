@@ -1,7 +1,6 @@
 
 .formCol {
   width: 33%;
-  background-color: #202020;
   height: 100%;
   border-top: 1px solid;
   border-bottom: 1px solid;
@@ -11,4 +10,12 @@
 
 .formLabel {
   color:#18cdc6;
+}
+
+.formContainer, .background, h2, div.col, .col, div.justify-content-center.col{
+  background-color: #252526;
+}
+
+h2 {
+  font-weight: bold;
 }

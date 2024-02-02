@@ -207,15 +207,16 @@ function CreateEventPage() {
 
                 <HeaderBar></HeaderBar>
                 <Row style={{width:"100%", height: "100%"}} className='justify-content-center'>
-                <Row style={{width:"80%", height: "100%",backgroundColor: "#202020"}} className='justify-content-center'>
-                <Container fluid style={{height:"100%", width: "70%", marginTop:"2%"}}>
+                <Row style={{width:"80%", height: "100%"}} className="background">
+                <Container fluid style={{height:"100%", width: "70%", marginTop:"2%"}} className="formContainer">
                         <Row style={{width:"100%",height: "100%", margin:"0", backgroundColor: "#202020"}} className="text-center">
-                            <Col style={{width:"33%", height :"100%", margin:"0", backgroundColor:"#202020"}}>
-                                <Container fluid style={{marginTop: "2%", backgroundColor:"#202020", width:"100%"}} className="text-center">
+                            <Col style={{width:"33%", height :"100%", margin:"0"}} className="formCol">
+                                <Container fluid style={{marginTop: "2%", width:"100%"}} className="text-center">
                                                 <h2 className="subHeader" style={{color:"#18cdc6", fontSize:"70px", margin:"0"}}>Let's create an event!</h2>
                                             </Container>
+                                            <br />
                                             <Collapse in={open1}>
-                                                <Container fluid className="text-center" style={{backgroundColor:"#202020", width:"100%"}}>
+                                                <Container fluid style={{width:"100%"}} className="formContainer">
                                                     <Row className="text-center" style={{height:"100%"}}>
                                                         <Col style={{width:"33%"}}></Col>
                                                         <Col className="formCol">
@@ -280,7 +281,7 @@ function CreateEventPage() {
                                                 </Container>
                                             </Collapse>
                                             <Collapse in={open6} fluid className="text-center">
-                                                <Container fluid className="text-center" style={{backgroundColor:"#202020", width:"100%"}}>
+                                                <Container fluid className="text-center" style={{width:"100%"}}>
                                                     <Row className="text-center" styke={{height:"100%"}}>
                                                             <Col style={{width:"33%"}}></Col>
                                                             <Col className="formCol">
@@ -314,7 +315,7 @@ function CreateEventPage() {
                                                 </Container>
                                             </Collapse>
                                             <Collapse in={open7} fluid className="text-center">
-                                                <Container fluid className="text-center" style={{backgroundColor:"#202020", width:"100%"}}>
+                                                <Container fluid className="text-center" style={{width:"100%"}}>
                                                         <Row className="text-center">
                                                             <Col style={{width:"33%"}}></Col>
                                                             <Col className="formCol">
@@ -336,10 +337,10 @@ function CreateEventPage() {
                                                         </Row>
                                                 </Container>
                                             </Collapse>     
-                                            <Container fluid  className="text-center" style={{backgroundColor:"#202020", width:"100%"}}>
-                                                <Row className="text-center" styke={{height:"100%"}}>
+                                            <Container fluid  className="text-center" style={{width:"100%"}}>
+                                                <Row className="text-center" style={{height:"100%"}}>
                                                     <Col style={{width:"33%"}}></Col>
-                                                    <Col style={{width:"33%", backgroundColor:"#202020", height:"100%"}} className='justify-content-center'>
+                                                    <Col style={{width:"33%", height:"100%"}} className='justify-content-center'>
                                                             <Button variant="outline-primary" id="formButton" className="btn" onClick={formAnim} style={{backgroundColor:"#252526", width: "50%",color:"#ffffff", fontSize:"90%", borderColor :"#18cdc6"}}>{buttonLabel}</Button>
                                                     </Col>
                                                     <Col style={{width:"33%"}}></Col>
