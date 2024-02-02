@@ -47,7 +47,7 @@ function HomePage(props) {
 
   return (
     <>
-      <html>
+      <html class="home">
         <HeaderBar /> <br /> <br /> <br /> <br /> <br />
         <div class="nextEvent">
           <h2 class="headerText">Your Next Event!</h2>

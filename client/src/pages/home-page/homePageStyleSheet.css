@@ -6,13 +6,23 @@
   text-align: center;
 }
 
+body {
+  background-color: blue;
+}
+
 .headerText {
   color:white;
 }
 
-html {
-  background: url("./images/background3.png") center fixed;
-  background-position: right top;
+html.home  {
+  background-image: url("./images/background3.png");
+  min-height: 100%;
+  min-width: 1024px;	
+  width: 100%;
+  height: auto;
+  position: fixed;
+  top: 0;
+  left: 0;
 }
 
 .eventBox {
