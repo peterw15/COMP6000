@@ -1,4 +1,4 @@
-//import './createEventPageStylesheet.css';
+import './createEventPageStylesheet.css';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
 import { Link } from "react-router-dom";
@@ -11,7 +11,10 @@ import Col from 'react-bootstrap/Col';
 import Carousel from 'react-bootstrap/Carousel';
 import Button from 'react-bootstrap/Button';
 import { ListGroup } from 'react-bootstrap';
+import Collapse from 'react-bootstrap/Collapse';
+import background from './background3.png';
 
+var index = 0;
 
 function CreateEventPage() {
 
@@ -144,118 +147,238 @@ function CreateEventPage() {
         setEventDescription(document.getElementById("description").value);
         setEventPrice(document.getElementById("price").value);
         setEventTags(gatherTags().map((tag) => tag + " | "));
-        onNext();
     }
 
+    const [openStart,setOpenStart] = useState(true);
+    const [open1,setOpen1] = useState(false);
+    const [open2,setOpen2] = useState(false);
+    const [open3,setOpen3] = useState(false);
+    const [open4,setOpen4] = useState(false);
+    const [open5,setOpen5] = useState(false);
+    const [open6,setOpen6] = useState(false);
+    const [open7,setOpen7] = useState(false);
+
+    const [buttonLabel, setButtonLabel] = useState("Begin");
+    const [buttonSubmit, setButtonSubmit] = useState(false);
+
+    function buttonHandler () {
+        if(!buttonSubmit) {
+            formAnim();
+        } 
+        else if(buttonSubmit) {
+            createEvent();
+        }
+    }
+
+
+    function formAnim() {
+        switch(index) {
+            case 0:
+                setOpenStart(false);
+                setOpen1(true);
+                setButtonLabel("Next");
+                index++;
+                break;
+            case 1:
+                setOpen2(true);
+                index++;
+                break;
+            case 2:
+                setOpen3(true);
+                index++;
+                break;
+            case 3:
+                setOpen4(true);
+                index++;
+                break;
+            case 4:
+                setOpen5(true);
+                index++;
+                break;
+            case 5:
+                setOpen6(true);
+                index++;
+                break;
+            case 6:
+                summaryFunction();
+                setOpen7(true);
+                index++;
+                setButtonLabel("Create Event");
+                setButtonSubmit(true);
+                break;
+            
+
+        }
+
+    }
+  
  
 
     return (
             <>
+            <html style={{height:"2200px", backgroundImage: `url(${background})`,  backgroundSize : "cover", backgroundPosition:"center"}} className='justify-content-center'>
+
                 <HeaderBar></HeaderBar>
-                <Container fluid style={{height:"100vh", width: "100%", backgroundColor:"#202020", margin:"0"}}>
-                        <Row style={{width:"100%",height: "100%", margin:"0"}} className="text-center">
-                                <Carousel style={{marginTop: "100px", height:"70%", width:"70%", marginLeft:"15%", marginRight: "15%", borderColor: "#18cdc6", border: "3px solid #18cdc6"}} className="text-center" ref={ref} interval={null} controls={false}>
-                                    <Carousel.Item>
-                                        <Container fluid style={{marginTop: "10%", marginBottom :"5%"}}>
-                                            <h2 className="subHeader" style={{color:"#18cdc6", fontSize:"70px"}}>Let's create an event!</h2>
-                                            <Button variant="outline-primary" id="begin" className="btn" onClick={onNext}>Begin</Button>
-                                        </Container>
-                                    </Carousel.Item>
-                                    <Carousel.Item>
-                                        <Container fluid style={{marginTop: "10%", marginBottom :"5%"}} className="text-center">
-                                            <Row className="text-center" styke={{height:"100%"}}>
-                                                <Col style={{width:"33%"}}></Col>
-                                                <Col style={{width:"33%"}}>
-                                                    <h2 className="subHeader" style={{color:"#18cdc6"}}>What would you like your event to be called?</h2>
-                                                    <Form.Control type="text" id="eventName" style={{width:"50%"}} className="text-center"/>
-                                                    <Button variant="outline-primary" id="namePrev" className="btn" onClick={onPrev}>Back</Button>
-                                                    <Button variant="outline-primary" id="nameNext" className="btn" onClick={onNext}>Next</Button>
-                                                </Col>
-                                                <Col style={{width:"33%"}}></Col>
-                                            </Row>
-                                        </Container>
-                                    </Carousel.Item>
-                                    <Carousel.Item>
-                                        <Container fluid style={{marginTop: "10%", marginBottom :"5%"}}>
-                                            <h2 className="subHeader" style={{color:"#18cdc6"}}>What is the date/time of your event?</h2>
-                                            <input id="eventDateTime" style={{marginTop:"5%"}} />
-                                            <Button variant="outline-primary" id="dateTimePrev" className="btn" onClick={onPrev}>Back</Button>
-                                            <Button variant="outline-primary" id="dateTimeNext" className="btn" onClick={onNext}>Next</Button>
-                                        </Container>
-                                    </Carousel.Item>
-                                    <Carousel.Item>
-                                        <Container fluid style={{marginTop: "10%", marginBottom :"5%"}}>
-                                            <h2 className="subHeader" style={{color:"#18cdc6"}}>Where will your event be located?</h2>
-                                            <input id="location" style={{marginTop:"5%"}}/>
-                                            <Button variant="outline-primary" id="locationPrev" className="btn" onClick={onPrev}>Back</Button>
-                                            <Button variant="outline-primary" id="locationNext" className="btn" onClick={onNext}>Next</Button>
-                                        </Container>
-                                    </Carousel.Item>
-                                    <Carousel.Item>
-                                        <Container fluid style={{marginTop: "10%", marginBottom :"5%"}}>
-                                            <h2 className="subHeader" style={{color:"#18cdc6",}}>How would you describe your event?</h2>
-                                            <input id="description" style={{marginTop:"5%"}} />
-                                            <Button variant="outline-primary" id="descriptionPrev" className="btn" onClick={onPrev}>Back</Button>
-                                            <Button variant="outline-primary" id="descriptionNext" className="btn" onClick={onNext}>Next</Button>
-                                        </Container>
-                                    </Carousel.Item>
-                                    <Carousel.Item>
-                                        <Container fluid style={{marginTop: "10%", marginBottom :"5%"}}>
-                                            <h2 className="subHeader" style={{color:"#18cdc6"}}>How much will your event cost?</h2>
-                                            <input id="price" style={{marginTop:"5%"}} />
-                                            <Button variant="outline-primary" id="pricePrev" className="btn" onClick={onPrev}>Back</Button>
-                                            <Button variant="outline-primary" id="priceNext" className="btn" onClick={onNext}>Next</Button>
-                                        </Container>
-                                    </Carousel.Item>
-                                    <Carousel.Item>
-                                            <Container fluid style={{marginTop: "5%", marginBottom: "5%"}}>
-                                                <h2 className="subHeader" style={{color:"#18cdc6"}}> Please Select Up to 5 Tags: </h2>
-                                                <br/>
-                                                <Row style={{width:"100%",height: "100%", margin:"0"}}>
-                                                    <Col></Col>
-                                                    <Col>
-                                                        {
-                                                            tags.map((tag) => (
-                                                                <Row style={{width:"100%"}}>
-                                                                <Form.Check
-                                                                    type="checkbox"
-                                                                    id={`${tag}`}
-                                                                    label={`${tag}`}
-                                                                    onChange={onCheckboxChange}
-                                                                    style={{color:"#18cdc6"}}
-                                                                />
-                                                                <br />
-                                                                </Row>
-                                                            ))
-                                                        }
-                                                        <Button variant="outline-primary" id="tagsPrev" className="btn" onClick={onPrev}>Back</Button>
-                                                        <Button variant="outline-primary" id="tagsNext" className="btn" onClick={summaryFunction}>Next</Button>
-                                                    </Col>
-                                                    <Col></Col>
-                                                </Row>
+                <Row style={{width:"100%", height: "100%"}} className='justify-content-center'>
+                <Row style={{width:"80%", height: "100%"}} className="createEventbackground">
+                <Container fluid style={{height:"98%", width: "100%", marginTop:"2%"}} className="createEventFormContainer">
+                        <Row style={{width:"100%",height: "100%", margin:"0", backgroundColor: "#202020"}} className="text-center">
+                            <Col style={{width:"100%", height :"100%", margin:"0"}} className="createEventCol">
+                                <Container fluid style={{marginTop: "2%", width:"100%"}} className="createEventFormContainer">
+                                             <Collapse in={openStart}>
+                                                <Container fluid style={{width:"100%", height:"100%"}} className="formContainer">
+                                                        <Row className="text-center" style={{height:"100%"}}>
+                                                            <Col style={{width:"33%"}} className="createEventCol"></Col>
+                                                            <Col>
+                                                            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+                                                            </Col>
+                                                            <Col style={{width:"33%"}} className="createEventCol"></Col>
+                                                        </Row>
+                                                    </Container>
+                                            </Collapse>
+                                                <h2 className="createEventHeader" style={{fontSize:"70px", margin:"0"}}>Create Event</h2>
                                             </Container>
-                                    </Carousel.Item>
-                                    <Carousel.Item>
-                                        <Container fluid style={{marginTop: "5%", marginBottom: "5%"}}>
-                                            <Col></Col>
-                                            <Col>
-                                                <h2>Summary</h2>
-                                                <ListGroup style={{width:"50%"}}>
-                                                    <ListGroup.Item>Name: {eventName}</ListGroup.Item>
-                                                    <ListGroup.Item>Date/Time: {eventDateTime}</ListGroup.Item>
-                                                    <ListGroup.Item>Location: {eventLocation}</ListGroup.Item>
-                                                    <ListGroup.Item>Description: {eventDescription}</ListGroup.Item>
-                                                    <ListGroup.Item>Price: {eventPrice}</ListGroup.Item>
-                                                    <ListGroup.Item>Tags: {eventTags}</ListGroup.Item>
-                                                </ListGroup>
-                                                <Button variant="outline-primary" id="submit" className="btn" onClick={createEvent}>Create Event</Button>
-                                            </Col>
-                                            <Col></Col>
-                                        </Container>
-                                    </Carousel.Item>
-                                </Carousel>                             
+                                            <br />
+                                            <Collapse in={open1}>
+                                                <Container fluid style={{width:"100%"}} className="formContainer">
+                                                    <Row className="text-center" style={{height:"100%"}}>
+                                                        <Col style={{width:"33%"}} className="createEventCol"></Col>
+                                                        <Col className="createEventFormCol">
+                                                            <br />
+                                                            <h2 className="createEventFormLabel">What would you like your event to be called?</h2>
+                                                            <Row className='justify-content-center'><Form.Control type="text" id="eventName" style={{marginTop:"5%",width:"50%"}} className='center-block'/></Row> <br />
+                                                        </Col>
+                                                        <Col style={{width:"33%"}} className="createEventCol"></Col>
+                                                    </Row>
+                                                </Container>
+                                            </Collapse>
+                                            <Collapse in={open2}>
+                                                <Container fluid  className="text-center" style={{backgroundColor:"#202020", width:"100%"}}>
+                                                        <Row className="text-center" styke={{height:"100%"}}>
+                                                            <Col style={{width:"33%"}}className="createEventCol"></Col>
+                                                            <Col className="createEventFormCol">
+                                                                <br />
+                                                                <h2 className="createEventFormLabel">What is the date/time of your event?</h2>
+                                                                <Row className='justify-content-center'><Form.Control id="eventDateTime" style={{marginTop:"5%",width:"50%"}} className='center-block'/></Row> <br />
+                                                            </Col>
+                                                            <Col style={{width:"33%"}}className="createEventCol"></Col>
+                                                        </Row>
+                                                </Container>
+                                            </Collapse>
+                                            <Collapse in={open3}>
+                                                <Container fluid className="text-center" style={{backgroundColor:"#202020", width:"100%"}}>
+                                                    <Row className="text-center" styke={{height:"100%"}}>
+                                                        <Col style={{width:"33%"}}className="createEventCol"></Col>
+                                                        <Col className="createEventFormCol">
+                                                            <br />
+                                                            <h2 className="createEventFormLabel">Where will your event be located?</h2>
+                                                            <Row className='justify-content-center'><Form.Control id="location" style={{marginTop:"5%",width:"50%"}} /></Row> <br />
+                                                        </Col>
+                                                        <Col style={{width:"33%"}}className="createEventCol"></Col>
+                                                    </Row>
+                                                </Container>
+                                            </Collapse>
+                                            <Collapse in={open4}>
+                                                <Container fluid className="text-center" style={{backgroundColor:"#202020", width:"100%"}}>
+                                                        <Row className="text-center" styke={{height:"100%"}}>
+                                                            <Col style={{width:"33%"}}className="createEventCol"></Col>
+                                                            <Col className="createEventFormCol">
+                                                                <br />
+                                                                <h2 className="createEventFormLabel">How would you describe your event?</h2>
+                                                                <Row className='justify-content-center'><Form.Control id="description" style={{marginTop:"5%",width:"50%"}}  /></Row> <br />
+                                                            </Col>
+                                                            <Col style={{width:"33%"}}className="createEventCol"></Col>
+                                                        </Row>
+                                                </Container>
+                                            </Collapse>
+                                            <Collapse in={open5} fluid className="text-center">
+                                                <Container fluid className="text-center" style={{backgroundColor:"#202020", width:"100%"}}>
+                                                        <Row className="text-center" styke={{height:"100%"}}>
+                                                            <Col style={{width:"33%"}}className="createEventCol"></Col>
+                                                            <Col className="createEventFormCol">
+                                                                <br />
+                                                                <h2 className="createEventFormLabel">How much will your event cost?</h2>
+                                                                <Row className='justify-content-center'><Form.Control id="price" style={{marginTop:"5%",width:"50%"}} /></Row> <br />
+                                                            </Col>
+                                                            <Col style={{width:"33%"}}className="createEventCol"></Col>
+                                                        </Row>
+                                                </Container>
+                                            </Collapse>
+                                            <Collapse in={open6} fluid className="text-center">
+                                                <Container fluid className="text-center" style={{width:"100%"}}>
+                                                    <Row className="text-center" styke={{height:"100%"}}>
+                                                            <Col style={{width:"33%"}}className="createEventCol"></Col>
+                                                            <Col className="createEventFormCol">
+                                                                <br />
+                                                                <h2 className="createEventFormLabel"> Please Select Up to 5 Tags: </h2>
+                                                                <br/>
+                                                                <Row style={{width:"100%",height: "100%", margin:"0"}}>
+                                                                    <Col></Col>
+                                                                    <Col>
+                                                                        {
+                                                                            tags.map((tag) => (
+                                                                                <Row style={{width:"100%"}}>
+                                                                                <Form.Check
+                                                                                    type="checkbox"
+                                                                                    id={`${tag}`}
+                                                                                    label={`${tag}`}
+                                                                                    onChange={onCheckboxChange}
+                                                                                    style={{color:"#18cdc6"}}
+                                                                                />
+                                                                                <br />
+                                                                                </Row>
+                                                                            ))
+                                                                        }
+                                                                    <br/>
+                                                                    </Col>
+                                                                    <Col></Col>
+                                                                </Row>
+                                                            </Col>
+                                                            <Col style={{width:"33%"}}className="createEventCol"></Col>   
+                                                    </Row>
+                                                </Container>
+                                            </Collapse>
+                                            <Collapse in={open7} fluid className="text-center">
+                                                <Container fluid className="text-center" style={{width:"100%"}}>
+                                                        <Row className="text-center">
+                                                            <Col style={{width:"33%"}}className="createEventCol"></Col>
+                                                            <Col className="createEventFormCol">
+                                                                <br />
+                                                                <h2 className = "createEventFormLabel">Summary</h2>
+                                                                <Row className='justify-content-center'>
+                                                                    <ListGroup style={{width:"50%"}}>
+                                                                        <ListGroup.Item>Name: {eventName}</ListGroup.Item>
+                                                                        <ListGroup.Item>Date/Time: {eventDateTime}</ListGroup.Item>
+                                                                        <ListGroup.Item>Location: {eventLocation}</ListGroup.Item>
+                                                                        <ListGroup.Item>Description: {eventDescription}</ListGroup.Item>
+                                                                        <ListGroup.Item>Price: {eventPrice}</ListGroup.Item>
+                                                                        <ListGroup.Item>Tags: {eventTags}</ListGroup.Item>
+                                                                    </ListGroup>
+                                                                </Row>
+                                                                <br/>
+                                                            </Col>
+                                                            <Col style={{width:"33%"}}className="createEventCol"></Col>
+                                                        </Row>
+                                                </Container>
+                                            </Collapse>     
+                                            <Container fluid  className="text-center" style={{width:"100%"}}>
+                                                <Row className="text-center" style={{height:"100%"}}>
+                                                    <Col style={{width:"33%"}}className="createEventCol"></Col>
+                                                    <Col style={{width:"33%", height:"100%"}} className='justify-content-center'>
+                                                        <br/>
+                                                            <Button variant="outline-primary" id="formButton" className="btn" onClick={formAnim} style={{backgroundColor:"#252526", width: "50%",color:"#ffffff", fontSize:"90%", borderColor :"#18cdc6"}}>{buttonLabel}</Button>
+                                                    </Col>
+                                                    <Col style={{width:"33%"}}className="createEventCol"></Col>
+                                                </Row>
+                                        </Container>               
+                            </Col>
                         </Row>
+                        
                 </Container>
+                </Row>
+                </Row>
+                
+                </html>
             </>
     );
 }

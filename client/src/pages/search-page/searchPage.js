@@ -4,6 +4,9 @@ import Axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import HeaderBar from '../general-components/HeaderBar/HeaderBar.js';
 import { format } from 'date-fns';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 
 function SearchPage() {
     const navigate = useNavigate();
@@ -12,7 +15,12 @@ function SearchPage() {
     const [locationTerm, setLocationTerm] = useState('');
     const [organiserTerm, setOrganiserTerm] = useState('');
     const [priceTerm, setPriceTerm] = useState('');
+    const [selectedDate, setSelectedDate] = useState(null);
     const [searchResults, setSearchResults] = useState([]);
+
+    const handleDateChange = (date) => {
+        setSelectedDate(date);
+    };
 
     const handleSearch = async () => {
         try {
@@ -21,16 +29,16 @@ function SearchPage() {
                 descriptionTerm: descriptionTerm,
                 locationTerm: locationTerm,
                 organiserTerm: organiserTerm,
-                priceTerm: priceTerm
+                priceTerm: priceTerm,
+                selectedDate: selectedDate
             });
-
+    
             setSearchResults(response.data.results);
         } catch (error) {
             console.log(error);
         }
     };
     
-
     return (
         <>
             <HeaderBar />
@@ -43,6 +51,8 @@ function SearchPage() {
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
+                    <br />
+                    <DatePicker selected={selectedDate} onChange={handleDateChange} /> {/* Date picker */}
                     <br />
                     <button id="searchButton" className="btn" onClick={handleSearch}>
                         Search

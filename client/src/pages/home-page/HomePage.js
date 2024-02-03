@@ -6,10 +6,11 @@ import HeaderBar from '../general-components/HeaderBar/HeaderBar.js';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import background from './images/background3.png';
 
 function HomePage(props) {
 
-  const [events, setEvents] = useState([]);
+  const [event, setEvent] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -28,30 +29,32 @@ function HomePage(props) {
     Axios.post('http://localhost:3001/upcomingevents').then(res => {
       var eventsData = res.data.map(function (i) {
         return (
-          <div style={{ border: "3px solid hsl(231, 77%, 78%)", margin: "auto", padding: "10px", width: "fit-content", height: "fit-content", justifyContent: "center" }}>
-            <h1 className="eventInfoHeader">{i.eventName}</h1>
-            <div className="eventInfo">{i.description}</div>
-            <div className="eventInfo">Location: {i.location}</div>
-            <div className="eventInfo">Date/Time: {i.eventDateTime}</div>
-            <div className="eventInfo">Price: {i.price}</div>
+          <div class="eventBox">
+            <br />
+            <h1>{i.eventName}</h1>
+            <div>{i.description}</div>
+            <div>Location: {i.location}</div>
+            <div>Date/Time: {i.eventDateTime}</div>
+            <div>Price: {i.price}</div>
             <br />
           </div>
         );
       });
       console.log(eventsData);
-      setEvents(eventsData);
+      setEvent(eventsData);
     });
   }
 
   return (
     <>
-      <HeaderBar />
-      <div class="main"> <br></br><br></br><br></br>
+      <html class="home">
+        <HeaderBar /> <br /> <br /> <br /> <br /> <br />
         <div class="nextEvent">
           <h2 class="headerText">Your Next Event!</h2>
-          {events}
+          {event}
         </div>
-      </div >
+      </html>
+
     </>
   );
 }
