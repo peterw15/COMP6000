@@ -2,9 +2,8 @@ DROP TABLE IF EXISTS EventRegistration;
 DROP TABLE IF EXISTS EventTags;
 DROP TABLE IF EXISTS Event;
 DROP TABLE IF EXISTS User;
-
-
-
+DROP TABLE IF EXISTS Societies;
+DROP TABLE IF EXISTS societiesTag;
 
 CREATE TABLE User (
   UserID bigint unsigned NOT NULL AUTO_INCREMENT,
@@ -30,7 +29,6 @@ CREATE TABLE Event (
   FOREIGN KEY (organiser) REFERENCES User (UserID)
 );
 
-
 CREATE TABLE EventRegistration (
   EventID bigint unsigned NOT NULL,
   UserID bigint unsigned NOT NULL,
@@ -45,5 +43,23 @@ CREATE TABLE EventTags (
   tag varchar(30) NOT NULL,
   PRIMARY KEY (EventID,tag),
   FOREIGN KEY (EventID) REFERENCES Event (EventID)
+);
+
+CREATE TABLE Societies (
+    SocietiesID INT PRIMARY KEY AUTO_INCREMENT,
+    socName VARCHAR(255) NOT NULL,
+    socDateTime DATETIME NOT NULL,
+    socLocation VARCHAR(255),
+    socDescription TEXT,
+    socOrganiser VARCHAR(100),
+    socPrice DECIMAL(10, 2),
+    socLink VARCHAR(255)
+);
+
+CREATE TABLE societiesTag (
+    tagID INT PRIMARY KEY AUTO_INCREMENT,
+    SocietiesID INT,
+    tag VARCHAR(30) NOT NULL,
+    FOREIGN KEY (SocietiesID) REFERENCES Societies(SocietiesID)
 );
 

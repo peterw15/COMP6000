@@ -1,0 +1,66 @@
+.societiesPages {
+    background-image: url('components/images/background2.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.header {
+    color: #18cdc6;
+    font-size: 2em;
+}
+
+.societiesButton {
+    position: relative;
+    padding: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ImgButton {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover; 
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.societiesText {
+    font-size: 1.4em;
+    margin: 0;
+    padding-bottom: 60%;
+}
+
+.societiesButton.ripple::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 0;
+    height: 0;
+    background-color: rgba(24, 205, 199, 0.752);
+    border-radius: 50%;
+    opacity: 0.5;
+    animation: ripple-animation 2s ease-out;
+}
+
+@keyframes ripple-animation {
+    to {
+        width: 300%;
+        padding-bottom: 300%;
+        opacity: 0;
+    }
+}
