@@ -5,7 +5,10 @@ import { Navigate } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import HeaderBar from '../general-components/HeaderBar/HeaderBar.js';
-
+import Card from 'react-bootstrap/Card';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 
 function EventsPage() {
@@ -28,16 +31,19 @@ function EventsPage() {
         Axios.post('http://localhost:3001/events').then(res => {
             var dataArray = res.data.map(function (i) {
                 return (
-                    <div style={{ border: "1px solid hsl(231, 77%, 78%)", margin: "10px", paddingLeft: "10px" }}>
-                        <h1 className="eventInfoHeader">{i.eventName}</h1>
-                        <button onClick={() => joinEvent(i.EventID, this)}> Join! </ button>
-                        <div className="eventInfo">Location: {i.location}</div>
-                        <div className="eventInfo">Date/Time: {i.eventDateTime}</div>
-                        <div className="eventInfo">Price: {i.price}</div>
-                        <div className="eventInfo">Description: {i.description}</div>
-                        <div className="eventInfo">Organiser: {i.firstName + " " + i.lastName}</div>
-                        <br />
-                    </div >
+                    <Container flex className = "eventsContainer">
+                        <Card className = "eventsCard bg-custom">
+                            <Card.Body className="cardBody">
+                                <Card.Title className="cardTitle">{i.eventName}</Card.Title>
+                                <Card.Text className="cardText">Location: {i.location}</Card.Text>
+                                <Card.Text className="cardText">Date/Time: {i.eventDateTime}</Card.Text>
+                                <Card.Text className="cardText">Price: {i.price}</Card.Text>
+                                <Card.Text className="cardText">Description: {i.description}</Card.Text>
+                                <Card.Text className="cardText">Organiser: {i.firstName + " " + i.lastName}</Card.Text>
+                            </Card.Body>
+                        </Card>
+                    </Container>
+                    
                 );
             });
             console.log(dataArray);
@@ -68,10 +74,7 @@ function EventsPage() {
     return (
         <>
             <HeaderBar></HeaderBar>
-            <div className="eventsPage">
-                <div>
-                    <button className="btn" onClick={goHome}>Home</button>
-                </div>
+            <div className="eventsContainer">
                 <div className="header"> Events </div>
                 {listState}
             </div>
