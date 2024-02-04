@@ -1,23 +1,47 @@
 
+.eventHtml {
+  justify-content: center !important;
+  display: flex;
+  background-repeat: no-repeat;
+}
+
 .eventsContainer {
   height:100%;
   background-color: #252526;
+  justify-content: center;
+}
+
+.mainContainer {
+  height:100%;
+  width: 100vw!important;
+  background-color: #252526 ;
+  justify-content: center;
+  padding: 0px;
+  margin-left: 0% !important;
+  margin-right: 0% !important;
 }
 
 .eventsCard {
-  width:40%;
+  width:46% !important;
   background-color: #202020 !important;  
   color : #202020 !important;
   border-color: #202020 !important;
-  margin-bottom: 10px;
+  margin-bottom: 40px;
+  margin-left: 35px !important;
+  padding: 0px !important;
 }
 
 .cardBody {
-  background-color: #202020;
+  background-color: #18cdc6;
+  font-weight:500;
+  width: 97% !important;
+  margin : auto;
 }
 
 .cardText {
-  background-color: #202020;
+  background-color: #18cdc6;
+  color: #202020 !important;
+  
 
 }
 
@@ -26,19 +50,31 @@
 }
 
 .cardTitle {
-  color: #18cdc6 !important;
-  width:100% !important;
+  color: #ffffff !important;
   margin-top: 10px !important;
   margin-bottom: 0px !important;
   font-size: 30px !important;
   padding-right: 0px !important;
+  padding-left: 12px !important;
+  
+}
+
+.cardTitleRow {
+  color: #ffffff !important;
+  margin-top: 10px !important;
+  margin-bottom: 0px !important;
+  font-size: 30px !important;
+  padding-right: 0px !important;
+  padding-left: 10px !important;
+  width: 97%;
+  margin : auto;
 }
 
 .cardImg {
-  width:100px !important;
-  height:100px !important;
+  width:85px !important;
+  height:85px !important;
   padding: 0px !important;
-  margin-top: 10px !important;
+  margin-top: 20px !important;
 }
 
 .cardRow {
@@ -48,6 +84,7 @@
 
 .imgCol {
   width: 100px !important;
+  padding: 0px !
 }
 
 .subHeading {
@@ -57,12 +94,13 @@
 
 .infoRow {
   height:45% !important;
-  margin-left: 10px !important;
+  margin-left: 20px !important;
   margin-top: 20px !important;
 }
 
 .infoCol {
   margin-left: 10px !important;
+  padding-left: 0px !important;
 }
 
 .cardIcon {
@@ -72,6 +110,40 @@
 }
 
 .infoLabel {
-  color:#18cdc6 !important;
-  width: 50% !important;
+  color:#ffffff !important;
+  width: 40% !important;
+}
+
+.mainRow {
+  height: 100% !important;
+  width:100% !important;
+  display: grid !important;;
+}
+
+.eventsHeader {
+  Color: #ffffff;
+  margin-top: 150px;
+  margin-bottom: 100px;
+  font-size: 80px;
+  text-align: center;
+  border-top : 1px solid #18cdc6;
+  border-bottom : 1px solid #18cdc6;
+  font-weight: bold;
+
+}
+
+.buttonRow {
+  margin:0px !important;
+  width : 100%;
+  justify-content: center;
+  padding-top: 20px;
+  background-color: #202020;
+}
+
+.joinButton {
+  width: 20% !important;
+  height: 50px !important;
+  background-color: #252526 !important;
+  border-color: #18cdc6 !important;
+  color : #ffffff !important;
 }

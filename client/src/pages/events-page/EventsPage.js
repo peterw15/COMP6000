@@ -9,8 +9,13 @@ import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/Button';
 import thumbnail from './Images/basketball.png';
 import locationPin from './Icons/locationPin.png';
+import calendar from './Icons/calendar.png'
+import pound from './Icons/pound.png'
+import avatar from './Icons/avatar.png'
+import background from "./circleBackground1.png";
 
 
 function EventsPage() {
@@ -32,8 +37,13 @@ function EventsPage() {
     const getEvents = () => {
         Axios.post('http://localhost:3001/events').then(res => {
             var dataArray = res.data.map(function (i) {
+                var date = new Date(i.eventDateTime);
+                date = date.toDateString() + " " + date.toLocaleTimeString();
+                var price = i.price;
+                if(price == 0.00) {
+                    price = "Free";
+                }
                 return (
-                    <Container flex className = "eventsContainer">
                         <Card className = "eventsCard">
                             <Container flex>
                                 <Row className="cardRow">
@@ -41,37 +51,40 @@ function EventsPage() {
                                         <Card.Img src={thumbnail} className="cardImg"></Card.Img>
                                     </Col>
                                     <Col className="infoCol" >
-                                        <Row className="infoRow"><img className="cardIcon" src={locationPin}></img><div className="infoLabel">{i.location}</div></Row>
-                                        <Row className="infoRow"></Row>
+                                        <Row className="infoRow">
+                                            <img className="cardIcon" src={locationPin}></img>
+                                            <div className="infoLabel">{i.location}</div>
+                                            <img className="cardIcon" src={calendar}></img>
+                                            <div className="infoLabel">{date}</div>
+                                        </Row>
+                                        <Row className="infoRow">
+                                            <img className="cardIcon" src={pound}></img>
+                                            <div className="infoLabel">{price}</div>
+                                            <img className="cardIcon" src={avatar}></img>
+                                            <div className="infoLabel">{i.firstName + " " + i.lastName}</div>
+                                        </Row>
                                     </Col>
                                 </Row>
-                                <Row className="cardRow">
+                                <br/>
+                                <Row className="cardTitleRow">
                                     <Card.Title className="cardTitle">{i.eventName}</Card.Title>
                                 </Row>
+                                <br/>
                             </Container>
                             <Card.Body className="cardBody">
-                                <Card.Text className="cardText">Location: {i.location}</Card.Text>
-                                <Card.Text className="cardText">Date/Time: {i.eventDateTime}</Card.Text>
-                                <Card.Text className="cardText">Price: {i.price}</Card.Text>
-                                <Card.Text className="cardText">Description: {i.description}</Card.Text>
-                                <Card.Text className="cardText">Organiser: {i.firstName + " " + i.lastName}</Card.Text>
+                                <Card.Text className="cardText">{i.description}</Card.Text>
                             </Card.Body>
+                            <Row className="buttonRow">
+                                <Button className="joinButton" onClick={joinEvent}>Join</Button>
+                            </Row>
                         </Card>
-                    </Container>
-                    
                 );
             });
-            console.log(dataArray);
             setListState(dataArray);
         });
     }
 
-    function test() {
-        console.log("e");
-    }
-
     function joinEvent(EventID, button) {
-        console.log("eee");
         Axios.post('http://localhost:3001/joinEvent', {
             EventID: EventID
         }).then(res => {
@@ -79,21 +92,16 @@ function EventsPage() {
         });
     }
 
-    const goHome = () => {
-        navigate("/home");
-    }
-
-
     const [listState, setListState] = useState([]);
 
     return (
-        <>
+        <html className="eventHtml" style={{backgroundImage: `url(${background})`,  backgroundSize : "cover", backgroundPosition:"center"}}>
             <HeaderBar></HeaderBar>
-            <div className="eventsContainer">
-                <div className="header"> Events </div>
-                {listState}
-            </div>
-        </>
+            <Container className="mainContainer">
+                <div className="eventsHeader"> Events </div>
+                <Row classname="mainRow">{listState}</Row>
+            </Container>
+        </html>
     );
 }
 
