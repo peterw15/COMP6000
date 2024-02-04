@@ -1,17 +1,15 @@
-.bg-custom {
-  background-color: #202020;
-}
 
 .eventsContainer {
   height:100%;
   background-color: #252526;
 }
 
-.eventsCard-bg {
+.eventsCard {
   width:40%;
-  background-color: #202020;
-  color : #202020;
-  border-color: #202020;
+  background-color: #202020 !important;  
+  color : #202020 !important;
+  border-color: #202020 !important;
+  margin-bottom: 10px;
 }
 
 .cardBody {
@@ -23,14 +21,57 @@
 
 }
 
-.cardBody {
-
-}
-
 .cardText {
   color: #18cdc6;
 }
 
-.cardTtle {
-  color: #18cdc6;
+.cardTitle {
+  color: #18cdc6 !important;
+  width:100% !important;
+  margin-top: 10px !important;
+  margin-bottom: 0px !important;
+  font-size: 30px !important;
+  padding-right: 0px !important;
+}
+
+.cardImg {
+  width:100px !important;
+  height:100px !important;
+  padding: 0px !important;
+  margin-top: 10px !important;
+}
+
+.cardRow {
+  margin : 0px;
+  width: 100%;
+}
+
+.imgCol {
+  width: 100px !important;
+}
+
+.subHeading {
+  color:#18cdc6 !important;
+  margin: 0;
+}
+
+.infoRow {
+  height:45% !important;
+  margin-left: 10px !important;
+  margin-top: 20px !important;
+}
+
+.infoCol {
+  margin-left: 10px !important;
+}
+
+.cardIcon {
+  height: 25px !important;
+  width: 25px !important;
+  padding: 0px !important;
+}
+
+.infoLabel {
+  color:#18cdc6 !important;
+  width: 50% !important;
 }

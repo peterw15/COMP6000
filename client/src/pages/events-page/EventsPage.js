@@ -9,6 +9,8 @@ import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import thumbnail from './Images/basketball.png';
+import locationPin from './Icons/locationPin.png';
 
 
 function EventsPage() {
@@ -32,9 +34,22 @@ function EventsPage() {
             var dataArray = res.data.map(function (i) {
                 return (
                     <Container flex className = "eventsContainer">
-                        <Card className = "eventsCard bg-custom">
+                        <Card className = "eventsCard">
+                            <Container flex>
+                                <Row className="cardRow">
+                                    <Col className="imgCol" lg="2">
+                                        <Card.Img src={thumbnail} className="cardImg"></Card.Img>
+                                    </Col>
+                                    <Col className="infoCol" >
+                                        <Row className="infoRow"><img className="cardIcon" src={locationPin}></img><div className="infoLabel">{i.location}</div></Row>
+                                        <Row className="infoRow"></Row>
+                                    </Col>
+                                </Row>
+                                <Row className="cardRow">
+                                    <Card.Title className="cardTitle">{i.eventName}</Card.Title>
+                                </Row>
+                            </Container>
                             <Card.Body className="cardBody">
-                                <Card.Title className="cardTitle">{i.eventName}</Card.Title>
                                 <Card.Text className="cardText">Location: {i.location}</Card.Text>
                                 <Card.Text className="cardText">Date/Time: {i.eventDateTime}</Card.Text>
                                 <Card.Text className="cardText">Price: {i.price}</Card.Text>
