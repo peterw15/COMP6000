@@ -15,7 +15,7 @@ import locationPin from './Icons/locationPin.png';
 import calendar from './Icons/calendar.png'
 import pound from './Icons/pound.png'
 import avatar from './Icons/avatar.png'
-import background from "./circleBackground1.png";
+import background from "./Images/circleBackground1.png";
 
 
 function EventsPage() {

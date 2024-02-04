@@ -25,6 +25,17 @@ body {
    border-radius: 0.25em;
    cursor: pointer;
 }
+
+html.background {
+  background-image: url("./Images/circleBackground1.png");
+  min-height: 100%;
+  width: 100%;
+  height: auto;
+  position: fixed;
+  top: 0;
+  left: 0;
+  justify-content: center;
+}
  
 .btn:hover {
    transition: ease-in-out 0.06s;
@@ -43,10 +54,10 @@ body {
    color: hsl(231, 77%, 78%);
    font-size: 25px;
    font-weight: 100;
- }
+}
  
- .eventInfoHeader {
+.eventInfoHeader {
    color: hsl(231, 77%, 78%);
    font-size: 40px;
    font-weight: 200;
- }
+}

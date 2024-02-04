@@ -4,7 +4,17 @@ import Axios from 'axios';
 import { useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import HeaderBar from '../general-components/HeaderBar/HeaderBar.js';
-
+import Card from 'react-bootstrap/Card';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/Button';
+import thumbnail from './Images/basketball.png';
+import locationPin from './Icons/locationPin.png';
+import calendar from './Icons/calendar.png'
+import pound from './Icons/pound.png'
+import avatar from './Icons/avatar.png'
+import background from "./Images/circleBackground1.png";
 
 
 
@@ -31,20 +41,51 @@ function MyEvents() {
 
     const getMyEvents = () => {
         Axios.post('http://localhost:3001/myevents').then(res => {
-            var eventsData = res.data.map(function (i) {
+            var dataArray = res.data.map(function (i) {
+                var date = new Date(i.eventDateTime);
+                date = date.toDateString() + " " + date.toLocaleTimeString();
+                var price = i.price;
+                if (price == 0.00) {
+                    price = "Free";
+                }
                 return (
-                    <div style={{ border: "1px solid hsl(231, 77%, 78%)", margin: "10px", paddingLeft: "10px" }}>
-                        <h1 className="eventInfoHeader">{i.eventName}</h1>
-                        <button onClick={() => leaveEvent(i.EventID, this)}> Leave! </ button>
-                        <div className="eventInfo">{i.description}</div>
-                        <div className="eventInfo">Location: {i.location}</div>
-                        <div className="eventInfo">Date/Time: {i.eventDateTime}</div>
-                        <div className="eventInfo">Price: {i.price}</div>
-                        <br />
-                    </div>
+                    <Card className="eventsCard">
+                        <Container flex>
+                            <Row className="cardRow">
+                                <Col className="imgCol" lg="2">
+                                    <Card.Img src={thumbnail} className="cardImg"></Card.Img>
+                                </Col>
+                                <Col className="infoCol" >
+                                    <Row className="infoRow">
+                                        <img className="cardIcon" src={locationPin}></img>
+                                        <div className="infoLabel">{i.location}</div>
+                                        <img className="cardIcon" src={calendar}></img>
+                                        <div className="infoLabel">{date}</div>
+                                    </Row>
+                                    <Row className="infoRow">
+                                        <img className="cardIcon" src={pound}></img>
+                                        <div className="infoLabel">{price}</div>
+                                        <img className="cardIcon" src={avatar}></img>
+                                        <div className="infoLabel">{i.firstName + " " + i.lastName}</div>
+                                    </Row>
+                                </Col>
+                            </Row>
+                            <br />
+                            <Row className="cardTitleRow">
+                                <Card.Title className="cardTitle">{i.eventName}</Card.Title>
+                            </Row>
+                            <br />
+                        </Container>
+                        <Card.Body className="cardBody">
+                            <Card.Text className="cardText">{i.description}</Card.Text>
+                        </Card.Body>
+                        <Row className="buttonRow">
+                            <Button className="joinButton" onClick={() => leaveEvent(i.EventID, this)}>Leave</Button>
+                        </Row>
+                    </Card>
                 );
             });
-            setEvents(eventsData);
+            setEvents(dataArray);
         });
     }
 
@@ -58,13 +99,13 @@ function MyEvents() {
     }
 
     return (
-        <>
+        <html className="eventHtml" style={{ backgroundImage: `url(${background})`, backgroundSize: "cover", backgroundPosition: "center" }}>
             <HeaderBar></HeaderBar>
-            <div className="body">
-                <div className="header">Your Events</div>
-                {events}
-            </div >
-        </>
+            <Container className="mainContainer">
+                <div className="eventsHeader"> Joined Events! </div>
+                <Row classname="mainRow">{events}</Row>
+            </Container>
+        </html>
     )
 }
 
