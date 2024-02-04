@@ -40,44 +40,44 @@ function EventsPage() {
                 var date = new Date(i.eventDateTime);
                 date = date.toDateString() + " " + date.toLocaleTimeString();
                 var price = i.price;
-                if(price == 0.00) {
+                if (price == 0.00) {
                     price = "Free";
                 }
                 return (
-                        <Card className = "eventsCard">
-                            <Container flex>
-                                <Row className="cardRow">
-                                    <Col className="imgCol" lg="2">
-                                        <Card.Img src={thumbnail} className="cardImg"></Card.Img>
-                                    </Col>
-                                    <Col className="infoCol" >
-                                        <Row className="infoRow">
-                                            <img className="cardIcon" src={locationPin}></img>
-                                            <div className="infoLabel">{i.location}</div>
-                                            <img className="cardIcon" src={calendar}></img>
-                                            <div className="infoLabel">{date}</div>
-                                        </Row>
-                                        <Row className="infoRow">
-                                            <img className="cardIcon" src={pound}></img>
-                                            <div className="infoLabel">{price}</div>
-                                            <img className="cardIcon" src={avatar}></img>
-                                            <div className="infoLabel">{i.firstName + " " + i.lastName}</div>
-                                        </Row>
-                                    </Col>
-                                </Row>
-                                <br/>
-                                <Row className="cardTitleRow">
-                                    <Card.Title className="cardTitle">{i.eventName}</Card.Title>
-                                </Row>
-                                <br/>
-                            </Container>
-                            <Card.Body className="cardBody">
-                                <Card.Text className="cardText">{i.description}</Card.Text>
-                            </Card.Body>
-                            <Row className="buttonRow">
-                                <Button className="joinButton" onClick={joinEvent}>Join</Button>
+                    <Card className="eventsCard">
+                        <Container flex>
+                            <Row className="cardRow">
+                                <Col className="imgCol" lg="2">
+                                    <Card.Img src={thumbnail} className="cardImg"></Card.Img>
+                                </Col>
+                                <Col className="infoCol" >
+                                    <Row className="infoRow">
+                                        <img className="cardIcon" src={locationPin}></img>
+                                        <div className="infoLabel">{i.location}</div>
+                                        <img className="cardIcon" src={calendar}></img>
+                                        <div className="infoLabel">{date}</div>
+                                    </Row>
+                                    <Row className="infoRow">
+                                        <img className="cardIcon" src={pound}></img>
+                                        <div className="infoLabel">{price}</div>
+                                        <img className="cardIcon" src={avatar}></img>
+                                        <div className="infoLabel">{i.firstName + " " + i.lastName}</div>
+                                    </Row>
+                                </Col>
                             </Row>
-                        </Card>
+                            <br />
+                            <Row className="cardTitleRow">
+                                <Card.Title className="cardTitle">{i.eventName}</Card.Title>
+                            </Row>
+                            <br />
+                        </Container>
+                        <Card.Body className="cardBody">
+                            <Card.Text className="cardText">{i.description}</Card.Text>
+                        </Card.Body>
+                        <Row className="buttonRow">
+                            <Button className="joinButton" onClick={() => joinEvent(i.EventID, this)}>Join</Button>
+                        </Row>
+                    </Card>
                 );
             });
             setListState(dataArray);
@@ -95,7 +95,7 @@ function EventsPage() {
     const [listState, setListState] = useState([]);
 
     return (
-        <html className="eventHtml" style={{backgroundImage: `url(${background})`,  backgroundSize : "cover", backgroundPosition:"center"}}>
+        <html className="eventHtml" style={{ backgroundImage: `url(${background})`, backgroundSize: "cover", backgroundPosition: "center" }}>
             <HeaderBar></HeaderBar>
             <Container className="mainContainer">
                 <div className="eventsHeader"> Events </div>

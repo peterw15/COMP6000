@@ -6,9 +6,12 @@ import { useEffect, useState } from 'react';
 import HeaderBar from '../general-components/HeaderBar/HeaderBar.js';
 
 
+
+
 function MyEvents() {
 
-    const [events, setEvents] = useState([]);
+    const [events, setEvents] = useState(["No Events Joined!"]);
+
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -39,22 +42,14 @@ function MyEvents() {
                     </div>
                 );
             });
-            console.log(eventsData);
             setEvents(eventsData);
         });
     }
 
     function leaveEvent(EventID, button) {
-        console.log("eee");
-        Axios.post('http://localhost:3001/leaveEvent', {
-            EventID: EventID
-        }).then(res => {
-            getMyEvents();
-
-            console.log("AAAAAAAAAAAAAAAAAAA");
-        });
+        Axios.post('http://localhost:3001/leaveEvent', { EventID: EventID })
         getMyEvents();
-        console.log({ events });
+        console.log("clicked")
     }
 
 
