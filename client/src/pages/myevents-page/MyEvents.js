@@ -10,9 +10,11 @@ import HeaderBar from '../general-components/HeaderBar/HeaderBar.js';
 
 function MyEvents() {
 
-    const [events, setEvents] = useState(["No Events Joined!"]);
+    const [events, setEvents] = useState([]);
 
     const navigate = useNavigate();
+
+    useEffect(() => { getMyEvents(); }, [events])
 
     useEffect(() => {
         Axios.get('http://localhost:3001/loggedIn', {}).then(res => {
@@ -48,8 +50,6 @@ function MyEvents() {
 
     function leaveEvent(EventID, button) {
         Axios.post('http://localhost:3001/leaveEvent', { EventID: EventID })
-        getMyEvents();
-        console.log("clicked")
     }
 
 
