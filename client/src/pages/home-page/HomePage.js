@@ -6,7 +6,6 @@ import HeaderBar from '../general-components/HeaderBar/HeaderBar.js';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import background from './images/background3.png';
 
 function HomePage(props) {
 
