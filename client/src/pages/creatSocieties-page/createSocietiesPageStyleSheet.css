@@ -1,0 +1,33 @@
+
+.createEventFormCol {
+    width: 33%;
+    height: 100%;
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+    border-color: #18cdc6;
+    padding-top: 10px;
+    background-color: #252526;
+  }
+  
+  .createEventFormLabel {
+    color:#18cdc6;
+    background-color: #252526;
+  }
+  
+  .createEventFormContainer, .createEventbackground, .createEventCol, div.justify-content-center.createEventCol{
+    background-color: #252526;
+  }
+  
+  h2.createEventHeader {
+    font-weight: bold;
+    color:#ffffff;
+    background-color: #252526;
+  }
+  
+  
+  .bg-backColor {
+    background-color: #252526;
+    color:#18cdc6;
+    border-color: #18cdc6;
+    border: 1px solid;
+  }

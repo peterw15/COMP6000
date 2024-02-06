@@ -83,12 +83,22 @@ app.post('/events', (req, res) => {
   })
 })
 
+app.post('/societies', (req, res) => {
+  const results = connection.query("SELECT socName, socDateTime, socLocation, socDescription, socOrganiser, socPrice, socLink, SocietiesID FROM Societies JOIN User WHERE Societies.socOrganiser = user.UserID", function (err) {
+    if (err) throw err;
+    console.log(results_rows[0]);
+    res.send(results._rows[0]);
+  })
+})
+
+
 app.post('/myevents', (req, res) => {
   const results = connection.query("SELECT * FROM Event INNER JOIN EventRegistration ON Event.EventID=EventRegistration.EventID WHERE EventRegistration.UserID = ?", [userIDGLOBAL], function (err) {
     if (err) throw err;
     res.send(results._rows[0]);
   })
 })
+
 
 app.post('/upcomingevents', (req, res) => {
   const results = connection.query("SELECT * FROM Event INNER JOIN EventRegistration ON Event.EventID=EventRegistration.EventID WHERE EventRegistration.UserID = ? ORDER BY eventDateTime LIMIT 1", [userIDGLOBAL], function (err) {
@@ -112,11 +122,42 @@ app.post('/createEvent', (req, res) => {
   });
 })
 
+app.post('/createSocieties', (req, res) => {
+  const { socName, socDataTime, socLocation, socDescription, socOrganiser, socPrice, socLink } = req.body;
+  const query = "INSERT INTO Societies (socName, socDataTime, socLocation, socDescription, socOrganiser, socPrice, socLink) VALUES (?,?,?,?,?,?,?)";
+
+  connection.query(query, [socName, socDataTime, socLocation, socDescription, socOrganiser, socPrice], (err) => {
+    if (err) {
+      console.error('Error creating societies: ' + err.stack);
+      res.status(500).send(false);
+      return;
+    }
+    res.status(200).send(true);
+  })
+
+
+})
+
 app.post('/getEventID', (req,res) => {
   const { eventName, eventDateTime, location, description, organiser, price } = req.body;
 
   const query = "SELECT EventID FROM Event WHERE eventName = ? AND eventDateTime = ? AND location = ? AND description = ? AND organiser = ? AND price = ?";
   const results = connection.query(query, [eventName, eventDateTime, location, description, organiser, price], (err) => {
+    if (err) {
+      console.error('Error creating event: ' + err.stack);
+      res.status(500).send(false);
+      return;
+    }
+    res.status(200).send(results._rows[0]);
+  });
+
+})
+
+app.post('/getSocietiesID', (req,res) => {
+  const { socName, socDateTime, socLocation, socDescription, socOrganiser, socPrice } = req.body;
+
+  const query = "SELECT SocietiesID FROM Societies WHERE socName = ? AND socDateTime = ? AND socLocation = ? AND socDescription = ? AND socOrganiser = ? AND socPrice = ? AND socLink = ?";
+  const results = connection.query(query, [socName, socDateTime, socLocation, socDescription, socOrganiser, socPrice], (err) => {
     if (err) {
       console.error('Error creating event: ' + err.stack);
       res.status(500).send(false);
@@ -164,6 +205,8 @@ app.post('/leaveEvent', (req, res) => {
   }
   catch (error) { }
 })
+
+
 
 
 app.listen(PORT, () => {
