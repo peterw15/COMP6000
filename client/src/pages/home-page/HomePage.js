@@ -6,6 +6,7 @@ import HeaderBar from '../general-components/HeaderBar/HeaderBar.js';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import background from "./images/circleBackground1.png";
 
 function HomePage(props) {
 
@@ -46,12 +47,17 @@ function HomePage(props) {
 
   return (
     <>
-      <html class="home">
+      <html className="eventHtml" style={{ backgroundImage: `url(${background})`, minHeight: "1080px", backgroundSize: "cover", backgroundPosition: "center" }}>
         <HeaderBar /> <br /> <br /> <br /> <br /> <br />
-        <div class="nextEvent">
-          <h2 class="headerText">Your Next Event!</h2>
-          {event}
-        </div>
+        <Container className="mainContainer">
+          <div className="eventsHeader"> Home! </div>
+          <Row classname="mainRow">{ }</Row>
+          <div class="nextEvent">
+            <h2 class="headerText">Your Next Event!</h2>
+            {event}
+          </div>
+        </Container>
+
       </html>
 
     </>
