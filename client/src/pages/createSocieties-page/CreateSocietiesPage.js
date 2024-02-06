@@ -1,4 +1,3 @@
-import './createSocietiesPageStylesheet.css';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
 import { Link } from "react-router-dom";
@@ -13,6 +12,7 @@ import Button from 'react-bootstrap/Button';
 import { ListGroup } from 'react-bootstrap';
 import Collapse from 'react-bootstrap/Collapse';
 import background from './background3.png';
+import './createSocietiesPageStyleSheet.css';
 
 var index = 0;
 
@@ -35,8 +35,8 @@ function CreateSocietiesPage() {
 
     var checkedBoxes = 0;
 
-    function onCheckboxChange(event) {
-        const target = event.target;
+    function onCheckboxChange(societies) {
+        const target = societies.target;
         const label = target.id;
         console.log(label);
         var add = false;
@@ -96,24 +96,27 @@ function CreateSocietiesPage() {
     const checkState = {Academic : false , Arts : false, Drinking : false, Mindfulness : false, Music : false, Off_Campus : false, On_Campus : false,
     Outdoors : false, Science : false, Social : false, Sports : false};
 
-    function createEvent () {
+    function createSocieties () {
 
         const finalTags = gatherTags();
 
-        const socName = document.getElementById('socName').value;
-        const socDateTime = document.getElementById('socDateTime').value;
-        const socLocation = document.getElementById('socLocation').value;
-        const socDescription = document.getElementById('socDescription').value;
-        const socPrice = parseFloat(document.getElementById('socPrice').value);
-        const socLink = document.getElementById('socLink').value;
+        const socName = document.getElementById('societiesName').value;
+        const socDateTime = document.getElementById('societiesDateTime').value;
+        const socLocation = document.getElementById('societiesLocation').value;
+        const socDescription = document.getElementById('societiesDescription').value;
+        const socPrice = parseFloat(document.getElementById('societiesPrice').value);
+        const socLink = document.getElementById('societiesLink').value;
+        const socOrganiser = document.getElementById('societiesOrganizer').value;
+
+        
         
             Axios.get('http://localhost:3001/loggedIn', {}).then(res => {
             const organiser = parseInt(res.data);
             Axios.post('http://localhost:3001/createSocieties', { socName, socDateTime, socLocation, socDescription, socOrganiser, socPrice, socLink }).then(res => 
                 res.data ? console.log("SUCCESS") : console.log("FAIL")).catch(error => console.log(error)).then(
-            Axios.post('http://localhost:3001/getSocietiesID', { eventName, eventDateTime, location, description, organiser, price }).then(res => {
+            Axios.post('http://localhost:3001/getSocietiesID', { socName, socDateTime, socLocation, socDescription, socOrganiser, socPrice, socLink }).then(res => {
                 
-                const EventID = res.data[0].EventID;
+                const SocietiesID = res.data[0].SocietiesID;
 
                 for(let i=0;i<finalTags.length;i++) {
                     const tag = finalTags[i];
@@ -134,21 +137,23 @@ function CreateSocietiesPage() {
         ref.current.prev();
     }
 
-    const [SocietiesName,setSocietiesName] = useState("");
-    const [SocietiesDateTime,setSocietiesDateTime] = useState("");
-    const [SocietiesLocation,setSocietiesLocation] = useState("");
-    const [SocietiesDescription,setSocietiesDescription] = useState("");
-    const [SocietiesPrice,setSocietiesPrice] = useState("");
-    const [SocietiesTags,setSocietiesTags] = useState([]);
+    const [socName, setSocName] = useState("");
+    const [socDateTime, setSocDateTime] = useState("");
+    const [socLocation, setSocLocation] = useState("");
+    const [socDescription, setSocDescription] = useState("");
+    const [socPrice, setSocPrice] = useState("");
+    const [socTags, setSocTags] = useState([]);
+    const [socLink, setSocLink] = useState("");
+    
 
     function summaryFunction() {
-        setSocietiesName(document.getElementById("socName").value);
-        setSocietiesDateTime(document.getElementById("socDateTime").value);
-        setSocietiesLocation(document.getElementById("socLocation").value);
-        setSocietiesDescription(document.getElementById("socDescription").value);
-        setSocietiesPrice(document.getElementById("socPrice").value);
-        setSocietiesLink(document.getElementById("socLink").value);
-        setSocietiesTags(gatherTags().map((tag) => tag + " | "));
+        setSocName(document.getElementById("societiesName").value);
+        setSocDateTime(document.getElementById("societiesDateTime").value);
+        setSocLocation(document.getElementById("societiesLocation").value);
+        setSocDescription(document.getElementById("societiesDescription").value);
+        setSocPrice(document.getElementById("societiesPrice").value);
+        setSocLink(document.getElementById("societiesLink").value);
+        setSocTags(gatherTags().map((tag) => tag + " | "));
     }
 
     const [openStart,setOpenStart] = useState(true);
@@ -168,7 +173,7 @@ function CreateSocietiesPage() {
             formAnim();
         } 
         else if(buttonSubmit) {
-            createEvent();
+            createSocieties();
         }
     }
 
@@ -238,7 +243,7 @@ function CreateSocietiesPage() {
                                                         </Row>
                                                     </Container>
                                             </Collapse>
-                                                <h2 className="createEventHeader" style={{fontSize:"70px", margin:"0"}}>Create Event</h2>
+                                                <h2 className="createEventHeader" style={{fontSize:"70px", margin:"0"}}>Create Societies</h2>
                                             </Container>
                                             <br />
                                             <Collapse in={open1}>
@@ -247,8 +252,8 @@ function CreateSocietiesPage() {
                                                         <Col style={{width:"33%"}} className="createEventCol"></Col>
                                                         <Col className="createEventFormCol">
                                                             <br />
-                                                            <h2 className="createEventFormLabel">What would you like your event to be called?</h2>
-                                                            <Row className='justify-content-center'><Form.Control type="text" id="eventName" style={{marginTop:"5%",width:"50%"}} className='center-block'/></Row> <br />
+                                                            <h2 className="createEventFormLabel">What would you like your society to be called?</h2>
+                                                            <Row className='justify-content-center'><Form.Control type="text" id="societiesName" style={{marginTop:"5%",width:"50%"}} className='center-block'/></Row> <br />
                                                         </Col>
                                                         <Col style={{width:"33%"}} className="createEventCol"></Col>
                                                     </Row>
@@ -260,8 +265,8 @@ function CreateSocietiesPage() {
                                                             <Col style={{width:"33%"}}className="createEventCol"></Col>
                                                             <Col className="createEventFormCol">
                                                                 <br />
-                                                                <h2 className="createEventFormLabel">What is the date/time of your event?</h2>
-                                                                <Row className='justify-content-center'><Form.Control id="eventDateTime" style={{marginTop:"5%",width:"50%"}} className='center-block'/></Row> <br />
+                                                                <h2 className="createEventFormLabel">What is the date/time of your societies?</h2>
+                                                                <Row className='justify-content-center'><Form.Control id="societiesDateTime" style={{marginTop:"5%",width:"50%"}} className='center-block'/></Row> <br />
                                                             </Col>
                                                             <Col style={{width:"33%"}}className="createEventCol"></Col>
                                                         </Row>
@@ -273,8 +278,8 @@ function CreateSocietiesPage() {
                                                         <Col style={{width:"33%"}}className="createEventCol"></Col>
                                                         <Col className="createEventFormCol">
                                                             <br />
-                                                            <h2 className="createEventFormLabel">Where will your event be located?</h2>
-                                                            <Row className='justify-content-center'><Form.Control id="location" style={{marginTop:"5%",width:"50%"}} /></Row> <br />
+                                                            <h2 className="createEventFormLabel">Where will your societies be located?</h2>
+                                                            <Row className='justify-content-center'><Form.Control id="societiesLocation" style={{marginTop:"5%",width:"50%"}} /></Row> <br />
                                                         </Col>
                                                         <Col style={{width:"33%"}}className="createEventCol"></Col>
                                                     </Row>
@@ -286,8 +291,8 @@ function CreateSocietiesPage() {
                                                             <Col style={{width:"33%"}}className="createEventCol"></Col>
                                                             <Col className="createEventFormCol">
                                                                 <br />
-                                                                <h2 className="createEventFormLabel">How would you describe your event?</h2>
-                                                                <Row className='justify-content-center'><Form.Control id="description" style={{marginTop:"5%",width:"50%"}}  /></Row> <br />
+                                                                <h2 className="createEventFormLabel">How would you describe your societies?</h2>
+                                                                <Row className='justify-content-center'><Form.Control id="soicetiesDescription" style={{marginTop:"5%",width:"50%"}}  /></Row> <br />
                                                             </Col>
                                                             <Col style={{width:"33%"}}className="createEventCol"></Col>
                                                         </Row>
@@ -299,8 +304,8 @@ function CreateSocietiesPage() {
                                                             <Col style={{width:"33%"}}className="createEventCol"></Col>
                                                             <Col className="createEventFormCol">
                                                                 <br />
-                                                                <h2 className="createEventFormLabel">How much will your event cost?</h2>
-                                                                <Row className='justify-content-center'><Form.Control id="price" style={{marginTop:"5%",width:"50%"}} /></Row> <br />
+                                                                <h2 className="createEventFormLabel">How much will your societies cost?</h2>
+                                                                <Row className='justify-content-center'><Form.Control id="societiesPrice" style={{marginTop:"5%",width:"50%"}} /></Row> <br />
                                                             </Col>
                                                             <Col style={{width:"33%"}}className="createEventCol"></Col>
                                                         </Row>
@@ -349,12 +354,13 @@ function CreateSocietiesPage() {
                                                                 <h2 className = "createEventFormLabel">Summary</h2>
                                                                 <Row className='justify-content-center'>
                                                                     <ListGroup style={{width:"50%"}}>
-                                                                        <ListGroup.Item>Name: {eventName}</ListGroup.Item>
-                                                                        <ListGroup.Item>Date/Time: {eventDateTime}</ListGroup.Item>
-                                                                        <ListGroup.Item>Location: {eventLocation}</ListGroup.Item>
-                                                                        <ListGroup.Item>Description: {eventDescription}</ListGroup.Item>
-                                                                        <ListGroup.Item>Price: {eventPrice}</ListGroup.Item>
-                                                                        <ListGroup.Item>Tags: {eventTags}</ListGroup.Item>
+                                                                        <ListGroup.Item>Name: {socName}</ListGroup.Item>
+                                                                        <ListGroup.Item>Date/Time: {socDateTime}</ListGroup.Item>
+                                                                        <ListGroup.Item>Location: {socLocation}</ListGroup.Item>
+                                                                        <ListGroup.Item>Description: {socDescription}</ListGroup.Item>
+                                                                        <ListGroup.Item>Price: {socPrice}</ListGroup.Item>
+                                                                        <ListGroup.Item>Tags: {socTags}</ListGroup.Item>
+                                                                        <ListGroup.Item>Links: {socLink}</ListGroup.Item>
                                                                     </ListGroup>
                                                                 </Row>
                                                                 <br/>
@@ -385,4 +391,4 @@ function CreateSocietiesPage() {
     );
 }
 
-export default CreateEventPage;
+export default CreateSocietiesPage;

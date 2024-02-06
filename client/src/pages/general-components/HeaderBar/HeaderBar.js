@@ -69,7 +69,7 @@ export default function HeaderBar(props) {
                             <Nav>
                                 <NavDropdown id="nav-dropdown-dark-example" title="Societies" menuVariant="dark" >
                                     <NavDropdown.Item href="societies">Browse Societies</NavDropdown.Item>
-                                    <NavDropdown.Item href="#action/3.2">Create Society </NavDropdown.Item>
+                                    <NavDropdown.Item href="createSocieties">Create Society </NavDropdown.Item>
                                     <NavDropdown.Item href="#action/3.3">Your Joined Societies</NavDropdown.Item>
                                 </NavDropdown>
                             </Nav>

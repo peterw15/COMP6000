@@ -159,7 +159,7 @@ app.post('/getSocietiesID', (req,res) => {
   const query = "SELECT SocietiesID FROM Societies WHERE socName = ? AND socDateTime = ? AND socLocation = ? AND socDescription = ? AND socOrganiser = ? AND socPrice = ? AND socLink = ?";
   const results = connection.query(query, [socName, socDateTime, socLocation, socDescription, socOrganiser, socPrice], (err) => {
     if (err) {
-      console.error('Error creating event: ' + err.stack);
+      console.error('Error creating societies: ' + err.stack);
       res.status(500).send(false);
       return;
     }
@@ -181,6 +181,19 @@ app.post('/addEventTag', (req,res) => {
     res.status(200).send(true);
   });
 })
+app.post('/addSocietiesTag', (req,res) => {
+  console.log(req.body);
+  const { SocietiesID, tag} = req.body;
+  const query = "INSERT INTO SocietiesTags (SocietiesID, tag) VALUES (?,?)";
+  connection.query(query, [SocietiesID, tag], (err) => {
+    if (err) {
+      console.error('Error creating societies: ' + err.stack);
+      res.status(500).send(false);
+      return;
+    }
+    res.status(200).send(true);
+  });
+})
 
 app.post('/joinEvent', (req, res) => {
   try {
@@ -188,6 +201,17 @@ app.post('/joinEvent', (req, res) => {
     const query = "INSERT INTO EventRegistration VALUES (?,?)";
     try {
       connection.query(query, [EventID, userIDGLOBAL], (err) => { });
+    }
+    catch (error) { }
+  }
+  catch (error) { }
+})
+app.post('/joinSocieties', (req, res) => {
+  try {
+    const { SocietiesID } = req.body
+    const query = "INSERT INTO SocieitesRegistration VALUES (?,?)";
+    try {
+      connection.query(query, [SocietiesID, userIDGLOBAL], (err) => { });
     }
     catch (error) { }
   }
@@ -206,6 +230,17 @@ app.post('/leaveEvent', (req, res) => {
   catch (error) { }
 })
 
+app.post('/leaveSocieties', (req, res) => {
+  try {
+    const { SocietiesID } = req.body
+    const query = "DELETE FROM SocietiesRegistration WHERE EventID = ? AND UserID = ?";
+    try {
+      connection.query(query, [SocietiesID, userIDGLOBAL], (err) => { });
+    }
+    catch (error) { }
+  }
+  catch (error) { }
+})
 
 
 
