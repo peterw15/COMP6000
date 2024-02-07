@@ -1,4 +1,4 @@
-import './myEventsStyleSheet.css';
+import './JoinedEventsStyleSheet.css';
 import React from 'react';
 import Axios from 'axios';
 import { useNavigate, useLocation } from "react-router-dom";
@@ -11,9 +11,9 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import thumbnail from './Images/basketball.png';
 import locationPin from './Icons/locationPin.png';
-import calendar from './Icons/calendar.png'
-import pound from './Icons/pound.png'
-import avatar from './Icons/avatar.png'
+import calendar from './Icons/calendar.png';
+import pound from './Icons/pound.png';
+import avatar from './Icons/avatar.png';
 import background from "./Images/circleBackground1.png";
 
 
@@ -102,7 +102,7 @@ function MyEvents() {
         <html className="eventHtml" style={{ backgroundImage: `url(${background})`, minHeight: "1080px", backgroundSize: "cover", backgroundPosition: "center" }}>
             <HeaderBar></HeaderBar>
             <Container className="mainContainer">
-                <div className="eventsHeader"> Joined Events! </div>
+                <div className="eventsHeader">Your Joined Events!</div>
                 <Row classname="mainRow">{events}</Row>
             </Container>
         </html>
