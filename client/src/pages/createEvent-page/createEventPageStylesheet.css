@@ -10,7 +10,7 @@
 }
 
 .createEventFormLabel {
-  color:#18cdc6;
+  color:#ffffff !important;
   background-color: #252526;
 }
 
@@ -30,4 +30,19 @@ h2.createEventHeader {
   color:#18cdc6;
   border-color: #18cdc6;
   border: 1px solid;
+}
+
+.eventInput {
+  color: #ffffff !important;
+  background-color: #202020 !important;
+  border-color: #18cdc6 !important;
+}
+
+.form-control:focus {
+  border-color: #18cdc6 !important;
+  box-shadow: 0 0 0 0.2rem #18cdc6 !important;
+} 
+
+.formButton {
+  background-color: #202020 !important;
 }

@@ -101,7 +101,7 @@ function CreateEventPage() {
         const finalTags = gatherTags();
 
         const eventName = document.getElementById('eventName').value;
-        const eventDateTime = document.getElementById('eventDateTime').value;
+        const eventDateTime = eventDate + " " + eventTime;
         const location = document.getElementById('location').value;
         const description = document.getElementById('description').value;
         const price = parseFloat(document.getElementById('price').value);
@@ -134,7 +134,8 @@ function CreateEventPage() {
     }
 
     const [eventName,setEventName] = useState("");
-    const [eventDateTime,setEventDateTime] = useState("");
+    const [eventDate,setEventDate] = useState("");
+    const [eventTime,setEventTime] = useState("");
     const [eventLocation,setEventLocation] = useState("");
     const [eventDescription,setEventDescription] = useState("");
     const [eventPrice,setEventPrice] = useState("");
@@ -142,7 +143,8 @@ function CreateEventPage() {
 
     function summaryFunction() {
         setEventName(document.getElementById("eventName").value);
-        setEventDateTime(document.getElementById("eventDateTime").value);
+        setEventDate(document.getElementById("eventDate").value);
+        setEventTime(document.getElementById("eventTime").value);
         setEventLocation(document.getElementById("location").value);
         setEventDescription(document.getElementById("description").value);
         setEventPrice(document.getElementById("price").value);
@@ -190,19 +192,23 @@ function CreateEventPage() {
             case 3:
                 setOpen4(true);
                 index++;
+                window. scrollTo({ top: 200, left: 0, behavior: 'smooth' })
                 break;
             case 4:
                 setOpen5(true);
                 index++;
+                window. scrollTo({ top: 400, left: 0, behavior: 'smooth' })
                 break;
             case 5:
                 setOpen6(true);
                 index++;
+                window. scrollTo({ top: 800, left: 0, behavior: 'smooth' })
                 break;
             case 6:
                 summaryFunction();
                 setOpen7(true);
                 index++;
+                window. scrollTo({ top: 2200, left: 0, behavior: 'smooth' })
                 setButtonLabel("Create Event");
                 setButtonSubmit(true);
                 break;
@@ -246,7 +252,7 @@ function CreateEventPage() {
                                                         <Col className="createEventFormCol">
                                                             <br />
                                                             <h2 className="createEventFormLabel">What would you like your event to be called?</h2>
-                                                            <Row className='justify-content-center'><Form.Control type="text" id="eventName" style={{marginTop:"5%",width:"50%"}} className='center-block'/></Row> <br />
+                                                            <Row className='justify-content-center'><Form.Control type="text" id="eventName" style={{marginTop:"5%",width:"50%"}} className='eventInput'/></Row> <br />
                                                         </Col>
                                                         <Col style={{width:"33%"}} className="createEventCol"></Col>
                                                     </Row>
@@ -259,7 +265,12 @@ function CreateEventPage() {
                                                             <Col className="createEventFormCol">
                                                                 <br />
                                                                 <h2 className="createEventFormLabel">What is the date/time of your event?</h2>
-                                                                <Row className='justify-content-center'><Form.Control id="eventDateTime" style={{marginTop:"5%",width:"50%"}} className='center-block'/></Row> <br />
+                                                                <Row className='justify-content-center'>
+                                                                    <Form.Control id="eventDate" type="date" style={{marginTop:"5%",width:"50%"}} className='eventInput'/>
+                                                                </Row>
+                                                                <Row className='justify-content-center'>
+                                                                    <Form.Control id="eventTime" type="time" style={{marginTop:"5%",width:"50%"}} className='eventInput'/>
+                                                                </Row> <br />
                                                             </Col>
                                                             <Col style={{width:"33%"}}className="createEventCol"></Col>
                                                         </Row>
@@ -272,7 +283,7 @@ function CreateEventPage() {
                                                         <Col className="createEventFormCol">
                                                             <br />
                                                             <h2 className="createEventFormLabel">Where will your event be located?</h2>
-                                                            <Row className='justify-content-center'><Form.Control id="location" style={{marginTop:"5%",width:"50%"}} /></Row> <br />
+                                                            <Row className='justify-content-center'><Form.Control id="location" style={{marginTop:"5%",width:"50%"}} className='eventInput'/></Row> <br />
                                                         </Col>
                                                         <Col style={{width:"33%"}}className="createEventCol"></Col>
                                                     </Row>
@@ -285,7 +296,7 @@ function CreateEventPage() {
                                                             <Col className="createEventFormCol">
                                                                 <br />
                                                                 <h2 className="createEventFormLabel">How would you describe your event?</h2>
-                                                                <Row className='justify-content-center'><Form.Control id="description" style={{marginTop:"5%",width:"50%"}}  /></Row> <br />
+                                                                <Row className='justify-content-center'><Form.Control id="description" style={{marginTop:"5%",width:"50%"}} className='eventInput'  /></Row> <br />
                                                             </Col>
                                                             <Col style={{width:"33%"}}className="createEventCol"></Col>
                                                         </Row>
@@ -298,7 +309,7 @@ function CreateEventPage() {
                                                             <Col className="createEventFormCol">
                                                                 <br />
                                                                 <h2 className="createEventFormLabel">How much will your event cost?</h2>
-                                                                <Row className='justify-content-center'><Form.Control id="price" style={{marginTop:"5%",width:"50%"}} /></Row> <br />
+                                                                <Row className='justify-content-center'><Form.Control id="price" style={{marginTop:"5%",width:"50%"}} className='eventInput' /></Row> <br />
                                                             </Col>
                                                             <Col style={{width:"33%"}}className="createEventCol"></Col>
                                                         </Row>
@@ -347,12 +358,13 @@ function CreateEventPage() {
                                                                 <h2 className = "createEventFormLabel">Summary</h2>
                                                                 <Row className='justify-content-center'>
                                                                     <ListGroup style={{width:"50%"}}>
-                                                                        <ListGroup.Item>Name: {eventName}</ListGroup.Item>
-                                                                        <ListGroup.Item>Date/Time: {eventDateTime}</ListGroup.Item>
-                                                                        <ListGroup.Item>Location: {eventLocation}</ListGroup.Item>
-                                                                        <ListGroup.Item>Description: {eventDescription}</ListGroup.Item>
-                                                                        <ListGroup.Item>Price: {eventPrice}</ListGroup.Item>
-                                                                        <ListGroup.Item>Tags: {eventTags}</ListGroup.Item>
+                                                                        <ListGroup.Item className='eventInput'>Name: {eventName}</ListGroup.Item>
+                                                                        <ListGroup.Item className='eventInput'>Date: {eventDate}</ListGroup.Item>
+                                                                        <ListGroup.Item className='eventInput'>Time: {eventTime}</ListGroup.Item>
+                                                                        <ListGroup.Item className='eventInput'>Location: {eventLocation}</ListGroup.Item>
+                                                                        <ListGroup.Item className='eventInput'>Description: {eventDescription}</ListGroup.Item>
+                                                                        <ListGroup.Item className='eventInput'>Price: {eventPrice}</ListGroup.Item>
+                                                                        <ListGroup.Item className='eventInput'>Tags: {eventTags}</ListGroup.Item>
                                                                     </ListGroup>
                                                                 </Row>
                                                                 <br/>
@@ -366,7 +378,7 @@ function CreateEventPage() {
                                                     <Col style={{width:"33%"}}className="createEventCol"></Col>
                                                     <Col style={{width:"33%", height:"100%"}} className='justify-content-center'>
                                                         <br/>
-                                                            <Button variant="outline-primary" id="formButton" className="btn" onClick={formAnim} style={{backgroundColor:"#252526", width: "50%",color:"#ffffff", fontSize:"90%", borderColor :"#18cdc6"}}>{buttonLabel}</Button>
+                                                            <Button variant="outline-primary" id="formButton" className="formButton" onClick={buttonHandler} style={{backgroundColor:"#252526", width: "50%",color:"#ffffff", fontSize:"90%", borderColor :"#18cdc6"}}>{buttonLabel}</Button>
                                                     </Col>
                                                     <Col style={{width:"33%"}}className="createEventCol"></Col>
                                                 </Row>
