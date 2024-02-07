@@ -292,6 +292,24 @@ app.post('/infoFromID', (req, res) => {
   })
 })
 
+app.post('/deleteEvent', (req,res) => {
+  try {
+    query = "DELETE FROM Event WHERE EventID = ?";
+    const results = connection.query(query, req.body.EventID, function (err) {
+      if (err) throw err;
+    })
+  } catch (error) {
+    console.error(error);
+  }
+})
+
+app.post('/myCreatedEvents', (req, res) => {
+  const results = connection.query("SELECT * FROM Event WHERE Organiser = ?", [userIDGLOBAL], function (err) {
+    if (err) throw err;
+    res.send(results._rows[0]);
+  })
+})
+
 
 
 

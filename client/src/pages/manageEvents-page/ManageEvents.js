@@ -27,7 +27,7 @@ function ManageEvents() {
     useEffect(() => { getMyEvents(); }, [events])
 
     const getMyEvents = () => {
-        Axios.post('http://localhost:3001/myevents').then(res => {
+        Axios.post('http://localhost:3001/myCreatedEvents').then(res => {
             var dataArray = res.data.map(function (i) {
                 var date = new Date(i.eventDateTime);
                 date = date.toDateString() + " " + date.toLocaleTimeString();
@@ -67,7 +67,7 @@ function ManageEvents() {
                             <Card.Text className="cardText">{i.description}</Card.Text>
                         </Card.Body>
                         <Row className="buttonRow">
-                            <Button className="joinButton" onClick={() => leaveEvent(i.EventID, this)}>Leave</Button>
+                            <Button className="joinButton" onClick={() => deleteEvent(i.EventID, this)}>Delete Event</Button>
                         </Row>
                     </Card>
                 );
@@ -76,8 +76,8 @@ function ManageEvents() {
         });
     }
 
-    function leaveEvent(EventID, button) {
-        Axios.post('http://localhost:3001/leaveEvent', { EventID: EventID })
+    function deleteEvent(EventID, button) {
+        Axios.post('http://localhost:3001/deleteEvent', { EventID: EventID })
     }
 
 
