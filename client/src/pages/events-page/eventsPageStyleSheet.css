@@ -6,12 +6,14 @@
 }
 
 .eventsContainer {
+  min-width: 600px !important;
   height:100%;
   background-color: #252526;
   justify-content: center;
 }
 
 .mainContainer {
+  min-width: 675px !important;
   height:100%;
   width: 100vw!important;
   background-color: #252526 ;
@@ -23,6 +25,7 @@
 }
 
 .eventsCard {
+  min-width: 600px !important;
   width:46% !important;
   background-color: #202020 !important;  
   color : #202020 !important;
