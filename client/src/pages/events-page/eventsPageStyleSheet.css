@@ -113,6 +113,13 @@
   padding: 0px !important;
 }
 
+.joinedIcon {
+  height: 50px !important;
+  width: 50px !important;
+  padding: 0px !important;
+  margin-bottom: 10px;
+}
+
 .infoLabel {
   color:#ffffff !important;
   width: 40% !important;

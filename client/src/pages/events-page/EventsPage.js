@@ -16,6 +16,7 @@ import calendar from './Icons/calendar.png'
 import pound from './Icons/pound.png'
 import avatar from './Icons/avatar.png'
 import background from "./Images/circleBackground1.png";
+import tick from "./Icons/check-mark.png";
 
 
 function EventsPage() {
@@ -75,7 +76,8 @@ function EventsPage() {
                             <Card.Text className="cardText">{i.description}</Card.Text>
                         </Card.Body>
                         <Row className="buttonRow">
-                            <Button className="joinButton" onClick={() => joinEvent(i.EventID, this)}>Join</Button>
+                            <Button className="joinButton" id ={i.EventID + "button"} onClick={() => joinEvent(i.EventID, this)}>Join</Button>
+                            <img src={tick} id ={i.EventID + "tick"} className= "joinedIcon" hidden></img>
                         </Row>
                     </Card>
                 );
@@ -89,7 +91,9 @@ function EventsPage() {
             EventID: EventID
         }).then(res => {
 
-        });
+        })
+        document.getElementById(EventID + "button").hidden = true;
+        document.getElementById(EventID + "tick").hidden = false;
     }
 
     const [listState, setListState] = useState([]);
