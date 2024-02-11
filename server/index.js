@@ -251,10 +251,6 @@ app.listen(PORT, () => {
 app.post('/api/search', async (req, res) => {
   try {
     const searchTerm = req.body.searchTerm;
-    const descriptionTerm = req.body.description;
-    const locationTerm = req.body.location;
-    const organiserTerm = req.body.organiser;
-    const priceTerm = req.body.price;
     
     const query = `
     SELECT * FROM Event 

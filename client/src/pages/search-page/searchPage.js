@@ -1,12 +1,10 @@
+import './searchPageStyleSheet.css';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import HeaderBar from '../general-components/HeaderBar/HeaderBar.js';
 import { format } from 'date-fns';
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-
 
 function SearchPage() {
     const navigate = useNavigate();
@@ -15,12 +13,7 @@ function SearchPage() {
     const [locationTerm, setLocationTerm] = useState('');
     const [organiserTerm, setOrganiserTerm] = useState('');
     const [priceTerm, setPriceTerm] = useState('');
-    const [selectedDate, setSelectedDate] = useState(null);
     const [searchResults, setSearchResults] = useState([]);
-
-    const handleDateChange = (date) => {
-        setSelectedDate(date);
-    };
 
     const handleSearch = async () => {
         try {
@@ -29,8 +22,7 @@ function SearchPage() {
                 descriptionTerm: descriptionTerm,
                 locationTerm: locationTerm,
                 organiserTerm: organiserTerm,
-                priceTerm: priceTerm,
-                selectedDate: selectedDate
+                priceTerm: priceTerm
             });
     
             setSearchResults(response.data.results);
@@ -38,30 +30,53 @@ function SearchPage() {
             console.log(error);
         }
     };
+
+    const handleSort = (sortBy) => {
+        const sortedResults = [...searchResults].sort((a, b) => {
+            if (a[sortBy] < b[sortBy]) return -1;
+            if (a[sortBy] > b[sortBy]) return 1;
+            return 0;
+        });
+        setSearchResults(sortedResults);
+    };
+    
     
     return (
         <>
             <HeaderBar />
             <div className="searchPage">
-                <div className="header"> Search </div>
-                <div className="form">
+                <br />
+                <br />
+                <div className="searchPageHeader"> Search </div>
+                <div className="searchPageForm">
                     <input
                         type="text"
                         id="searchTerm"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
+                        className="searchPageFormInput"
                     />
                     <br />
-                    <DatePicker selected={selectedDate} onChange={handleDateChange} /> {/* Date picker */}
                     <br />
-                    <button id="searchButton" className="btn" onClick={handleSearch}>
+                    <button id="searchButton" className="searchPageButton" onClick={handleSearch}>
                         Search
                     </button>
+                    <div class="searchPageDropDown">
+                        <label htmlFor="sortBy">Sort By:</label>
+                        <select id="sortBy" onChange={(e) => handleSort(e.target.value)} defaultValue="">
+                            <option value="" disabled hidden>Select an option</option>
+                            <option value="eventName">Event Name</option>
+                            <option value="eventDateTime">Date Time</option>
+                            <option value="location">Location</option>
+                            <option value="organiser">Organiser</option>
+                            <option value="price">Price</option>
+                        </select>
+                    </div>
 
                     {/* Display search results */}
-                    <div className="searchResults">
+                    <div className="searchPageResults">
                         {searchResults.length > 0 ? (
-                            <table className="searchTable">
+                            <table className="searchPageResults">
                                 <thead>
                                     <tr>
                                         <th>Event</th>
@@ -91,7 +106,7 @@ function SearchPage() {
                     </div>
 
                     <Link to="/home">
-                        <button id="backToHome" className="btn">
+                        <button id="backToHome" className="searchPageButton">
                             Back to Home
                         </button>
                     </Link>

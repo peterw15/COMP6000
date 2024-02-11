@@ -1,125 +1,78 @@
-/* searchPageStyleSheet.css */
 .searchPage {
-    background-color: #000000;
+    background-color: rgb(46, 46, 46);
     font-family: Arial, Helvetica, sans-serif;
-    height: 100vh;
-    top: 0px;
-    bottom: 0px;
-    border: 10px solid #1a2238;
+    width: 100%;
+    height: 100%vh;
+      justify-content: center;
+  text-align: center;
 }
 
-.header {
+.searchPageHeader {
     text-align: center;
-    color: hsl(231, 77%, 78%);
+    color: hsl(0, 0%, 100%);
     font-size: 70px;
     font-weight: 700;
 }
 
-.subHeader {
+.searchPageSubHeader {
     margin-top: 10px;
     margin-bottom: 10px;
 }
 
-.form {
+.searchPageForm {
     text-align: center;
-    color: hsl(231, 77%, 78%);
+    color: hsl(0, 0%, 100%);
 }
 
-.form input {
+.searchPageFormInput {
     outline: none;
-    background-color: hsl(224, 35%, 25%);
-    border: 1px solid hsl(231, 77%, 78%);
+    background-color: hsl(0, 0%, 0%);
+    border: 1px solid hsl(0, 0%, 0%);
     border-radius: 0.25em;
-    color: hsl(231, 77%, 78%);
+    color: hsl(0, 0%, 0%);
     font-size: 25px;
     text-align: center;
     margin-bottom: 20px;
 }
 
-.btn {
-    background-color: hsl(224, 35%, 25%);
-    color: hsl(231, 77%, 78%);
+.searchPageButton {
+    background-color: hsl(0, 0%, 0%);
+    color: hsl(0, 0%, 100%);
     font-weight: 700;
     font-size: 100%;
     width: 10%;
     height: 15%;
     padding: 10px;
     margin: 15px;
-    border: 1px solid hsl(231, 77%, 78%);
+    border: 1px solid hsl(0, 0%, 100%);
     border-radius: 0.25em;
     cursor: pointer;
 }
 
-.searchResults {
+.searchPageResults {
     width: 100%;
     border-collapse: collapse;
 }
 
-.searchResults th, .searchTable td {
+.searchPageResults th,
+.searchPageResults td {
     padding: 8px;
-    border: 1px solid #ddd;
+    border: 1px solid #000000;
 }
 
-.searchResults th {
-    text-align: left;
-    background-color: #f2f2f2;
+.searchPageResults th {
+    text-align: center;
+    background-color: #000000;
 }
 
-.form input {
+.searchPageFormInput {
     outline: none;
-    background-color: hsl(224, 35%, 25%);
-    border: 1px solid hsl(231, 77%, 78%);
+    background-color: hsl(0, 0%, 0%);
+    border: 1px solid hsl(0, 0%, 100%);
     border-radius: 0.25em;
     color: hsl(231, 77%, 78%);
     font-size: 25px;
     text-align: center;
     margin-bottom: 20px;
     width: 300px;
-}
-
-/* Style the date picker button */
-.react-datepicker-wrapper {
-    display: inline-block;
-    position: relative;
-    margin-bottom: 20px;
-}
-
-.react-datepicker__input-container input {
-    outline: none;
-    background-color: hsl(224, 35%, 25%);
-    border: 1px solid hsl(231, 77%, 78%);
-    border-radius: 0.25em;
-    color: hsl(231, 77%, 78%);
-    font-size: 25px;
-    text-align: center;
-    width: 300px;
-}
-
-.react-datepicker-popper {
-    z-index: 1;
-}
-
-.react-datepicker__header {
-    background-color: #333;
-}
-
-.react-datepicker__day-names {
-    background-color: #555;
-}
-
-.react-datepicker__current-month {
-    color: #fff;
-}
-
-.react-datepicker__day {
-    color: #fff;
-}
-
-.react-datepicker__day:hover {
-    background-color: #444;
-}
-
-.react-datepicker__day--selected {
-    background-color: #007bff;
-    color: #fff;
 }
