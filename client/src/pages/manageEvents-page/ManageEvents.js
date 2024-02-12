@@ -15,12 +15,20 @@ import calendar from './Icons/calendar.png';
 import pound from './Icons/pound.png';
 import avatar from './Icons/avatar.png';
 import background from "./Images/circleBackground1.png";
+import Modal from 'react-bootstrap/Modal';
 
 
 function ManageEvents() {
 
 
     const [events, setEvents] = useState([]);
+    const [chosenEvent, setchosenEvent] = useState([]);
+
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    var event;
 
     const navigate = useNavigate();
 
@@ -67,9 +75,13 @@ function ManageEvents() {
                             <Card.Text className="cardText">{i.description}</Card.Text>
                         </Card.Body>
                         <Row className="buttonRow">
-                            <Button className="joinButton" onClick={() => deleteEvent(i.EventID, this)}>Delete Event</Button>
+                            <Button className="editButton" onClick={() => {
+                                setShow(true);
+                                setchosenEvent(i);
+                            }}> Edit Event </Button>
+                            <Button className="deleteButton" onClick={() => deleteEvent(i.EventID, this)}>Delete Event</Button>
                         </Row>
-                    </Card>
+                    </Card >
                 );
             });
             setEvents(dataArray);
@@ -80,18 +92,60 @@ function ManageEvents() {
         Axios.post('http://localhost:3001/deleteEvent', { EventID: EventID })
     }
 
-
     const goHome = () => {
         navigate("/home");
+    }
+
+    function updateEvent() {
+        var eventName = document.getElementById("EventName").value;
+        var eventDescription = document.getElementById("EventDescription").value;
+        var eventPrice = document.getElementById("EventLocation").value;
+        var eventLocation = document.getElementById("EventPrice").value;
+        var eventDate = document.getElementById("EventDate").value + " " + document.getElementById("EventTime").value;
+
+        console.log(eventName)
+        console.log(eventDate)
+
+        Axios.post('http://localhost:3001/updateEvent', { eventID: chosenEvent.EventID, eventName: eventName, eventDescription: eventDescription, eventPrice: eventPrice, eventLocation: eventLocation, eventDate: eventDate })
+
+
     }
 
     return (
         <html className="eventHtml" style={{ backgroundImage: `url(${background})`, minHeight: "1080px", backgroundSize: "cover", backgroundPosition: "center" }}>
             <HeaderBar></HeaderBar>
             <Container className="mainContainer">
-                <div className="eventsHeader">Manage Your Events!</div>
+                <Modal show={show} onHide={handleClose} size="lg">
+                    <Modal.Header closeButton>
+                        <Modal.Title>Update Event Details For: {chosenEvent.eventName}</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <form>
+                            <label for="EventName">Event Name:</label>
+                            <input type="text" class="form-control" id="EventName" placeholder={chosenEvent.eventName} />
+                            <label for="EventName">Event Description:</label>
+                            <input type="text" class="form-control" id="EventDescription" placeholder={chosenEvent.description} />
+                            <label for="EventName">Event Location:</label>
+                            <input type="text" class="form-control" id="EventLocation" placeholder={chosenEvent.location} />
+                            <label for="EventName">Event Price:</label>
+                            <input type="text" class="form-control" id="EventPrice" placeholder={chosenEvent.price} />
+                            <label for="EventName">Event Date:</label>
+                            <input type="date" class="form-control" id="EventDate" placeholder={"to do"} />
+                            <label for="EventName">Event Time:</label>
+                            <input type="time" class="form-control" id="EventTime" placeholder={"to do"} />
+                        </form>
+                    </Modal.Body>
+                    <Modal.Footer>
+
+                        <Button onClick={updateEvent}>
+                            Update Event
+                        </Button>
+                    </Modal.Footer>
+                </Modal >
+                <div className="eventsHeader">Manage Your Created Events!</div>
                 <Row classname="mainRow">{events}</Row>
             </Container>
+
         </html>
     )
 

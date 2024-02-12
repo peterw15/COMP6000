@@ -1,0 +1,19 @@
+.deleteButton {
+  width: 20% !important;
+  height: 50px !important;
+  background-color: #ff000031 !important;
+  border-color: rgb(255, 0, 0) !important;
+  color : #ff0000 !important;
+}
+
+.editButton {
+  width: 20% !important;
+  height: 50px !important;
+  background-color: #252526 !important;
+  border-color: #18cdc6 !important;
+  color : #ffffff !important;
+}
+
+.modalClass {
+    background-color: black;
+}

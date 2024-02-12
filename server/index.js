@@ -138,7 +138,7 @@ app.post('/createSocieties', (req, res) => {
 
 })
 
-app.post('/getEventID', (req,res) => {
+app.post('/getEventID', (req, res) => {
   const { eventName, eventDateTime, location, description, organiser, price } = req.body;
 
   const query = "SELECT EventID FROM Event WHERE eventName = ? AND eventDateTime = ? AND location = ? AND description = ? AND organiser = ? AND price = ?";
@@ -153,7 +153,7 @@ app.post('/getEventID', (req,res) => {
 
 })
 
-app.post('/getSocietiesID', (req,res) => {
+app.post('/getSocietiesID', (req, res) => {
   const { socName, socDateTime, socLocation, socDescription, socOrganiser, socPrice } = req.body;
 
   const query = "SELECT SocietiesID FROM Societies WHERE socName = ? AND socDateTime = ? AND socLocation = ? AND socDescription = ? AND socOrganiser = ? AND socPrice = ? AND socLink = ?";
@@ -168,9 +168,9 @@ app.post('/getSocietiesID', (req,res) => {
 
 })
 
-app.post('/addEventTag', (req,res) => {
+app.post('/addEventTag', (req, res) => {
   console.log(req.body);
-  const { EventID, tag} = req.body;
+  const { EventID, tag } = req.body;
   const query = "INSERT INTO EventTags (EventID, tag) VALUES (?,?)";
   connection.query(query, [EventID, tag], (err) => {
     if (err) {
@@ -181,9 +181,9 @@ app.post('/addEventTag', (req,res) => {
     res.status(200).send(true);
   });
 })
-app.post('/addSocietiesTag', (req,res) => {
+app.post('/addSocietiesTag', (req, res) => {
   console.log(req.body);
-  const { SocietiesID, tag} = req.body;
+  const { SocietiesID, tag } = req.body;
   const query = "INSERT INTO SocietiesTags (SocietiesID, tag) VALUES (?,?)";
   connection.query(query, [SocietiesID, tag], (err) => {
     if (err) {
@@ -251,7 +251,7 @@ app.listen(PORT, () => {
 app.post('/api/search', async (req, res) => {
   try {
     const searchTerm = req.body.searchTerm;
-    
+
     const query = `
     SELECT * FROM Event 
     WHERE 
@@ -261,7 +261,7 @@ app.post('/api/search', async (req, res) => {
       organiser LIKE '%${searchTerm}%' OR
       price LIKE '%${searchTerm}%'
   `;
-  
+
 
     connection.query(query, (err, results) => {
       if (err) {
@@ -288,7 +288,7 @@ app.post('/infoFromID', (req, res) => {
   })
 })
 
-app.post('/deleteEvent', (req,res) => {
+app.post('/deleteEvent', (req, res) => {
   try {
     query = "DELETE FROM Event WHERE EventID = ?";
     const results = connection.query(query, req.body.EventID, function (err) {
@@ -304,6 +304,18 @@ app.post('/myCreatedEvents', (req, res) => {
     if (err) throw err;
     res.send(results._rows[0]);
   })
+})
+
+app.post('/updateEvent', (req, res) => {
+
+  try {
+    query = "UPDATE Event SET eventName = ?, description = ?, location = ?, price = ?, eventDateTime = ? WHERE EventID = ?"
+    console.log(req.body.eventName)
+    console.log(req.body.eventDescription)
+    const results = connection.query(query, [req.body.eventName, req.body.eventDescription, req.body.eventLocation, req.body.eventPrice, req.body.eventDate, req.body.EventID])
+  } catch {
+
+  }
 })
 
 
