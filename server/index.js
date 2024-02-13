@@ -86,7 +86,7 @@ app.post('/events', (req, res) => {
 app.post('/societies', (req, res) => {
   const results = connection.query("SELECT socName, socDateTime, socLocation, socDescription, socOrganiser, socPrice, socLink, SocietiesID FROM Societies JOIN User WHERE Societies.socOrganiser = User.UserID", function (err) {
     if (err) throw err;
-    console.log(results_rows[0]);
+    console.log(results);
     res.send(results._rows[0]);
   })
 })
