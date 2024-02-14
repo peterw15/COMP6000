@@ -20,7 +20,6 @@ import Modal from 'react-bootstrap/Modal';
 
 function ManageEvents() {
 
-
     const [events, setEvents] = useState([]);
     const [chosenEvent, setchosenEvent] = useState([]);
 
@@ -28,11 +27,18 @@ function ManageEvents() {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    var event;
+    const [eventName, setEventName] = useState();
+    const [eventDescription, setEventDescription] = useState();
+    const [eventLocation, setEventLocation] = useState();
+    const [eventPrice, setEventPrice] = useState();
+    const [eventDT, setEventDT] = useState();
+    const [eventDate, setEventDate] = useState("");
+    const [eventTime, setEventTime] = useState("");
 
     const navigate = useNavigate();
 
     useEffect(() => { getMyEvents(); }, [events])
+
 
     const getMyEvents = () => {
         Axios.post('http://localhost:3001/myCreatedEvents').then(res => {
@@ -76,8 +82,16 @@ function ManageEvents() {
                         </Card.Body>
                         <Row className="buttonRow">
                             <Button className="editButton" onClick={() => {
-                                setShow(true);
+                                setEventName(i.eventName);
+                                setEventDescription(i.description);
+                                setEventPrice(i.price);
+                                setEventLocation(i.location);
+                                let d = new Date(i.eventDateTime)
+                                d = d.toISOString().slice(0, 19).replace('T', ' ');
+                                setEventDT(d);
                                 setchosenEvent(i);
+                                setShow(true);
+
                             }}> Edit Event </Button>
                             <Button className="deleteButton" onClick={() => deleteEvent(i.EventID, this)}>Delete Event</Button>
                         </Row>
@@ -97,18 +111,17 @@ function ManageEvents() {
     }
 
     function updateEvent() {
-        var eventName = document.getElementById("EventName").value;
-        var eventDescription = document.getElementById("EventDescription").value;
-        var eventPrice = document.getElementById("EventLocation").value;
-        var eventLocation = document.getElementById("EventPrice").value;
-        var eventDate = document.getElementById("EventDate").value + " " + document.getElementById("EventTime").value;
+
+        if (document.getElementById("EventName").value.length > 0) { setEventName(document.getElementById("EventName").value) };
+        if (document.getElementById("EventDescription").value.length > 0) { setEventDescription(document.getElementById("EventDescription").value) };
+        if (document.getElementById("EventLocation").value.length > 0) { setEventLocation(document.getElementById("EventLocation").value) };
+        if (document.getElementById("EventPrice").value.length > 0) { setEventPrice(document.getElementById("EventPrice").value) };
+        if ((document.getElementById("EventDate") !== null) && (document.getElementById("EventTime") !== null)) { setEventDT(document.getElementById("EventDate").value + " " + document.getElementById("EventTime").value) };
 
         console.log(eventName)
-        console.log(eventDate)
 
-        Axios.post('http://localhost:3001/updateEvent', { eventID: chosenEvent.EventID, eventName: eventName, eventDescription: eventDescription, eventPrice: eventPrice, eventLocation: eventLocation, eventDate: eventDate })
-
-
+        Axios.post('http://localhost:3001/updateEvent', { eventID: chosenEvent.EventID, eventName: eventName, eventDescription: eventDescription, eventPrice: eventPrice, eventLocation: eventLocation, eventDate: eventDT })
+        setShow(false);
     }
 
     return (
@@ -117,21 +130,21 @@ function ManageEvents() {
             <Container className="mainContainer">
                 <Modal show={show} onHide={handleClose} size="lg">
                     <Modal.Header closeButton>
-                        <Modal.Title>Update Event Details For: {chosenEvent.eventName}</Modal.Title>
+                        <Modal.Title>Update Event Details For: {eventName}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <form>
                             <label for="EventName">Event Name:</label>
-                            <input type="text" class="form-control" id="EventName" placeholder={chosenEvent.eventName} />
-                            <label for="EventName">Event Description:</label>
-                            <input type="text" class="form-control" id="EventDescription" placeholder={chosenEvent.description} />
-                            <label for="EventName">Event Location:</label>
-                            <input type="text" class="form-control" id="EventLocation" placeholder={chosenEvent.location} />
-                            <label for="EventName">Event Price:</label>
-                            <input type="text" class="form-control" id="EventPrice" placeholder={chosenEvent.price} />
-                            <label for="EventName">Event Date:</label>
+                            <input type="text" class="form-control" id="EventName" placeholder={eventName} />
+                            <label for="EventDescription">Event Description:</label>
+                            <input type="text" class="form-control" id="EventDescription" placeholder={eventDescription} />
+                            <label for="EventLocation">Event Location:</label>
+                            <input type="text" class="form-control" id="EventLocation" placeholder={eventLocation} />
+                            <label for="EventPrice">Event Price:</label>
+                            <input type="text" class="form-control" id="EventPrice" placeholder={eventPrice} />
+                            <label for="EventDate">Event Date:</label>
                             <input type="date" class="form-control" id="EventDate" placeholder={"to do"} />
-                            <label for="EventName">Event Time:</label>
+                            <label for="EventTime">Event Time:</label>
                             <input type="time" class="form-control" id="EventTime" placeholder={"to do"} />
                         </form>
                     </Modal.Body>

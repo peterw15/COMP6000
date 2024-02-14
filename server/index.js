@@ -310,9 +310,9 @@ app.post('/updateEvent', (req, res) => {
 
   try {
     query = "UPDATE Event SET eventName = ?, description = ?, location = ?, price = ?, eventDateTime = ? WHERE EventID = ?"
-    console.log(req.body.eventName)
-    console.log(req.body.eventDescription)
-    const results = connection.query(query, [req.body.eventName, req.body.eventDescription, req.body.eventLocation, req.body.eventPrice, req.body.eventDate, req.body.EventID])
+    console.log(req.body.eventName);
+    console.log(req.body.eventDescription);
+    connection.query(query, [req.body.eventName, req.body.eventDescription, req.body.eventLocation, req.body.eventPrice, req.body.eventDate, req.body.eventID])
   } catch {
 
   }
