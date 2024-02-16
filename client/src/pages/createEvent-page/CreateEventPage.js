@@ -101,7 +101,8 @@ function CreateEventPage() {
         const finalTags = gatherTags();
 
         const eventName = document.getElementById('eventName').value;
-        const eventDateTime = eventDate + " " + eventTime;
+        const eventDateTime = eventDate + " " + eventTime + ":00";
+        console.log(eventDateTime);
         const location = document.getElementById('location').value;
         const description = document.getElementById('description').value;
         const price = parseFloat(document.getElementById('price').value);
