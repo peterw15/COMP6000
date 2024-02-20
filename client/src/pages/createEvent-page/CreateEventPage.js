@@ -120,6 +120,8 @@ function CreateEventPage() {
                     Axios.post('http://localhost:3001/addEventTag', {EventID,tag}).then(res =>
                         res.data ? console.log("SUCCESS") : console.log("FAIL")).catch(error => console.log(error));
                 }
+
+                navigate("/manageevents");
             }));
         });
     }

@@ -1,4 +1,4 @@
-//import './createEventPageStylesheet.css';
+import './registrationPageStylesheet.css';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
 import { Link } from "react-router-dom";
@@ -108,6 +108,8 @@ function RegistrationPage() {
                     Axios.post('http://localhost:3001/addUserTag', {UserID,tag}).then(res =>
                         res.data ? console.log("SUCCESS") : console.log("FAIL")).catch(error => console.log(error));
                 }
+
+                navigate("/login");
             }));
     }
 
@@ -188,7 +190,7 @@ function RegistrationPage() {
                 setOpen7(true);
                 index++;
                 window. scrollTo({ top: 2200, left: 0, behavior: 'smooth' })
-                setButtonLabel("Create Event");
+                setButtonLabel("Create Account");
                 setButtonSubmit(true);
                 break;
             
