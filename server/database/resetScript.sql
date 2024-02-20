@@ -45,6 +45,13 @@ CREATE TABLE EventTags (
   FOREIGN KEY (EventID) REFERENCES Event (EventID)
 );
 
+CREATE TABLE UserTags (
+  UserID bigint unsigned NOT NULL,
+  tag varchar(30) NOT NULL,
+  PRIMARY KEY (UserID,tag),
+  FOREIGN KEY (UserID) REFERENCES User (UserID)
+);
+
 CREATE TABLE Societies (
     SocietiesID INT PRIMARY KEY AUTO_INCREMENT,
     socName VARCHAR(255) NOT NULL,

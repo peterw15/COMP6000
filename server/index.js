@@ -41,10 +41,10 @@ app.post('/register', (req, res) => {
   connection.query(query, [username, password, firstName, lastName, email], (err, results) => {
     if (err) {
       console.error('Error registering user: ' + err.stack);
-      res.status(500).send('Error registering user');
+      res.status(500).send(false);
       return;
     }
-    res.status(200).send('User registered successfully');
+    res.status(200).send(true);
   });
 });
 
@@ -168,6 +168,21 @@ app.post('/getSocietiesID', (req, res) => {
 
 })
 
+app.post('/getUserID', (req, res) => {
+  const {username} = req.body;
+
+  const query = "SELECT UserID FROM User WHERE username = ?";
+  const results = connection.query(query, [username], (err) => {
+    if (err) {
+      console.error('Error creating event: ' + err.stack);
+      res.status(500).send(false);
+      return;
+    }
+    res.status(200).send(results._rows[0]);
+  });
+
+})
+
 app.post('/addEventTag', (req, res) => {
   console.log(req.body);
   const { EventID, tag } = req.body;
@@ -181,6 +196,7 @@ app.post('/addEventTag', (req, res) => {
     res.status(200).send(true);
   });
 })
+
 app.post('/addSocietiesTag', (req, res) => {
   console.log(req.body);
   const { SocietiesID, tag } = req.body;
@@ -188,6 +204,23 @@ app.post('/addSocietiesTag', (req, res) => {
   connection.query(query, [SocietiesID, tag], (err) => {
     if (err) {
       console.error('Error creating societies: ' + err.stack);
+      res.status(500).send(false);
+      return;
+    }
+    res.status(200).send(true);
+  });
+})
+
+app.post('/addUserTag', (req, res) => {
+  console.log(req.body);
+  const { UserID, tag } = req.body;
+  console.log("HERE");
+  console.log(UserID);
+  console.log(tag);
+  const query = "INSERT INTO UserTags (UserID, tag) VALUES (?,?)";
+  connection.query(query, [UserID, tag], (err) => {
+    if (err) {
+      console.error('Error registering user: ' + err.stack);
       res.status(500).send(false);
       return;
     }
