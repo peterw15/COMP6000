@@ -191,21 +191,22 @@ function CreateEventPage() {
             case 2:
                 setOpen3(true);
                 index++;
+                window. scrollTo({ top: 300, left: 0, behavior: 'smooth' })
                 break;
             case 3:
                 setOpen4(true);
                 index++;
-                window. scrollTo({ top: 200, left: 0, behavior: 'smooth' })
+                window. scrollTo({ top: 600, left: 0, behavior: 'smooth' })
                 break;
             case 4:
                 setOpen5(true);
                 index++;
-                window. scrollTo({ top: 400, left: 0, behavior: 'smooth' })
+                window. scrollTo({ top: 900, left: 0, behavior: 'smooth' })
                 break;
             case 5:
                 setOpen6(true);
                 index++;
-                window. scrollTo({ top: 800, left: 0, behavior: 'smooth' })
+                window. scrollTo({ top: 1200, left: 0, behavior: 'smooth' })
                 break;
             case 6:
                 summaryFunction();
@@ -225,7 +226,7 @@ function CreateEventPage() {
 
     return (
             <>
-            <html style={{height:"2200px", backgroundImage: `url(${background})`,  backgroundSize : "cover", backgroundPosition:"center"}} className='justify-content-center'>
+            <html style={{height:"2400px", backgroundImage: `url(${background})`,  backgroundSize : "cover", backgroundPosition:"center"}} className='justify-content-center'>
 
                 <HeaderBar></HeaderBar>
                 <Row style={{width:"100%", height: "100%"}} className='justify-content-center'>
@@ -251,77 +252,66 @@ function CreateEventPage() {
                                             <Collapse in={open1}>
                                                 <Container fluid style={{width:"100%"}} className="formContainer">
                                                     <Row className="text-center" style={{height:"100%"}}>
-                                                        <Col style={{width:"33%"}} className="createEventCol"></Col>
                                                         <Col className="createEventFormCol">
                                                             <br />
                                                             <h2 className="createEventFormLabel">What would you like your event to be called?</h2>
-                                                            <Row className='justify-content-center'><Form.Control type="text" id="eventName" style={{marginTop:"5%",width:"50%"}} className='eventInput'/></Row> <br />
+                                                            <Row className='justify-content-center'><Form.Control type="text" id="eventName" style={{marginTop:"5%",width:"33%"}} className='eventInput'/></Row> <br />
                                                         </Col>
-                                                        <Col style={{width:"33%"}} className="createEventCol"></Col>
                                                     </Row>
                                                 </Container>
                                             </Collapse>
                                             <Collapse in={open2}>
                                                 <Container fluid  className="text-center" style={{backgroundColor:"#202020", width:"100%"}}>
                                                         <Row className="text-center" styke={{height:"100%"}}>
-                                                            <Col style={{width:"33%"}}className="createEventCol"></Col>
                                                             <Col className="createEventFormCol">
                                                                 <br />
                                                                 <h2 className="createEventFormLabel">What is the date/time of your event?</h2>
                                                                 <Row className='justify-content-center'>
-                                                                    <Form.Control id="eventDate" type="date" style={{marginTop:"5%",width:"50%"}} className='eventInput'/>
-                                                                </Row>
+                                                                    <Form.Control id="eventDate" type="date" style={{marginTop:"5%",width:"33%"}} className='eventInput'/>
+                                                                </Row> <br />
                                                                 <Row className='justify-content-center'>
-                                                                    <Form.Control id="eventTime" type="time" style={{marginTop:"5%",width:"50%"}} className='eventInput'/>
+                                                                    <Form.Control id="eventTime" type="time" style={{width:"33%"}} className='eventInput'/>
                                                                 </Row> <br />
                                                             </Col>
-                                                            <Col style={{width:"33%"}}className="createEventCol"></Col>
                                                         </Row>
                                                 </Container>
                                             </Collapse>
                                             <Collapse in={open3}>
                                                 <Container fluid className="text-center" style={{backgroundColor:"#202020", width:"100%"}}>
                                                     <Row className="text-center" styke={{height:"100%"}}>
-                                                        <Col style={{width:"33%"}}className="createEventCol"></Col>
                                                         <Col className="createEventFormCol">
                                                             <br />
                                                             <h2 className="createEventFormLabel">Where will your event be located?</h2>
-                                                            <Row className='justify-content-center'><Form.Control id="location" style={{marginTop:"5%",width:"50%"}} className='eventInput'/></Row> <br />
+                                                            <Row className='justify-content-center'><Form.Control id="location" style={{marginTop:"5%",width:"33%"}} className='eventInput'/></Row> <br />
                                                         </Col>
-                                                        <Col style={{width:"33%"}}className="createEventCol"></Col>
                                                     </Row>
                                                 </Container>
                                             </Collapse>
                                             <Collapse in={open4}>
                                                 <Container fluid className="text-center" style={{backgroundColor:"#202020", width:"100%"}}>
                                                         <Row className="text-center" styke={{height:"100%"}}>
-                                                            <Col style={{width:"33%"}}className="createEventCol"></Col>
                                                             <Col className="createEventFormCol">
                                                                 <br />
                                                                 <h2 className="createEventFormLabel">How would you describe your event?</h2>
-                                                                <Row className='justify-content-center'><Form.Control id="description" style={{marginTop:"5%",width:"50%"}} className='eventInput'  /></Row> <br />
+                                                                <Row className='justify-content-center'><Form.Control id="description" as="textarea" style={{marginTop:"5%",width:"50%", height: "100px"}} className='eventInput'  /></Row> <br />
                                                             </Col>
-                                                            <Col style={{width:"33%"}}className="createEventCol"></Col>
                                                         </Row>
                                                 </Container>
                                             </Collapse>
                                             <Collapse in={open5} fluid className="text-center">
                                                 <Container fluid className="text-center" style={{backgroundColor:"#202020", width:"100%"}}>
                                                         <Row className="text-center" styke={{height:"100%"}}>
-                                                            <Col style={{width:"33%"}}className="createEventCol"></Col>
                                                             <Col className="createEventFormCol">
                                                                 <br />
                                                                 <h2 className="createEventFormLabel">How much will your event cost?</h2>
-                                                                <Row className='justify-content-center'><Form.Control id="price" style={{marginTop:"5%",width:"50%"}} className='eventInput' /></Row> <br />
+                                                                <Row className='justify-content-center'><Form.Control id="price" style={{marginTop:"5%",width:"33%"}} className='eventInput' /></Row> <br />
                                                             </Col>
-                                                            <Col style={{width:"33%"}}className="createEventCol"></Col>
                                                         </Row>
                                                 </Container>
                                             </Collapse>
                                             <Collapse in={open6} fluid className="text-center">
                                                 <Container fluid className="text-center" style={{width:"100%"}}>
                                                     <Row className="text-center" styke={{height:"100%"}}>
-                                                            <Col style={{width:"33%"}}className="createEventCol"></Col>
                                                             <Col className="createEventFormCol">
                                                                 <br />
                                                                 <h2 className="createEventFormLabel"> Please Select Up to 5 Tags: </h2>
@@ -348,19 +338,17 @@ function CreateEventPage() {
                                                                     <Col></Col>
                                                                 </Row>
                                                             </Col>
-                                                            <Col style={{width:"33%"}}className="createEventCol"></Col>   
                                                     </Row>
                                                 </Container>
                                             </Collapse>
                                             <Collapse in={open7} fluid className="text-center">
                                                 <Container fluid className="text-center" style={{width:"100%"}}>
                                                         <Row className="text-center">
-                                                            <Col style={{width:"33%"}}className="createEventCol"></Col>
                                                             <Col className="createEventFormCol">
                                                                 <br />
                                                                 <h2 className = "createEventFormLabel">Summary</h2>
                                                                 <Row className='justify-content-center'>
-                                                                    <ListGroup style={{width:"50%"}}>
+                                                                    <ListGroup style={{width:"33%"}}>
                                                                         <ListGroup.Item className='eventInput'>Name: {eventName}</ListGroup.Item>
                                                                         <ListGroup.Item className='eventInput'>Date: {eventDate}</ListGroup.Item>
                                                                         <ListGroup.Item className='eventInput'>Time: {eventTime}</ListGroup.Item>
@@ -372,18 +360,15 @@ function CreateEventPage() {
                                                                 </Row>
                                                                 <br/>
                                                             </Col>
-                                                            <Col style={{width:"33%"}}className="createEventCol"></Col>
                                                         </Row>
                                                 </Container>
                                             </Collapse>     
                                             <Container fluid  className="text-center" style={{width:"100%"}}>
                                                 <Row className="text-center" style={{height:"100%"}}>
-                                                    <Col style={{width:"33%"}}className="createEventCol"></Col>
                                                     <Col style={{width:"33%", height:"100%"}} className='justify-content-center'>
                                                         <br/>
-                                                            <Button variant="outline-primary" id="formButton" className="formButton" onClick={buttonHandler} style={{backgroundColor:"#252526", width: "50%",color:"#ffffff", fontSize:"90%", borderColor :"#18cdc6"}}>{buttonLabel}</Button>
+                                                            <Button variant="outline-primary" id="formButton" className="formButton" onClick={buttonHandler} style={{backgroundColor:"#252526", width: "33%",color:"#ffffff", height: "50px",fontSize:"20px",borderColor :"#18cdc6"}}>{buttonLabel}</Button>
                                                     </Col>
-                                                    <Col style={{width:"33%"}}className="createEventCol"></Col>
                                                 </Row>
                                         </Container>               
                             </Col>
