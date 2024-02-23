@@ -1,4 +1,4 @@
-import './registrationPageStylesheet.css';
+import './registrationPageStyleSheet.css';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
 import { Link } from "react-router-dom";
@@ -105,7 +105,7 @@ function RegistrationPage() {
 
                 for(let i=0;i<finalTags.length;i++) {
                     const tag = finalTags[i];
-                    Axios.post('http://localhost:3001/addUserTag', {UserID,tag}).then(res =>
+                    Axios.post('http://localhost:3001/addUserTag', {UserID,tag}).catch(error => console.log(error)).then(res =>
                         res.data ? console.log("SUCCESS") : console.log("FAIL")).catch(error => console.log(error));
                 }
 

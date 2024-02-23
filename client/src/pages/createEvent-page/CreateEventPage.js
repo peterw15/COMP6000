@@ -1,4 +1,4 @@
-import './createEventPageStylesheet.css';
+import './createEventPageStyleSheet.css';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
 import { Link } from "react-router-dom";
@@ -19,6 +19,13 @@ var index = 0;
 function CreateEventPage() {
 
     const navigate = useNavigate();
+
+    const icons = ["abbacus.png","alcohol.png","apple.png","ball.png","basktball.png","bike.png","book.png","bus.png","car.png",
+    "clock.png","golf.png","id.png","mind.png","monitor.png","mouse.png","music.png","paintbrush.png","pencil.png","phone.png",
+    "pin.png","present.png","science.png","shoe.png","sofa.png","tags.png","target.png","thermometer.png","wallet.png","water.png",];
+
+
+
 
 
     useEffect(() => {
@@ -375,6 +382,11 @@ function CreateEventPage() {
                         </Row>
                         
                 </Container>
+                <div>
+                    {icons.map(icon =>
+                    <img src={"../../eventIcons/" + icon}></img>
+                    )}
+                </div>
                 </Row>
                 </Row>
                 
