@@ -21,6 +21,10 @@ function RegistrationPage() {
 
     const navigate = useNavigate();
 
+    const toLogin =  () => {
+        navigate("/login")
+    }
+
 
     var checkedBoxes = 0;
 
@@ -203,7 +207,7 @@ function RegistrationPage() {
 
     return (
             <>
-            <html style={{height:"2200px", backgroundImage: `url(${background})`,  backgroundSize : "cover", backgroundPosition:"center"}} className='justify-content-center'>
+            <html style={{height:"2200px", backgroundImage: `url(${background})`,  backgroundSize : "cover", backgroundPosition:"center", backgroundAttachment: "fixed" }} className='justify-content-center'>
 
                 <Row style={{width:"100%", height: "100%"}} className='justify-content-center'>
                 <Row style={{width:"80%", height: "100%"}} className="createEventbackground">
@@ -353,6 +357,8 @@ function RegistrationPage() {
                                                     <Col style={{width:"33%", height:"100%"}} className='justify-content-center'>
                                                         <br/>
                                                             <Button variant="outline-primary" id="formButton" className="formButton" onClick={buttonHandler} style={{backgroundColor:"#252526", width: "50%",color:"#ffffff", fontSize:"90%", borderColor :"#18cdc6"}}>{buttonLabel}</Button>
+                                                            <br />
+                                                            <Button variant="outline-primary" id="formButton" className="formButton" onClick={toLogin} style={{backgroundColor:"#252526", width: "25%",color:"#ffffff", fontSize:"90%", borderColor :"#18cdc6"}}>Cancel</Button>
                                                     </Col>
                                                     <Col style={{width:"33%"}}className="createEventCol"></Col>
                                                 </Row>

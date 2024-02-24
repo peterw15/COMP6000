@@ -100,7 +100,7 @@ function EventsPage() {
     const [listState, setListState] = useState([]);
 
     return (
-        <html className="eventHtml" style={{ backgroundImage: `url(${background})`, minHeight: "1080px", backgroundSize: "cover", backgroundPosition: "center" }}>
+        <html className="eventHtml" style={{ backgroundImage: `url(${background})`, minHeight: "1080px", backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed" }}>
             <HeaderBar></HeaderBar>
             <Container className="mainContainer">
                 <div className="eventsHeader"> Events </div>

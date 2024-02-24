@@ -1,8 +1,8 @@
-//import './loginPageStyleSheet.css';
+import './loginPageStyleSheet.css';
 import { Link } from "react-router-dom";
 import Axios from 'axios';
 import { Navigate } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -10,8 +10,9 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Image from 'react-bootstrap/Image';
 import background from './background2.png';
-import logo from './logoAbove.png';
+import logo from './logoAboveCropped.png';
 import { FloatingLabel } from "react-bootstrap";
+
 
 
 
@@ -27,11 +28,11 @@ function LoginPage() {
         }).then(res => res.data.isAuthenticated ? navigate("/home",) : errorMessage.hidden = false).catch(error => console.log(error));
     }
 
-    //const isAuthenticated = (authenticated) => authenticated ? navigate("/home")  : console.log("NOT VALIDATED");
 
     return (
         <>
-            <Container fluid style={{ height: "100vh", backgroundImage: `url(${background})`, backgroundSize: "cover", backgroundPosition: "center" }} className="text-center">
+        <html style={{backgroundColor: "#202020"}}>
+            <Container fluid style={{ height: "100vh", backgroundImage: `url(${background})`, backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "no-repeat"}} className="background">
                 <Row style={{ width: "100%" }} className="text-center">
                     <Col style={{ width: "33.33%", height: "100vh" }}>
                     </Col>
@@ -39,8 +40,8 @@ function LoginPage() {
                         <Row style={{ height: "15%" }}>
                         </Row>
                         <Row style={{ height: "33%" }} className="text-center">
-                            <img src={logo} ></img>
-                            <Container fluid style={{ backgroundColor: "#202020" }}>
+                            <img src={logo}></img>
+                            <Container fluid style={{}}>
                                 <Row>
                                     <Col></Col>
                                     <Col className="text-center">
@@ -87,16 +88,12 @@ function LoginPage() {
                                 <Row style={{ height: "1%" }}></Row>
                                 <Row className="text-center">
                                     <Col></Col>
-                                    <Col className="text-center">
-                                        <Button variant="outline-primary" id="forgotPassword" className="btn" style={{ height: "45px", width: "100px", fontSize: "80%", backgroundColor: "#252526", color: "#ffffff", borderColor: "#18cdc6" }}>Forgot Login</Button>
-                                    </Col>
-                                    <Col className="text-center">
+                                    <Col className="text-center" style={{alignContent: "center"}}>
                                         <Link to="/register" >
-                                            <Button variant="outline-primary" id="createAccount" className="btn" style={{ height: "45px", width: "100px", marginRight: "50%", fontSize: "80%", backgroundColor: "#252526", color: "#ffffff", borderColor: "#18cdc6" }}>Sign Up</Button>
+                                            <Button variant="outline-primary" id="createAccount" className="btn" style={{ height: "45px", width: "100px", fontSize: "80%", backgroundColor: "#252526", color: "#ffffff", borderColor: "#18cdc6" }}>Sign Up</Button>
                                         </Link>
                                     </Col>
-                                    <Col >
-                                    </Col>
+                                    <Col></Col>
                                 </Row>
                                 <Container>
                                     <Row></Row>
@@ -107,7 +104,8 @@ function LoginPage() {
                     </Col>
                     <Col style={{ width: "33.33%", height: "100vh" }}></Col>
                 </Row>
-            </Container>
+                </Container>
+            </html>
         </>
     );
 }

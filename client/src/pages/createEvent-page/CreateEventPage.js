@@ -291,7 +291,7 @@ function CreateEventPage() {
 
     return (
             <>
-            <html style={{height:"3200px", backgroundImage: `url(${background})`,  backgroundSize : "cover", backgroundPosition:"center"}} className='justify-content-center'>
+            <html style={{height:"3200px", backgroundImage: `url(${background})`,  backgroundSize : "cover", backgroundPosition:"center", backgroundAttachment: "fixed"}} className='justify-content-center'>
 
                 <HeaderBar></HeaderBar>
                 <Row style={{width:"100%", height: "100%"}} className='justify-content-center'>
@@ -384,7 +384,7 @@ function CreateEventPage() {
                                                                 <Row className='justify-content-center'>
                                                                     <Container style={{width: "70%", marginLeft: "0px", marginRight: "0px", paddingLeft: "50px", paddingRight: "0px"}}>
                                                                         {tags.map((tag,index) => 
-                                                                            <Alert style={{border: "1px solid transparent" , width:"10%", minWidth: "140px", marginLeft:"5px", marginRight: "5px", float: "left", backgroundColor: colors[index % colors.length], color: "#ffffff"}}>
+                                                                            <Alert id={`${tag}`} style={{border: "1px solid transparent" , width:"10%", minWidth: "140px", marginLeft:"5px", marginRight: "5px", float: "left", backgroundColor: colors[index % colors.length], color: "#ffffff"}}>
                                                                                 {tag}
                                                                             </Alert>
                                                                         )}

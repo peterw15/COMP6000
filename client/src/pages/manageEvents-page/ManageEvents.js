@@ -125,7 +125,7 @@ function ManageEvents() {
     }
 
     return (
-        <html className="eventHtml" style={{ backgroundImage: `url(${background})`, minHeight: "1080px", backgroundSize: "cover", backgroundPosition: "center" }}>
+        <html className="eventHtml" style={{ backgroundImage: `url(${background})`, minHeight: "1080px", backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed"  }}>
             <HeaderBar></HeaderBar>
             <Container className="mainContainer">
                 <Modal show={show} onHide={handleClose} size="lg">
