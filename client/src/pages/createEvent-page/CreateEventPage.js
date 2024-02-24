@@ -9,6 +9,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
+import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import { ListGroup } from 'react-bootstrap';
 import Collapse from 'react-bootstrap/Collapse';
@@ -97,6 +98,9 @@ function CreateEventPage() {
 
     const tags = ['Academic', 'Arts', 'Drinking', 'Mindfulness', 'Music', 'Off_Campus', 'On_Campus',
         'Outdoors', 'Science', 'Social', 'Sports'];
+    
+    const colors = ['#3B7F89','#E84849','#4ABC96', '#49A0AE', '#E84849', '#65A844', '#6EC2CB', '#6CC077', '#089283', '#ED3351'
+    , '#F37C2A'];
 
     const checkState = {Academic : false , Arts : false, Drinking : false, Mindfulness : false, Music : false, Off_Campus : false, On_Campus : false,
     Outdoors : false, Science : false, Social : false, Sports : false};
@@ -372,31 +376,19 @@ function CreateEventPage() {
                                             </Collapse>
                                             <Collapse in={open6} fluid className="text-center">
                                                 <Container fluid className="text-center" style={{width:"100%"}}>
-                                                    <Row className="text-center" styke={{height:"100%"}}>
+                                                    <Row className="text-center" style={{height:"100%"}}>
                                                             <Col className="createEventFormCol">
                                                                 <br />
                                                                 <h2 className="createEventFormLabel"> Please Select Up to 5 Tags: </h2>
                                                                 <br/>
-                                                                <Row style={{width:"100%",height: "100%", margin:"0"}}>
-                                                                    <Col></Col>
-                                                                    <Col>
-                                                                        {
-                                                                            tags.map((tag) => (
-                                                                                <Row style={{width:"100%"}}>
-                                                                                <Form.Check
-                                                                                    type="checkbox"
-                                                                                    id={`${tag}`}
-                                                                                    label={`${tag}`}
-                                                                                    onChange={onCheckboxChange}
-                                                                                    style={{color:"#18cdc6"}}
-                                                                                />
-                                                                                <br />
-                                                                                </Row>
-                                                                            ))
-                                                                        }
-                                                                    <br/>
-                                                                    </Col>
-                                                                    <Col></Col>
+                                                                <Row className='justify-content-center'>
+                                                                    <Container style={{width: "70%", marginLeft: "0px", marginRight: "0px", paddingLeft: "50px", paddingRight: "0px"}}>
+                                                                        {tags.map((tag,index) => 
+                                                                            <Alert style={{border: "1px solid transparent" , width:"10%", minWidth: "140px", marginLeft:"5px", marginRight: "5px", float: "left", backgroundColor: colors[index % colors.length], color: "#ffffff"}}>
+                                                                                {tag}
+                                                                            </Alert>
+                                                                        )}
+                                                                    </Container>
                                                                 </Row>
                                                             </Col>
                                                     </Row>
@@ -408,6 +400,7 @@ function CreateEventPage() {
                                                             <Col className="createEventFormCol">
                                                                 <br />
                                                                 <h2 className = "createEventFormLabel">Please select an icon for your event</h2>
+                                                                <br/>
                                                                 <Row className='justify-content-center'>
                                                                     <Container style={{width: "75%"}}>
                                                                     {icons.map(icon =>
