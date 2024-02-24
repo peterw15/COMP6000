@@ -46,3 +46,11 @@ h2.createEventHeader {
 .formButton {
   background-color: #202020 !important;
 }
+
+.createEventCardImg {
+  width:120px !important;
+  height:120px !important;
+  padding: 10px !important;
+  margin-top: 20px !important;
+  margin: 10px !important;
+}

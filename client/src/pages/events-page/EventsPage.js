@@ -44,12 +44,13 @@ function EventsPage() {
                 if (price == 0.00) {
                     price = "Free";
                 }
+                console.log(res.data)
                 return (
                     <Card className="eventsCard">
                         <Container flex>
                             <Row className="cardRow">
                                 <Col className="imgCol" lg="2">
-                                    <Card.Img src={thumbnail} className="cardImg"></Card.Img>
+                                    <Card.Img src={i.imageURL} className="cardImg"></Card.Img>
                                 </Col>
                                 <Col className="infoCol" >
                                     <Row className="infoRow">

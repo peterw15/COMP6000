@@ -76,7 +76,7 @@ app.post('/home', (req, res) => {
 })
 
 app.post('/events', (req, res) => {
-  const results = connection.query("SELECT eventName,eventDateTime,location,description,price,firstName,lastName,EventID FROM Event JOIN User WHERE Event.organiser = User.UserID", function (err) {
+  const results = connection.query("SELECT eventName,eventDateTime,location,description,price,firstName,lastName,EventID,imageURL FROM Event JOIN User WHERE Event.organiser = User.UserID", function (err) {
     if (err) throw err;
     console.log(results._rows[0]);
     res.send(results._rows[0]);
@@ -108,11 +108,13 @@ app.post('/upcomingevents', (req, res) => {
 })
 
 app.post('/createEvent', (req, res) => {
-  const { eventName, eventDateTime, location, description, organiser, price } = req.body;
+  const { eventName, eventDateTime, location, description, organiser, price, imageURL } = req.body;
 
-  const query = "INSERT INTO Event (eventName,eventDateTime,location,description,organiser,price) VALUES (?,?,?,?,?,?)";
+  console.log(imageURL);
 
-  connection.query(query, [eventName, eventDateTime, location, description, organiser, price], (err) => {
+  const query = "INSERT INTO Event (eventName,eventDateTime,location,description,organiser,price,imageURL) VALUES (?,?,?,?,?,?,?)";
+
+  connection.query(query, [eventName, eventDateTime, location, description, organiser, price, imageURL], (err) => {
     if (err) {
       console.error('Error creating event: ' + err.stack);
       res.status(500).send(false);

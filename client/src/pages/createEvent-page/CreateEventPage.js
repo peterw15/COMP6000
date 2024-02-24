@@ -8,10 +8,11 @@ import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Carousel from 'react-bootstrap/Carousel';
+import Image from 'react-bootstrap/Image';
 import Button from 'react-bootstrap/Button';
 import { ListGroup } from 'react-bootstrap';
 import Collapse from 'react-bootstrap/Collapse';
+import Card from 'react-bootstrap/Card';
 import background from './background3.png';
 
 var index = 0;
@@ -20,12 +21,9 @@ function CreateEventPage() {
 
     const navigate = useNavigate();
 
-    const icons = ["abbacus.png","alcohol.png","apple.png","ball.png","basktball.png","bike.png","book.png","bus.png","car.png",
+    const icons = ["pin.png","alcohol.png","apple.png","ball.png","basketball.png","bike.png","book.png","bus.png","car.png",
     "clock.png","golf.png","id.png","mind.png","monitor.png","mouse.png","music.png","paintbrush.png","pencil.png","phone.png",
-    "pin.png","present.png","science.png","shoe.png","sofa.png","tags.png","target.png","thermometer.png","wallet.png","water.png",];
-
-
-
+    "abbacus.png","present.png","science.png","shoe.png","sofa.png","tags.png","target.png","thermometer.png","wallet.png","water.png",];
 
 
     useEffect(() => {
@@ -113,12 +111,15 @@ function CreateEventPage() {
         const location = document.getElementById('location').value;
         const description = document.getElementById('description').value;
         const price = parseFloat(document.getElementById('price').value);
+        const imageURL = selectedIcon;
+
+        console.log(imageURL);
 
             Axios.get('http://localhost:3001/loggedIn', {}).then(res => {
             const organiser = parseInt(res.data);
-            Axios.post('http://localhost:3001/createEvent', { eventName, eventDateTime, location, description, organiser, price }).then(res => 
+            Axios.post('http://localhost:3001/createEvent', { eventName, eventDateTime, location, description, organiser, price, imageURL}).then(res => 
                 res.data ? console.log("SUCCESS") : console.log("FAIL")).catch(error => console.log(error)).then(
-            Axios.post('http://localhost:3001/getEventID', { eventName, eventDateTime, location, description, organiser, price }).then(res => {
+            Axios.post('http://localhost:3001/getEventID', { eventName, eventDateTime, location, description, organiser, price, imageURL }).then(res => {
                 
                 const EventID = res.data[0].EventID;
 
@@ -150,6 +151,8 @@ function CreateEventPage() {
     const [eventDescription,setEventDescription] = useState("");
     const [eventPrice,setEventPrice] = useState("");
     const [eventTags,setEventTags] = useState([]);
+    const [eventDateTime,setEventDateTime] = useState("");
+
 
     function summaryFunction() {
         setEventName(document.getElementById("eventName").value);
@@ -169,6 +172,7 @@ function CreateEventPage() {
     const [open5,setOpen5] = useState(false);
     const [open6,setOpen6] = useState(false);
     const [open7,setOpen7] = useState(false);
+    const [open8,setOpen8] = useState(false);
 
     const [buttonLabel, setButtonLabel] = useState("Begin");
     const [buttonSubmit, setButtonSubmit] = useState(false);
@@ -216,24 +220,74 @@ function CreateEventPage() {
                 window. scrollTo({ top: 1200, left: 0, behavior: 'smooth' })
                 break;
             case 6:
-                summaryFunction();
                 setOpen7(true);
                 index++;
-                window. scrollTo({ top: 2200, left: 0, behavior: 'smooth' })
+                window. scrollTo({ top: 1800, left: 0, behavior: 'smooth' })
+                break;
+            case 7:
+                summaryFunction();
+                setOpen8(true);
+                index++;
+                window. scrollTo({ top: 3000, left: 0, behavior: 'smooth' })
                 setButtonLabel("Create Event");
                 setButtonSubmit(true);
                 break;
             
 
         }
+    }
 
+    function handleChange (event) {
+
+        const value = event.target.value;
+
+        switch(event.target.id) {
+            case "eventName":
+                setEventName(value);
+                break;
+
+            case "eventDate":
+                setEventDate(value);
+                dateTimeFormat();
+                break;
+            
+            case "eventTime":
+                setEventTime(value);
+                dateTimeFormat();
+                break;
+            
+            case "location":
+                setEventLocation(value);
+                break;
+
+            case "description":
+                setEventDescription(value);
+                break;
+            
+            case "price":
+                setEventPrice(value);
+                break;
+        }
+    }
+
+    function dateTimeFormat () {
+        var date = new Date(eventDate + " " + eventTime);
+        setEventDateTime(date.toDateString() + " " + date.toLocaleTimeString());
+    }
+
+    const [selectedIcon, setSelectedIcon] = useState("eventIcons/pin.png")
+
+    function iconSelect (event) {
+        document.getElementById(selectedIcon).style.borderColor = "transparent"
+        setSelectedIcon(event.target.id);
+        event.target.style.borderColor = "#18cdc6";
     }
   
  
 
     return (
             <>
-            <html style={{height:"2400px", backgroundImage: `url(${background})`,  backgroundSize : "cover", backgroundPosition:"center"}} className='justify-content-center'>
+            <html style={{height:"3200px", backgroundImage: `url(${background})`,  backgroundSize : "cover", backgroundPosition:"center"}} className='justify-content-center'>
 
                 <HeaderBar></HeaderBar>
                 <Row style={{width:"100%", height: "100%"}} className='justify-content-center'>
@@ -262,7 +316,7 @@ function CreateEventPage() {
                                                         <Col className="createEventFormCol">
                                                             <br />
                                                             <h2 className="createEventFormLabel">What would you like your event to be called?</h2>
-                                                            <Row className='justify-content-center'><Form.Control type="text" id="eventName" style={{marginTop:"5%",width:"33%"}} className='eventInput'/></Row> <br />
+                                                            <Row className='justify-content-center'><Form.Control type="text" id="eventName" style={{marginTop:"5%",width:"33%"}} className='eventInput' onChange={handleChange}/></Row> <br />
                                                         </Col>
                                                     </Row>
                                                 </Container>
@@ -274,10 +328,10 @@ function CreateEventPage() {
                                                                 <br />
                                                                 <h2 className="createEventFormLabel">What is the date/time of your event?</h2>
                                                                 <Row className='justify-content-center'>
-                                                                    <Form.Control id="eventDate" type="date" style={{marginTop:"5%",width:"33%"}} className='eventInput'/>
+                                                                    <Form.Control id="eventDate" type="date" style={{marginTop:"5%",width:"33%"}} className='eventInput' onChange={handleChange}/>
                                                                 </Row> <br />
                                                                 <Row className='justify-content-center'>
-                                                                    <Form.Control id="eventTime" type="time" style={{width:"33%"}} className='eventInput'/>
+                                                                    <Form.Control id="eventTime" type="time" style={{width:"33%"}} className='eventInput' onChange={handleChange}/>
                                                                 </Row> <br />
                                                             </Col>
                                                         </Row>
@@ -289,7 +343,7 @@ function CreateEventPage() {
                                                         <Col className="createEventFormCol">
                                                             <br />
                                                             <h2 className="createEventFormLabel">Where will your event be located?</h2>
-                                                            <Row className='justify-content-center'><Form.Control id="location" style={{marginTop:"5%",width:"33%"}} className='eventInput'/></Row> <br />
+                                                            <Row className='justify-content-center'><Form.Control id="location" style={{marginTop:"5%",width:"33%"}} className='eventInput' onChange={handleChange}/></Row> <br />
                                                         </Col>
                                                     </Row>
                                                 </Container>
@@ -300,7 +354,7 @@ function CreateEventPage() {
                                                             <Col className="createEventFormCol">
                                                                 <br />
                                                                 <h2 className="createEventFormLabel">How would you describe your event?</h2>
-                                                                <Row className='justify-content-center'><Form.Control id="description" as="textarea" style={{marginTop:"5%",width:"50%", height: "100px"}} className='eventInput'  /></Row> <br />
+                                                                <Row className='justify-content-center'><Form.Control id="description" as="textarea" style={{marginTop:"5%",width:"50%", height: "100px"}} className='eventInput' onChange={handleChange} /></Row> <br />
                                                             </Col>
                                                         </Row>
                                                 </Container>
@@ -311,7 +365,7 @@ function CreateEventPage() {
                                                             <Col className="createEventFormCol">
                                                                 <br />
                                                                 <h2 className="createEventFormLabel">How much will your event cost?</h2>
-                                                                <Row className='justify-content-center'><Form.Control id="price" style={{marginTop:"5%",width:"33%"}} className='eventInput' /></Row> <br />
+                                                                <Row className='justify-content-center'><Form.Control id="price" style={{marginTop:"5%",width:"33%"}} className='eventInput' onChange={handleChange}/></Row> <br />
                                                             </Col>
                                                         </Row>
                                                 </Container>
@@ -353,17 +407,60 @@ function CreateEventPage() {
                                                         <Row className="text-center">
                                                             <Col className="createEventFormCol">
                                                                 <br />
-                                                                <h2 className = "createEventFormLabel">Summary</h2>
+                                                                <h2 className = "createEventFormLabel">Please select an icon for your event</h2>
                                                                 <Row className='justify-content-center'>
-                                                                    <ListGroup style={{width:"33%"}}>
-                                                                        <ListGroup.Item className='eventInput'>Name: {eventName}</ListGroup.Item>
-                                                                        <ListGroup.Item className='eventInput'>Date: {eventDate}</ListGroup.Item>
-                                                                        <ListGroup.Item className='eventInput'>Time: {eventTime}</ListGroup.Item>
-                                                                        <ListGroup.Item className='eventInput'>Location: {eventLocation}</ListGroup.Item>
-                                                                        <ListGroup.Item className='eventInput'>Description: {eventDescription}</ListGroup.Item>
-                                                                        <ListGroup.Item className='eventInput'>Price: {eventPrice}</ListGroup.Item>
-                                                                        <ListGroup.Item className='eventInput'>Tags: {eventTags}</ListGroup.Item>
-                                                                    </ListGroup>
+                                                                    <Container style={{width: "75%"}}>
+                                                                    {icons.map(icon =>
+                                                                        <Image src={"eventIcons/" + icon} className="createEventCardImg" onClick={iconSelect} id={"eventIcons/" + icon} roundedCircle/>
+                                                                    )}
+                                                                    </Container>
+                                                                </Row>
+                                                                <br/>
+                                                            </Col>
+                                                        </Row>
+                                                </Container>
+                                            </Collapse>     
+                                            <Collapse in={open8} fluid className="text-center">
+                                                <Container fluid className="text-center" style={{width:"100%"}}>
+                                                        <Row className="text-center">
+                                                            <Col className="createEventFormCol">
+                                                                <br />
+                                                                <h2 className = "createEventFormLabel">Summary</h2> <br />
+                                                                <Row className='justify-content-center'>
+                                                                    <Card className="eventsCard">
+                                                                        <Container flex>
+                                                                            <Row className="cardRow">
+                                                                                <Col className="imgCol" lg="2">
+                                                                                    <Card.Img src={selectedIcon} className="cardImg"></Card.Img>
+                                                                                </Col>
+                                                                                <Col className="infoCol" >
+                                                                                    <Row className="infoRow" style={{textAlign:"left"}}>
+                                                                                        <img className="cardIcon" src="icons/locationPin.png"></img>
+                                                                                        <div className="infoLabel">{eventLocation}</div>
+                                                                                        <img className="cardIcon" src="icons/calendar.png"></img>
+                                                                                        <div className="infoLabel">{eventDateTime}</div>
+                                                                                    </Row>
+                                                                                    <Row className="infoRow" style={{textAlign:"left"}}>
+                                                                                        <img className="cardIcon" src="icons/pound.png"></img>
+                                                                                        <div className="infoLabel">{eventPrice}</div>
+                                                                                        <img className="cardIcon" src="icons/avatar.png"></img>
+                                                                                        <div className="infoLabel">You</div>
+                                                                                    </Row>
+                                                                                </Col>
+                                                                            </Row>
+                                                                            <br />
+                                                                            <Row className="cardTitleRow" style={{textAlign:"left"}}>
+                                                                                <Card.Title className="cardTitle">{eventName}</Card.Title>
+                                                                            </Row>
+                                                                            <br />
+                                                                        </Container>
+                                                                        <Card.Body className="cardBody" style={{textAlign:"left"}}>
+                                                                            <Card.Text className="cardText">{eventDescription}</Card.Text>
+                                                                        </Card.Body>
+                                                                        <Row className="buttonRow">
+                                                                            
+                                                                        </Row>
+                                                                    </Card>
                                                                 </Row>
                                                                 <br/>
                                                             </Col>
@@ -382,11 +479,6 @@ function CreateEventPage() {
                         </Row>
                         
                 </Container>
-                <div>
-                    {icons.map(icon =>
-                    <img src={"../../eventIcons/" + icon}></img>
-                    )}
-                </div>
                 </Row>
                 </Row>
                 

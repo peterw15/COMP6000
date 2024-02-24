@@ -81,6 +81,14 @@
   margin-top: 20px !important;
 }
 
+.selectedCardImg {
+  width:85px !important;
+  height:85px !important;
+  padding: 0px !important;
+  margin-top: 20px !important;
+  border: 1px solid #18cdc6 !important;
+}
+
 .cardRow {
   margin : 0px;
   width: 100%;
