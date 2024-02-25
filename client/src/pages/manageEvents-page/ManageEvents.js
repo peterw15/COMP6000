@@ -36,8 +36,20 @@ function ManageEvents() {
     const [eventTime, setEventTime] = useState("");
 
     const navigate = useNavigate();
-
     useEffect(() => { getMyEvents(); }, [events])
+
+    useEffect(() => {
+        Axios.get('http://localhost:3001/loggedIn', {}).then(res => {
+            console.log(res);
+            if (res.data == null) {
+                navigate("/login");
+            }
+            else {
+                getMyEvents();
+            }
+        });
+    }, [])
+
 
 
     const getMyEvents = () => {
@@ -66,8 +78,6 @@ function ManageEvents() {
                                     <Row className="infoRow">
                                         <img className="cardIcon" src={pound}></img>
                                         <div className="infoLabel">{price}</div>
-                                        <img className="cardIcon" src={avatar}></img>
-                                        <div className="infoLabel">{i.firstName + " " + i.lastName}</div>
                                     </Row>
                                 </Col>
                             </Row>
@@ -91,7 +101,6 @@ function ManageEvents() {
                                 setEventDT(d);
                                 setchosenEvent(i);
                                 setShow(true);
-
                             }}> Edit Event </Button>
                             <Button className="deleteButton" onClick={() => deleteEvent(i.EventID, this)}>Delete Event</Button>
                         </Row>
@@ -125,7 +134,7 @@ function ManageEvents() {
     }
 
     return (
-        <html className="eventHtml" style={{ backgroundImage: `url(${background})`, minHeight: "1080px", backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed"  }}>
+        <html className="eventHtml" style={{ backgroundImage: `url(${background})`, minHeight: "1080px", backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed" }}>
             <HeaderBar></HeaderBar>
             <Container className="mainContainer">
                 <Modal show={show} onHide={handleClose} size="lg">
@@ -134,17 +143,17 @@ function ManageEvents() {
                     </Modal.Header>
                     <Modal.Body>
                         <form>
-                            <label for="EventName">Event Name:</label>
+                            <label for="EventNameLabel">Event Name:</label>
                             <input type="text" class="form-control" id="EventName" placeholder={eventName} />
-                            <label for="EventDescription">Event Description:</label>
+                            <label for="EventDescriptionLabel">Event Description:</label>
                             <input type="text" class="form-control" id="EventDescription" placeholder={eventDescription} />
-                            <label for="EventLocation">Event Location:</label>
+                            <label for="EventLocationLabel">Event Location:</label>
                             <input type="text" class="form-control" id="EventLocation" placeholder={eventLocation} />
-                            <label for="EventPrice">Event Price:</label>
+                            <label for="EventPriceLabel">Event Price:</label>
                             <input type="text" class="form-control" id="EventPrice" placeholder={eventPrice} />
-                            <label for="EventDate">Event Date:</label>
+                            <label for="EventDateLabel">Event Date:</label>
                             <input type="date" class="form-control" id="EventDate" placeholder={"to do"} />
-                            <label for="EventTime">Event Time:</label>
+                            <label for="EventTimeLabel">Event Time:</label>
                             <input type="time" class="form-control" id="EventTime" placeholder={"to do"} />
                         </form>
                     </Modal.Body>

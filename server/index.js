@@ -171,7 +171,7 @@ app.post('/getSocietiesID', (req, res) => {
 })
 
 app.post('/getUserID', (req, res) => {
-  const {username} = req.body;
+  const { username } = req.body;
 
   const query = "SELECT UserID FROM User WHERE username = ?";
   const results = connection.query(query, [username], (err) => {
@@ -324,6 +324,22 @@ app.post('/infoFromID', (req, res) => {
 })
 
 app.post('/deleteEvent', (req, res) => {
+  try {
+    query = "DELETE FROM EventTags WHERE EventID = ?";
+    const results = connection.query(query, req.body.EventID, function (err) {
+      if (err) throw err;
+    })
+  } catch (error) {
+    console.error(error);
+  }
+  try {
+    query = "DELETE FROM EventRegistration WHERE EVENTID = ?";
+    const results = connection.query(query, req.body.EventID, function (err) {
+      if (err) throw err;
+    })
+  } catch (error) {
+    console.error(error);
+  }
   try {
     query = "DELETE FROM Event WHERE EventID = ?";
     const results = connection.query(query, req.body.EventID, function (err) {

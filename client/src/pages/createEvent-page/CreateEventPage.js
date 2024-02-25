@@ -1,4 +1,4 @@
-import './createEventPageStyleSheet.css';
+import './createEventPageStylesheet.css';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
 import { Link } from "react-router-dom";
@@ -22,9 +22,9 @@ function CreateEventPage() {
 
     const navigate = useNavigate();
 
-    const icons = ["pin.png","alcohol.png","apple.png","ball.png","basketball.png","bike.png","book.png","bus.png","car.png",
-    "clock.png","golf.png","id.png","mind.png","monitor.png","mouse.png","music.png","paintbrush.png","pencil.png","phone.png",
-    "abbacus.png","present.png","science.png","shoe.png","sofa.png","tags.png","target.png","thermometer.png","wallet.png","water.png",];
+    const icons = ["pin.png", "alcohol.png", "apple.png", "ball.png", "basketball.png", "bike.png", "book.png", "bus.png", "car.png",
+        "clock.png", "golf.png", "id.png", "mind.png", "monitor.png", "mouse.png", "music.png", "paintbrush.png", "pencil.png", "phone.png",
+        "abbacus.png", "present.png", "science.png", "shoe.png", "sofa.png", "tags.png", "target.png", "thermometer.png", "wallet.png", "water.png",];
 
 
     useEffect(() => {
@@ -46,40 +46,40 @@ function CreateEventPage() {
         const label = target.id;
         console.log(label);
         var add = false;
-        if(checkState[label] == false) {
+        if (checkState[label] == false) {
             console.log("YES");
             checkState[label] = true;
             checkedBoxes++;
             console.log(checkedBoxes);
         }
-        else if(checkState[label] == true){
+        else if (checkState[label] == true) {
             checkState[label] = false;
             checkedBoxes--;
             console.log(checkedBoxes);
         }
 
-        if(checkedBoxes == 5) {
+        if (checkedBoxes == 5) {
             disableChecks();
         }
-        else if(checkedBoxes == 4) {
+        else if (checkedBoxes == 4) {
             enableChecks();
         }
-        
+
     }
 
     function disableChecks() {
-        for(let i=0;i<tags.length;i++) {
+        for (let i = 0; i < tags.length; i++) {
             const element = document.getElementById(tags[i]);
-            if(!checkState[element.id]) {
+            if (!checkState[element.id]) {
                 element.disabled = true;
             }
         }
     }
 
     function enableChecks() {
-        for(let i=0;i<tags.length;i++) {
+        for (let i = 0; i < tags.length; i++) {
             const element = document.getElementById(tags[i]);
-            if(element.disabled) {
+            if (element.disabled) {
                 element.disabled = false;
             }
         }
@@ -87,9 +87,9 @@ function CreateEventPage() {
 
     function gatherTags() {
         const trueTags = [];
-        for(let i=0;i<tags.length;i++) {
+        for (let i = 0; i < tags.length; i++) {
             const element = document.getElementById(tags[i]);
-            if(checkState[element.id]) {
+            if (checkState[element.id]) {
                 trueTags.push(tags[i]);
             }
         }
@@ -98,14 +98,16 @@ function CreateEventPage() {
 
     const tags = ['Academic', 'Arts', 'Drinking', 'Mindfulness', 'Music', 'Off_Campus', 'On_Campus',
         'Outdoors', 'Science', 'Social', 'Sports'];
-    
-    const colors = ['#3B7F89','#E84849','#4ABC96', '#49A0AE', '#E84849', '#65A844', '#6EC2CB', '#6CC077', '#089283', '#ED3351'
-    , '#F37C2A'];
 
-    const checkState = {Academic : false , Arts : false, Drinking : false, Mindfulness : false, Music : false, Off_Campus : false, On_Campus : false,
-    Outdoors : false, Science : false, Social : false, Sports : false};
+    const colors = ['#3B7F89', '#E84849', '#4ABC96', '#49A0AE', '#E84849', '#65A844', '#6EC2CB', '#6CC077', '#089283', '#ED3351'
+        , '#F37C2A'];
 
-    function createEvent () {
+    const checkState = {
+        Academic: false, Arts: false, Drinking: false, Mindfulness: false, Music: false, Off_Campus: false, On_Campus: false,
+        Outdoors: false, Science: false, Social: false, Sports: false
+    };
+
+    function createEvent() {
 
         const finalTags = gatherTags();
 
@@ -119,22 +121,22 @@ function CreateEventPage() {
 
         console.log(imageURL);
 
-            Axios.get('http://localhost:3001/loggedIn', {}).then(res => {
+        Axios.get('http://localhost:3001/loggedIn', {}).then(res => {
             const organiser = parseInt(res.data);
-            Axios.post('http://localhost:3001/createEvent', { eventName, eventDateTime, location, description, organiser, price, imageURL}).then(res => 
+            Axios.post('http://localhost:3001/createEvent', { eventName, eventDateTime, location, description, organiser, price, imageURL }).then(res =>
                 res.data ? console.log("SUCCESS") : console.log("FAIL")).catch(error => console.log(error)).then(
-            Axios.post('http://localhost:3001/getEventID', { eventName, eventDateTime, location, description, organiser, price, imageURL }).then(res => {
-                
-                const EventID = res.data[0].EventID;
+                    Axios.post('http://localhost:3001/getEventID', { eventName, eventDateTime, location, description, organiser, price, imageURL }).then(res => {
 
-                for(let i=0;i<finalTags.length;i++) {
-                    const tag = finalTags[i];
-                    Axios.post('http://localhost:3001/addEventTag', {EventID,tag}).then(res =>
-                        res.data ? console.log("SUCCESS") : console.log("FAIL")).catch(error => console.log(error));
-                }
+                        const EventID = res.data[0].EventID;
 
-                navigate("/manageevents");
-            }));
+                        for (let i = 0; i < finalTags.length; i++) {
+                            const tag = finalTags[i];
+                            Axios.post('http://localhost:3001/addEventTag', { EventID, tag }).then(res =>
+                                res.data ? console.log("SUCCESS") : console.log("FAIL")).catch(error => console.log(error));
+                        }
+
+                        navigate("/manageevents");
+                    }));
         });
     }
 
@@ -148,14 +150,14 @@ function CreateEventPage() {
         ref.current.prev();
     }
 
-    const [eventName,setEventName] = useState("");
-    const [eventDate,setEventDate] = useState("");
-    const [eventTime,setEventTime] = useState("");
-    const [eventLocation,setEventLocation] = useState("");
-    const [eventDescription,setEventDescription] = useState("");
-    const [eventPrice,setEventPrice] = useState("");
-    const [eventTags,setEventTags] = useState([]);
-    const [eventDateTime,setEventDateTime] = useState("");
+    const [eventName, setEventName] = useState("");
+    const [eventDate, setEventDate] = useState("");
+    const [eventTime, setEventTime] = useState("");
+    const [eventLocation, setEventLocation] = useState("");
+    const [eventDescription, setEventDescription] = useState("");
+    const [eventPrice, setEventPrice] = useState("");
+    const [eventTags, setEventTags] = useState([]);
+    const [eventDateTime, setEventDateTime] = useState("");
 
 
     function summaryFunction() {
@@ -168,31 +170,31 @@ function CreateEventPage() {
         setEventTags(gatherTags().map((tag) => tag + " | "));
     }
 
-    const [openStart,setOpenStart] = useState(true);
-    const [open1,setOpen1] = useState(false);
-    const [open2,setOpen2] = useState(false);
-    const [open3,setOpen3] = useState(false);
-    const [open4,setOpen4] = useState(false);
-    const [open5,setOpen5] = useState(false);
-    const [open6,setOpen6] = useState(false);
-    const [open7,setOpen7] = useState(false);
-    const [open8,setOpen8] = useState(false);
+    const [openStart, setOpenStart] = useState(true);
+    const [open1, setOpen1] = useState(false);
+    const [open2, setOpen2] = useState(false);
+    const [open3, setOpen3] = useState(false);
+    const [open4, setOpen4] = useState(false);
+    const [open5, setOpen5] = useState(false);
+    const [open6, setOpen6] = useState(false);
+    const [open7, setOpen7] = useState(false);
+    const [open8, setOpen8] = useState(false);
 
     const [buttonLabel, setButtonLabel] = useState("Begin");
     const [buttonSubmit, setButtonSubmit] = useState(false);
 
-    function buttonHandler () {
-        if(!buttonSubmit) {
+    function buttonHandler() {
+        if (!buttonSubmit) {
             formAnim();
-        } 
-        else if(buttonSubmit) {
+        }
+        else if (buttonSubmit) {
             createEvent();
         }
     }
 
 
     function formAnim() {
-        switch(index) {
+        switch (index) {
             case 0:
                 setOpenStart(false);
                 setOpen1(true);
@@ -206,46 +208,46 @@ function CreateEventPage() {
             case 2:
                 setOpen3(true);
                 index++;
-                window. scrollTo({ top: 300, left: 0, behavior: 'smooth' })
+                window.scrollTo({ top: 300, left: 0, behavior: 'smooth' })
                 break;
             case 3:
                 setOpen4(true);
                 index++;
-                window. scrollTo({ top: 600, left: 0, behavior: 'smooth' })
+                window.scrollTo({ top: 600, left: 0, behavior: 'smooth' })
                 break;
             case 4:
                 setOpen5(true);
                 index++;
-                window. scrollTo({ top: 900, left: 0, behavior: 'smooth' })
+                window.scrollTo({ top: 900, left: 0, behavior: 'smooth' })
                 break;
             case 5:
                 setOpen6(true);
                 index++;
-                window. scrollTo({ top: 1200, left: 0, behavior: 'smooth' })
+                window.scrollTo({ top: 1200, left: 0, behavior: 'smooth' })
                 break;
             case 6:
                 setOpen7(true);
                 index++;
-                window. scrollTo({ top: 1800, left: 0, behavior: 'smooth' })
+                window.scrollTo({ top: 1800, left: 0, behavior: 'smooth' })
                 break;
             case 7:
                 summaryFunction();
                 setOpen8(true);
                 index++;
-                window. scrollTo({ top: 3000, left: 0, behavior: 'smooth' })
+                window.scrollTo({ top: 3000, left: 0, behavior: 'smooth' })
                 setButtonLabel("Create Event");
                 setButtonSubmit(true);
                 break;
-            
+
 
         }
     }
 
-    function handleChange (event) {
+    function handleChange(event) {
 
         const value = event.target.value;
 
-        switch(event.target.id) {
+        switch (event.target.id) {
             case "eventName":
                 setEventName(value);
                 break;
@@ -254,12 +256,12 @@ function CreateEventPage() {
                 setEventDate(value);
                 dateTimeFormat();
                 break;
-            
+
             case "eventTime":
                 setEventTime(value);
                 dateTimeFormat();
                 break;
-            
+
             case "location":
                 setEventLocation(value);
                 break;
@@ -267,216 +269,216 @@ function CreateEventPage() {
             case "description":
                 setEventDescription(value);
                 break;
-            
+
             case "price":
                 setEventPrice(value);
                 break;
         }
     }
 
-    function dateTimeFormat () {
+    function dateTimeFormat() {
         var date = new Date(eventDate + " " + eventTime);
         setEventDateTime(date.toDateString() + " " + date.toLocaleTimeString());
     }
 
     const [selectedIcon, setSelectedIcon] = useState("eventIcons/pin.png")
 
-    function iconSelect (event) {
+    function iconSelect(event) {
         document.getElementById(selectedIcon).style.borderColor = "transparent"
         setSelectedIcon(event.target.id);
         event.target.style.borderColor = "#18cdc6";
     }
-  
- 
+
+
 
     return (
-            <>
-            <html style={{height:"3200px", backgroundImage: `url(${background})`,  backgroundSize : "cover", backgroundPosition:"center", backgroundAttachment: "fixed"}} className='justify-content-center'>
+        <>
+            <html style={{ height: "3200px", backgroundImage: `url(${background})`, backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed" }} className='justify-content-center'>
 
                 <HeaderBar></HeaderBar>
-                <Row style={{width:"100%", height: "100%"}} className='justify-content-center'>
-                <Row style={{width:"80%", height: "100%"}} className="createEventbackground">
-                <Container fluid style={{height:"98%", width: "100%", marginTop:"2%"}} className="createEventFormContainer">
-                        <Row style={{width:"100%",height: "100%", margin:"0", backgroundColor: "#202020"}} className="text-center">
-                            <Col style={{width:"100%", height :"100%", margin:"0"}} className="createEventCol">
-                                <Container fluid style={{marginTop: "2%", width:"100%"}} className="createEventFormContainer">
-                                             <Collapse in={openStart}>
-                                                <Container fluid style={{width:"100%", height:"100%"}} className="formContainer">
-                                                        <Row className="text-center" style={{height:"100%"}}>
-                                                            <Col style={{width:"33%"}} className="createEventCol"></Col>
-                                                            <Col>
-                                                            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-                                                            </Col>
-                                                            <Col style={{width:"33%"}} className="createEventCol"></Col>
-                                                        </Row>
-                                                    </Container>
-                                            </Collapse>
-                                                <h2 className="createEventHeader" style={{fontSize:"70px", margin:"0"}}>Create Event</h2>
-                                            </Container>
-                                            <br />
-                                            <Collapse in={open1}>
-                                                <Container fluid style={{width:"100%"}} className="formContainer">
-                                                    <Row className="text-center" style={{height:"100%"}}>
-                                                        <Col className="createEventFormCol">
-                                                            <br />
-                                                            <h2 className="createEventFormLabel">What would you like your event to be called?</h2>
-                                                            <Row className='justify-content-center'><Form.Control type="text" id="eventName" style={{marginTop:"5%",width:"33%"}} className='eventInput' onChange={handleChange}/></Row> <br />
-                                                        </Col>
-                                                    </Row>
-                                                </Container>
-                                            </Collapse>
-                                            <Collapse in={open2}>
-                                                <Container fluid  className="text-center" style={{backgroundColor:"#202020", width:"100%"}}>
-                                                        <Row className="text-center" styke={{height:"100%"}}>
-                                                            <Col className="createEventFormCol">
-                                                                <br />
-                                                                <h2 className="createEventFormLabel">What is the date/time of your event?</h2>
-                                                                <Row className='justify-content-center'>
-                                                                    <Form.Control id="eventDate" type="date" style={{marginTop:"5%",width:"33%"}} className='eventInput' onChange={handleChange}/>
-                                                                </Row> <br />
-                                                                <Row className='justify-content-center'>
-                                                                    <Form.Control id="eventTime" type="time" style={{width:"33%"}} className='eventInput' onChange={handleChange}/>
-                                                                </Row> <br />
-                                                            </Col>
-                                                        </Row>
-                                                </Container>
-                                            </Collapse>
-                                            <Collapse in={open3}>
-                                                <Container fluid className="text-center" style={{backgroundColor:"#202020", width:"100%"}}>
-                                                    <Row className="text-center" styke={{height:"100%"}}>
-                                                        <Col className="createEventFormCol">
-                                                            <br />
-                                                            <h2 className="createEventFormLabel">Where will your event be located?</h2>
-                                                            <Row className='justify-content-center'><Form.Control id="location" style={{marginTop:"5%",width:"33%"}} className='eventInput' onChange={handleChange}/></Row> <br />
-                                                        </Col>
-                                                    </Row>
-                                                </Container>
-                                            </Collapse>
-                                            <Collapse in={open4}>
-                                                <Container fluid className="text-center" style={{backgroundColor:"#202020", width:"100%"}}>
-                                                        <Row className="text-center" styke={{height:"100%"}}>
-                                                            <Col className="createEventFormCol">
-                                                                <br />
-                                                                <h2 className="createEventFormLabel">How would you describe your event?</h2>
-                                                                <Row className='justify-content-center'><Form.Control id="description" as="textarea" style={{marginTop:"5%",width:"50%", height: "100px"}} className='eventInput' onChange={handleChange} /></Row> <br />
-                                                            </Col>
-                                                        </Row>
-                                                </Container>
-                                            </Collapse>
-                                            <Collapse in={open5} fluid className="text-center">
-                                                <Container fluid className="text-center" style={{backgroundColor:"#202020", width:"100%"}}>
-                                                        <Row className="text-center" styke={{height:"100%"}}>
-                                                            <Col className="createEventFormCol">
-                                                                <br />
-                                                                <h2 className="createEventFormLabel">How much will your event cost?</h2>
-                                                                <Row className='justify-content-center'><Form.Control id="price" style={{marginTop:"5%",width:"33%"}} className='eventInput' onChange={handleChange}/></Row> <br />
-                                                            </Col>
-                                                        </Row>
-                                                </Container>
-                                            </Collapse>
-                                            <Collapse in={open6} fluid className="text-center">
-                                                <Container fluid className="text-center" style={{width:"100%"}}>
-                                                    <Row className="text-center" style={{height:"100%"}}>
-                                                            <Col className="createEventFormCol">
-                                                                <br />
-                                                                <h2 className="createEventFormLabel"> Please Select Up to 5 Tags: </h2>
-                                                                <br/>
-                                                                <Row className='justify-content-center'>
-                                                                    <Container style={{width: "70%", marginLeft: "0px", marginRight: "0px", paddingLeft: "50px", paddingRight: "0px"}}>
-                                                                        {tags.map((tag,index) => 
-                                                                            <Alert id={`${tag}`} style={{border: "1px solid transparent" , width:"10%", minWidth: "140px", marginLeft:"5px", marginRight: "5px", float: "left", backgroundColor: colors[index % colors.length], color: "#ffffff"}}>
-                                                                                {tag}
-                                                                            </Alert>
-                                                                        )}
-                                                                    </Container>
-                                                                </Row>
-                                                            </Col>
-                                                    </Row>
-                                                </Container>
-                                            </Collapse>
-                                            <Collapse in={open7} fluid className="text-center">
-                                                <Container fluid className="text-center" style={{width:"100%"}}>
-                                                        <Row className="text-center">
-                                                            <Col className="createEventFormCol">
-                                                                <br />
-                                                                <h2 className = "createEventFormLabel">Please select an icon for your event</h2>
-                                                                <br/>
-                                                                <Row className='justify-content-center'>
-                                                                    <Container style={{width: "75%"}}>
-                                                                    {icons.map(icon =>
-                                                                        <Image src={"eventIcons/" + icon} className="createEventCardImg" onClick={iconSelect} id={"eventIcons/" + icon} roundedCircle/>
-                                                                    )}
-                                                                    </Container>
-                                                                </Row>
-                                                                <br/>
-                                                            </Col>
-                                                        </Row>
-                                                </Container>
-                                            </Collapse>     
-                                            <Collapse in={open8} fluid className="text-center">
-                                                <Container fluid className="text-center" style={{width:"100%"}}>
-                                                        <Row className="text-center">
-                                                            <Col className="createEventFormCol">
-                                                                <br />
-                                                                <h2 className = "createEventFormLabel">Summary</h2> <br />
-                                                                <Row className='justify-content-center'>
-                                                                    <Card className="eventsCard">
-                                                                        <Container flex>
-                                                                            <Row className="cardRow">
-                                                                                <Col className="imgCol" lg="2">
-                                                                                    <Card.Img src={selectedIcon} className="cardImg"></Card.Img>
-                                                                                </Col>
-                                                                                <Col className="infoCol" >
-                                                                                    <Row className="infoRow" style={{textAlign:"left"}}>
-                                                                                        <img className="cardIcon" src="icons/locationPin.png"></img>
-                                                                                        <div className="infoLabel">{eventLocation}</div>
-                                                                                        <img className="cardIcon" src="icons/calendar.png"></img>
-                                                                                        <div className="infoLabel">{eventDateTime}</div>
-                                                                                    </Row>
-                                                                                    <Row className="infoRow" style={{textAlign:"left"}}>
-                                                                                        <img className="cardIcon" src="icons/pound.png"></img>
-                                                                                        <div className="infoLabel">{eventPrice}</div>
-                                                                                        <img className="cardIcon" src="icons/avatar.png"></img>
-                                                                                        <div className="infoLabel">You</div>
-                                                                                    </Row>
-                                                                                </Col>
-                                                                            </Row>
-                                                                            <br />
-                                                                            <Row className="cardTitleRow" style={{textAlign:"left"}}>
-                                                                                <Card.Title className="cardTitle">{eventName}</Card.Title>
-                                                                            </Row>
-                                                                            <br />
-                                                                        </Container>
-                                                                        <Card.Body className="cardBody" style={{textAlign:"left"}}>
-                                                                            <Card.Text className="cardText">{eventDescription}</Card.Text>
-                                                                        </Card.Body>
-                                                                        <Row className="buttonRow">
-                                                                            
-                                                                        </Row>
-                                                                    </Card>
-                                                                </Row>
-                                                                <br/>
-                                                            </Col>
-                                                        </Row>
-                                                </Container>
-                                            </Collapse>     
-                                            <Container fluid  className="text-center" style={{width:"100%"}}>
-                                                <Row className="text-center" style={{height:"100%"}}>
-                                                    <Col style={{width:"33%", height:"100%"}} className='justify-content-center'>
-                                                        <br/>
-                                                            <Button variant="outline-primary" id="formButton" className="formButton" onClick={buttonHandler} style={{backgroundColor:"#252526", width: "33%",color:"#ffffff", height: "50px",fontSize:"20px",borderColor :"#18cdc6"}}>{buttonLabel}</Button>
+                <Row style={{ width: "100%", height: "100%" }} className='justify-content-center'>
+                    <Row style={{ width: "80%", height: "100%" }} className="createEventbackground">
+                        <Container fluid style={{ height: "98%", width: "100%", marginTop: "2%" }} className="createEventFormContainer">
+                            <Row style={{ width: "100%", height: "100%", margin: "0", backgroundColor: "#202020" }} className="text-center">
+                                <Col style={{ width: "100%", height: "100%", margin: "0" }} className="createEventCol">
+                                    <Container fluid style={{ marginTop: "2%", width: "100%" }} className="createEventFormContainer">
+                                        <Collapse in={openStart}>
+                                            <Container fluid style={{ width: "100%", height: "100%" }} className="formContainer">
+                                                <Row className="text-center" style={{ height: "100%" }}>
+                                                    <Col style={{ width: "33%" }} className="createEventCol"></Col>
+                                                    <Col>
+                                                        <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
                                                     </Col>
+                                                    <Col style={{ width: "33%" }} className="createEventCol"></Col>
                                                 </Row>
-                                        </Container>               
-                            </Col>
-                        </Row>
-                        
-                </Container>
+                                            </Container>
+                                        </Collapse>
+                                        <h2 className="createEventHeader" style={{ fontSize: "70px", margin: "0" }}>Create Event</h2>
+                                    </Container>
+                                    <br />
+                                    <Collapse in={open1}>
+                                        <Container fluid style={{ width: "100%" }} className="formContainer">
+                                            <Row className="text-center" style={{ height: "100%" }}>
+                                                <Col className="createEventFormCol">
+                                                    <br />
+                                                    <h2 className="createEventFormLabel">What would you like your event to be called?</h2>
+                                                    <Row className='justify-content-center'><Form.Control type="text" id="eventName" style={{ marginTop: "5%", width: "33%" }} className='eventInput' onChange={handleChange} /></Row> <br />
+                                                </Col>
+                                            </Row>
+                                        </Container>
+                                    </Collapse>
+                                    <Collapse in={open2}>
+                                        <Container fluid className="text-center" style={{ backgroundColor: "#202020", width: "100%" }}>
+                                            <Row className="text-center" styke={{ height: "100%" }}>
+                                                <Col className="createEventFormCol">
+                                                    <br />
+                                                    <h2 className="createEventFormLabel">What is the date/time of your event?</h2>
+                                                    <Row className='justify-content-center'>
+                                                        <Form.Control id="eventDate" type="date" style={{ marginTop: "5%", width: "33%" }} className='eventInput' onChange={handleChange} />
+                                                    </Row> <br />
+                                                    <Row className='justify-content-center'>
+                                                        <Form.Control id="eventTime" type="time" style={{ width: "33%" }} className='eventInput' onChange={handleChange} />
+                                                    </Row> <br />
+                                                </Col>
+                                            </Row>
+                                        </Container>
+                                    </Collapse>
+                                    <Collapse in={open3}>
+                                        <Container fluid className="text-center" style={{ backgroundColor: "#202020", width: "100%" }}>
+                                            <Row className="text-center" styke={{ height: "100%" }}>
+                                                <Col className="createEventFormCol">
+                                                    <br />
+                                                    <h2 className="createEventFormLabel">Where will your event be located?</h2>
+                                                    <Row className='justify-content-center'><Form.Control id="location" style={{ marginTop: "5%", width: "33%" }} className='eventInput' onChange={handleChange} /></Row> <br />
+                                                </Col>
+                                            </Row>
+                                        </Container>
+                                    </Collapse>
+                                    <Collapse in={open4}>
+                                        <Container fluid className="text-center" style={{ backgroundColor: "#202020", width: "100%" }}>
+                                            <Row className="text-center" styke={{ height: "100%" }}>
+                                                <Col className="createEventFormCol">
+                                                    <br />
+                                                    <h2 className="createEventFormLabel">How would you describe your event?</h2>
+                                                    <Row className='justify-content-center'><Form.Control id="description" as="textarea" style={{ marginTop: "5%", width: "50%", height: "100px" }} className='eventInput' onChange={handleChange} /></Row> <br />
+                                                </Col>
+                                            </Row>
+                                        </Container>
+                                    </Collapse>
+                                    <Collapse in={open5} fluid className="text-center">
+                                        <Container fluid className="text-center" style={{ backgroundColor: "#202020", width: "100%" }}>
+                                            <Row className="text-center" styke={{ height: "100%" }}>
+                                                <Col className="createEventFormCol">
+                                                    <br />
+                                                    <h2 className="createEventFormLabel">How much will your event cost?</h2>
+                                                    <Row className='justify-content-center'><Form.Control id="price" style={{ marginTop: "5%", width: "33%" }} className='eventInput' onChange={handleChange} /></Row> <br />
+                                                </Col>
+                                            </Row>
+                                        </Container>
+                                    </Collapse>
+                                    <Collapse in={open6} fluid className="text-center">
+                                        <Container fluid className="text-center" style={{ width: "100%" }}>
+                                            <Row className="text-center" style={{ height: "100%" }}>
+                                                <Col className="createEventFormCol">
+                                                    <br />
+                                                    <h2 className="createEventFormLabel"> Please Select Up to 5 Tags: </h2>
+                                                    <br />
+                                                    <Row className='justify-content-center'>
+                                                        <Container style={{ width: "70%", marginLeft: "0px", marginRight: "0px", paddingLeft: "50px", paddingRight: "0px" }}>
+                                                            {tags.map((tag, index) =>
+                                                                <Alert id={`${tag}`} style={{ border: "1px solid transparent", width: "10%", minWidth: "140px", marginLeft: "5px", marginRight: "5px", float: "left", backgroundColor: colors[index % colors.length], color: "#ffffff" }}>
+                                                                    {tag}
+                                                                </Alert>
+                                                            )}
+                                                        </Container>
+                                                    </Row>
+                                                </Col>
+                                            </Row>
+                                        </Container>
+                                    </Collapse>
+                                    <Collapse in={open7} fluid className="text-center">
+                                        <Container fluid className="text-center" style={{ width: "100%" }}>
+                                            <Row className="text-center">
+                                                <Col className="createEventFormCol">
+                                                    <br />
+                                                    <h2 className="createEventFormLabel">Please select an icon for your event</h2>
+                                                    <br />
+                                                    <Row className='justify-content-center'>
+                                                        <Container style={{ width: "75%" }}>
+                                                            {icons.map(icon =>
+                                                                <Image src={"eventIcons/" + icon} className="createEventCardImg" onClick={iconSelect} id={"eventIcons/" + icon} roundedCircle />
+                                                            )}
+                                                        </Container>
+                                                    </Row>
+                                                    <br />
+                                                </Col>
+                                            </Row>
+                                        </Container>
+                                    </Collapse>
+                                    <Collapse in={open8} fluid className="text-center">
+                                        <Container fluid className="text-center" style={{ width: "100%" }}>
+                                            <Row className="text-center">
+                                                <Col className="createEventFormCol">
+                                                    <br />
+                                                    <h2 className="createEventFormLabel">Summary</h2> <br />
+                                                    <Row className='justify-content-center'>
+                                                        <Card className="eventsCard">
+                                                            <Container flex>
+                                                                <Row className="cardRow">
+                                                                    <Col className="imgCol" lg="2">
+                                                                        <Card.Img src={selectedIcon} className="cardImg"></Card.Img>
+                                                                    </Col>
+                                                                    <Col className="infoCol" >
+                                                                        <Row className="infoRow" style={{ textAlign: "left" }}>
+                                                                            <img className="cardIcon" src="icons/locationPin.png"></img>
+                                                                            <div className="infoLabel">{eventLocation}</div>
+                                                                            <img className="cardIcon" src="icons/calendar.png"></img>
+                                                                            <div className="infoLabel">{eventDateTime}</div>
+                                                                        </Row>
+                                                                        <Row className="infoRow" style={{ textAlign: "left" }}>
+                                                                            <img className="cardIcon" src="icons/pound.png"></img>
+                                                                            <div className="infoLabel">{eventPrice}</div>
+                                                                            <img className="cardIcon" src="icons/avatar.png"></img>
+                                                                            <div className="infoLabel">You</div>
+                                                                        </Row>
+                                                                    </Col>
+                                                                </Row>
+                                                                <br />
+                                                                <Row className="cardTitleRow" style={{ textAlign: "left" }}>
+                                                                    <Card.Title className="cardTitle">{eventName}</Card.Title>
+                                                                </Row>
+                                                                <br />
+                                                            </Container>
+                                                            <Card.Body className="cardBody" style={{ textAlign: "left" }}>
+                                                                <Card.Text className="cardText">{eventDescription}</Card.Text>
+                                                            </Card.Body>
+                                                            <Row className="buttonRow">
+
+                                                            </Row>
+                                                        </Card>
+                                                    </Row>
+                                                    <br />
+                                                </Col>
+                                            </Row>
+                                        </Container>
+                                    </Collapse>
+                                    <Container fluid className="text-center" style={{ width: "100%" }}>
+                                        <Row className="text-center" style={{ height: "100%" }}>
+                                            <Col style={{ width: "33%", height: "100%" }} className='justify-content-center'>
+                                                <br />
+                                                <Button variant="outline-primary" id="formButton" className="formButton" onClick={buttonHandler} style={{ backgroundColor: "#252526", width: "33%", color: "#ffffff", height: "50px", fontSize: "20px", borderColor: "#18cdc6" }}>{buttonLabel}</Button>
+                                            </Col>
+                                        </Row>
+                                    </Container>
+                                </Col>
+                            </Row>
+
+                        </Container>
+                    </Row>
                 </Row>
-                </Row>
-                
-                </html>
-            </>
+
+            </html>
+        </>
     );
 }
 
