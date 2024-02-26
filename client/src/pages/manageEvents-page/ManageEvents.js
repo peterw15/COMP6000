@@ -32,8 +32,6 @@ function ManageEvents() {
     const [eventLocation, setEventLocation] = useState();
     const [eventPrice, setEventPrice] = useState();
     const [eventDT, setEventDT] = useState();
-    const [eventDate, setEventDate] = useState("");
-    const [eventTime, setEventTime] = useState("");
 
     const navigate = useNavigate();
     useEffect(() => { getMyEvents(); }, [events])
@@ -49,8 +47,6 @@ function ManageEvents() {
             }
         });
     }, [])
-
-
 
     const getMyEvents = () => {
         Axios.post('http://localhost:3001/myCreatedEvents').then(res => {
@@ -121,15 +117,22 @@ function ManageEvents() {
 
     function updateEvent() {
 
-        if (document.getElementById("EventName").value.length > 0) { setEventName(document.getElementById("EventName").value) };
-        if (document.getElementById("EventDescription").value.length > 0) { setEventDescription(document.getElementById("EventDescription").value) };
-        if (document.getElementById("EventLocation").value.length > 0) { setEventLocation(document.getElementById("EventLocation").value) };
-        if (document.getElementById("EventPrice").value.length > 0) { setEventPrice(document.getElementById("EventPrice").value) };
-        if ((document.getElementById("EventDate") !== null) && (document.getElementById("EventTime") !== null)) { setEventDT(document.getElementById("EventDate").value + " " + document.getElementById("EventTime").value) };
+        let ename, edesc, elocation, eprice;
+        let edate = new Date();
 
-        console.log(eventName)
+        if (document.getElementById("EventName").value.length > 0) { ename = document.getElementById("EventName").value } else { ename = eventName };
+        if (document.getElementById("EventDescription").value.length > 0) { edesc = document.getElementById("EventDescription").value } else { edesc = eventDescription };
+        if (document.getElementById("EventLocation").value.length > 0) { elocation = document.getElementById("EventLocation").value } else { elocation = eventLocation };
+        if (document.getElementById("EventPrice").value.length > 0) { eprice = document.getElementById("EventPrice").value } else { eprice = eventPrice };
+        if ((document.getElementById("EventDate").value !== "") && (document.getElementById("EventTime").value !== "")) { edate = new Date(document.getElementById("EventDate").value + " " + document.getElementById("EventTime").value); edate = edate.toISOString().slice(0, 19).replace('T', ' '); } else { edate = eventDT };
 
-        Axios.post('http://localhost:3001/updateEvent', { eventID: chosenEvent.EventID, eventName: eventName, eventDescription: eventDescription, eventPrice: eventPrice, eventLocation: eventLocation, eventDate: eventDT })
+
+
+        scriptFunction(ename, edesc, elocation, eprice, edate);
+    }
+
+    function scriptFunction(ename, edesc, elocation, eprice, edate) {
+        Axios.post('http://localhost:3001/updateEvent', { eventID: chosenEvent.EventID, eventName: ename, eventDescription: edesc, eventPrice: eprice, eventLocation: elocation, eventDateTime: edate })
         setShow(false);
     }
 
