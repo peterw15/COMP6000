@@ -100,10 +100,11 @@ function EventsPage() {
     const [listState, setListState] = useState([]);
 
     return (
-        <html className="eventHtml" style={{ backgroundImage: `url(${background})`, minHeight: "1080px", backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed" }}>
+        <html className="eventHtml" style={{ backgroundImage: `url(${background})`, minHeight: "1080px", backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed", fontFamily: "roboto" }}>
+        <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'/>  
             <HeaderBar></HeaderBar>
             <Container className="mainContainer">
-                <div className="eventsHeader"> Events </div>
+                <div className="eventsHeader" style={{fontFamily: "roboto"}}> Events </div>
                 <Row classname="mainRow">{listState}</Row>
             </Container>
         </html>

@@ -1,4 +1,4 @@
-import './createEventPageStylesheet.css';
+import './createEventPageStyleSheet.css';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
 import { Link } from "react-router-dom";
@@ -293,8 +293,8 @@ function CreateEventPage() {
 
     return (
         <>
-            <html style={{ height: "3200px", backgroundImage: `url(${background})`, backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed" }} className='justify-content-center'>
-
+            <html style={{ height: "3200px", backgroundImage: `url(${background})`, backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed", fontFamily: "roboto" }} className='justify-content-center'>
+            <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'/>  
                 <HeaderBar></HeaderBar>
                 <Row style={{ width: "100%", height: "100%" }} className='justify-content-center'>
                     <Row style={{ width: "80%", height: "100%" }} className="createEventbackground">
