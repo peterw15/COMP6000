@@ -18,6 +18,13 @@ import background from './background3.png';
 
 var index = 0;
 
+const checkState = {
+    Academic: false, Arts: false, Drinking: false, Mindfulness: false, Music: false, Off_Campus: false, On_Campus: false,
+    Outdoors: false, Science: false, Social: false, Sports: false
+};
+
+var checkedBoxes = 0;
+
 function CreateEventPage() {
 
     const navigate = useNavigate();
@@ -39,52 +46,6 @@ function CreateEventPage() {
         });
     })
 
-    var checkedBoxes = 0;
-
-    function onCheckboxChange(event) {
-        const target = event.target;
-        const label = target.id;
-        console.log(label);
-        var add = false;
-        if (checkState[label] == false) {
-            console.log("YES");
-            checkState[label] = true;
-            checkedBoxes++;
-            console.log(checkedBoxes);
-        }
-        else if (checkState[label] == true) {
-            checkState[label] = false;
-            checkedBoxes--;
-            console.log(checkedBoxes);
-        }
-
-        if (checkedBoxes == 5) {
-            disableChecks();
-        }
-        else if (checkedBoxes == 4) {
-            enableChecks();
-        }
-
-    }
-
-    function disableChecks() {
-        for (let i = 0; i < tags.length; i++) {
-            const element = document.getElementById(tags[i]);
-            if (!checkState[element.id]) {
-                element.disabled = true;
-            }
-        }
-    }
-
-    function enableChecks() {
-        for (let i = 0; i < tags.length; i++) {
-            const element = document.getElementById(tags[i]);
-            if (element.disabled) {
-                element.disabled = false;
-            }
-        }
-    }
-
     function gatherTags() {
         const trueTags = [];
         for (let i = 0; i < tags.length; i++) {
@@ -102,14 +63,10 @@ function CreateEventPage() {
     const colors = ['#3B7F89', '#E84849', '#4ABC96', '#49A0AE', '#E84849', '#65A844', '#6EC2CB', '#6CC077', '#089283', '#ED3351'
         , '#F37C2A'];
 
-    const checkState = {
-        Academic: false, Arts: false, Drinking: false, Mindfulness: false, Music: false, Off_Campus: false, On_Campus: false,
-        Outdoors: false, Science: false, Social: false, Sports: false
-    };
-
     function createEvent() {
 
         const finalTags = gatherTags();
+        console.log(finalTags);
 
         const eventName = document.getElementById('eventName').value;
         const eventDateTime = eventDate + " " + eventTime + ":00";
@@ -142,13 +99,6 @@ function CreateEventPage() {
 
     const ref = useRef(0);
 
-    const onNext = () => {
-        ref.current.next();
-    }
-
-    const onPrev = () => {
-        ref.current.prev();
-    }
 
     const [eventName, setEventName] = useState("");
     const [eventDate, setEventDate] = useState("");
@@ -189,6 +139,17 @@ function CreateEventPage() {
         }
         else if (buttonSubmit) {
             createEvent();
+        }
+    }
+
+    function onTagSelect(event) {
+        var tagId = event.target.id;
+        checkState[tagId] = !checkState[tagId];
+        if(checkState[tagId]) {
+            event.target.style.borderColor = "#18cdc6";
+        }
+        else {
+            event.target.style.borderColor = "transparent";
         }
     }
 
@@ -381,12 +342,12 @@ function CreateEventPage() {
                                             <Row className="text-center" style={{ height: "100%" }}>
                                                 <Col className="createEventFormCol">
                                                     <br />
-                                                    <h2 className="createEventFormLabel"> Please Select Up to 5 Tags: </h2>
+                                                    <h2 className="createEventFormLabel"> Please Select Your Interests: </h2>
                                                     <br />
                                                     <Row className='justify-content-center'>
                                                         <Container style={{ width: "70%", marginLeft: "0px", marginRight: "0px", paddingLeft: "50px", paddingRight: "0px" }}>
                                                             {tags.map((tag, index) =>
-                                                                <Alert id={`${tag}`} style={{ border: "1px solid transparent", width: "10%", minWidth: "140px", marginLeft: "5px", marginRight: "5px", float: "left", backgroundColor: colors[index % colors.length], color: "#ffffff" }}>
+                                                                <Alert id={`${tag}`} style={{ border: "5px solid transparent", padding: "5px",width: "10%", minWidth: "140px", marginLeft: "5px", marginRight: "5px", float: "left", backgroundColor: colors[index % colors.length], color: "#ffffff" }} onClick={onTagSelect}>
                                                                     {tag}
                                                                 </Alert>
                                                             )}
