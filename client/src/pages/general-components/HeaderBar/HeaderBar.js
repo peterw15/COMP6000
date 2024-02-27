@@ -61,9 +61,9 @@ export default function HeaderBar(props) {
                             <Nav>
                                 <NavDropdown id="nav-dropdown-dark-example" title="Events" menuVariant="dark" >
                                     <NavDropdown.Item href="events">Browse Events</NavDropdown.Item>
-                                    <NavDropdown.Item href="joinedevents">Your Joined Events</NavDropdown.Item>
+                                    <NavDropdown.Item href="joinedevents">Joined Events</NavDropdown.Item>
                                     <NavDropdown.Item href="createevent">Create Event </NavDropdown.Item>
-                                    <NavDropdown.Item href="manageevents">Manage My Events</NavDropdown.Item>
+                                    <NavDropdown.Item href="manageevents">Manage Events</NavDropdown.Item>
                                 </NavDropdown>
                             </Nav>
                             <Nav>
