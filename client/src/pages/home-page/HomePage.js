@@ -50,7 +50,7 @@ function HomePage(props) {
       <html className="eventHtml" style={{ backgroundImage: `url(${background})`, minHeight: "1080px", backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed"  }}>
         <HeaderBar /> <br /> <br /> <br /> <br /> <br />
         <Container className="mainContainer">
-          <div className="eventsHeader"> Home! </div>
+          <div className="eventsHeader"> Home</div>
           <Row classname="mainRow">{ }</Row>
           <div class="nextEvent">
             <h2 class="headerText">Your Next Event!</h2>
