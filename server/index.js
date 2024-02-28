@@ -288,15 +288,24 @@ app.post('/api/search', async (req, res) => {
     const searchTerm = req.body.searchTerm;
 
     const query = `
-    SELECT * FROM Event 
+    SELECT 
+      Event.*,
+      User.firstName AS organiserFirstName,
+      User.lastName AS organiserLastName
+    FROM 
+      Event 
+    JOIN 
+      User 
+    ON 
+      Event.organiser = User.UserID
     WHERE 
       eventName LIKE '%${searchTerm}%' OR
       description LIKE '%${searchTerm}%' OR
       location LIKE '%${searchTerm}%' OR
-      organiser LIKE '%${searchTerm}%' OR
+      User.firstName LIKE '%${searchTerm}%' OR
+      User.lastName LIKE '%${searchTerm}%' OR
       price LIKE '%${searchTerm}%'
   `;
-
 
     connection.query(query, (err, results) => {
       if (err) {
@@ -312,6 +321,7 @@ app.post('/api/search', async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
 
 
 app.post('/infoFromID', (req, res) => {

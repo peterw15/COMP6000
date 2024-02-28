@@ -1,78 +1,236 @@
 .searchPage {
-    background-color: rgb(46, 46, 46);
     font-family: Arial, Helvetica, sans-serif;
     width: 100%;
-    height: 100%vh;
-      justify-content: center;
-  text-align: center;
-}
-
-.searchPageHeader {
-    text-align: center;
-    color: hsl(0, 0%, 100%);
-    font-size: 70px;
-    font-weight: 700;
-}
-
-.searchPageSubHeader {
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
-.searchPageForm {
-    text-align: center;
-    color: hsl(0, 0%, 100%);
-}
-
-.searchPageFormInput {
-    outline: none;
-    background-color: hsl(0, 0%, 0%);
-    border: 1px solid hsl(0, 0%, 0%);
-    border-radius: 0.25em;
-    color: hsl(0, 0%, 0%);
-    font-size: 25px;
-    text-align: center;
+    min-height: 100vh;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center !important;
+    background-color: #252526;
+    color: #ffffff;
+  }
+  
+  .searchPageHeader {
+    font-size: 80px;
+    font-weight: bold;
     margin-bottom: 20px;
-}
-
-.searchPageButton {
-    background-color: hsl(0, 0%, 0%);
-    color: hsl(0, 0%, 100%);
-    font-weight: 700;
-    font-size: 100%;
-    width: 10%;
-    height: 15%;
-    padding: 10px;
-    margin: 15px;
-    border: 1px solid hsl(0, 0%, 100%);
-    border-radius: 0.25em;
-    cursor: pointer;
-}
-
-.searchPageResults {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.searchPageResults th,
-.searchPageResults td {
-    padding: 8px;
-    border: 1px solid #000000;
-}
-
-.searchPageResults th {
-    text-align: center;
-    background-color: #000000;
-}
-
-.searchPageFormInput {
+  }
+  
+  .searchPageForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .searchPageFormInput {
     outline: none;
-    background-color: hsl(0, 0%, 0%);
-    border: 1px solid hsl(0, 0%, 100%);
+    background-color: #202020;
+    border: 1px solid #18cdc6;
     border-radius: 0.25em;
-    color: hsl(231, 77%, 78%);
+    color: #ffffff;
     font-size: 25px;
     text-align: center;
     margin-bottom: 20px;
     width: 300px;
+  }
+  
+  .searchPageButton {
+    background-color: #252526;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 16px;
+    width: 200px;
+    height: 50px;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #18cdc6;
+    border-radius: 0.25em;
+    cursor: pointer;
+  }
+  
+  .searchPageResults {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .searchPageResults p {
+    margin: 20px;
+  }
+  
+  .searchPageResults .container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  .searchPageDropDown {
+    margin-top: 20px;
+}
+
+.searchPageDropDown label {
+    margin-right: 10px;
+    color: #ffffff;
+}
+
+.searchPageDropDown select {
+    background-color: #202020;
+    color: #ffffff;
+    border: 1px solid #18cdc6;
+    border-radius: 0.25em;
+    padding: 8px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.searchPageDropDown select option {
+    background-color: #202020;
+    color: #ffffff;
+}
+
+  
+.eventsCard {
+  min-width: 600px !important;
+  width:46% !important;
+  background-color: #202020 !important;  
+  color : #202020 !important;
+  border-color: #202020 !important;
+  margin-bottom: 40px;
+  margin-left: 35px !important;
+  padding: 0px !important;
+}
+
+.cardBody {
+  background-color: #18cdc6;
+  font-weight:500;
+  width: 97% !important;
+  margin : auto;
+}
+
+.cardText {
+  background-color: #18cdc6;
+  color: #202020 !important;
+  
+
+}
+
+.cardText {
+  color: #18cdc6;
+}
+
+.cardTitle {
+  color: #ffffff !important;
+  margin-top: 10px !important;
+  margin-bottom: 0px !important;
+  font-size: 30px !important;
+  padding-right: 0px !important;
+  padding-left: 12px !important;
+  
+}
+
+.cardTitleRow {
+  color: #ffffff !important;
+  margin-top: 10px !important;
+  margin-bottom: 0px !important;
+  font-size: 30px !important;
+  padding-right: 0px !important;
+  padding-left: 10px !important;
+  width: 97%;
+  margin : auto;
+}
+
+.cardImg {
+  width:85px !important;
+  height:85px !important;
+  padding: 0px !important;
+  margin-top: 20px !important;
+}
+
+.selectedCardImg {
+  width:85px !important;
+  height:85px !important;
+  padding: 0px !important;
+  margin-top: 20px !important;
+  border: 1px solid #18cdc6 !important;
+}
+
+.cardRow {
+  margin : 0px;
+  width: 100%;
+}
+
+.imgCol {
+  width: 100px !important;
+  padding: 0px !
+}
+
+.subHeading {
+  color:#18cdc6 !important;
+  margin: 0;
+}
+
+.infoRow {
+  height:45% !important;
+  margin-left: 20px !important;
+  margin-top: 20px !important;
+}
+
+.infoCol {
+  margin-left: 10px !important;
+  padding-left: 0px !important;
+}
+
+.cardIcon {
+  height: 25px !important;
+  width: 25px !important;
+  padding: 0px !important;
+}
+
+.joinedIcon {
+  height: 50px !important;
+  width: 50px !important;
+  padding: 0px !important;
+  margin-bottom: 10px;
+}
+
+.infoLabel {
+  color:#ffffff !important;
+  width: 40% !important;
+}
+
+.mainRow {
+  height: 100% !important;
+  width:100% !important;
+  display: grid !important;;
+}
+
+.eventsHeader {
+  Color: #ffffff;
+  margin-top: 150px;
+  margin-bottom: 100px;
+  font-size: 80px;
+  text-align: center;
+  border-top : 1px solid #18cdc6;
+  border-bottom : 1px solid #18cdc6;
+  font-weight: bold;
+
+}
+
+.buttonRow {
+  margin:0px !important;
+  width : 100%;
+  justify-content: center;
+  padding-top: 20px;
+  background-color: #202020;
+}
+
+.joinButton {
+  width: 20% !important;
+  height: 50px !important;
+  background-color: #252526 !important;
+  border-color: #18cdc6 !important;
+  color : #ffffff !important;
 }
