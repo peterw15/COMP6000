@@ -137,6 +137,10 @@ function joinEvent(EventID, button) {
                             <option value="price">Price</option>
                         </select>
                     </div>
+                    <br />
+                    <br />
+                    <br />
+                    <br />
 
                     {/* Display search results */}
                     <div className="searchPageResults">
@@ -147,8 +151,10 @@ function joinEvent(EventID, button) {
                                 ))}
                             </Container>
                         ) : (
-                            searchTerm!== '' && searched && searchResults.length === 0 &&(
-                                <p>No results found.</p>
+                            searched && searchResults.length === 0 &&(
+                                <>
+                                    <p>No results found.</p>
+                                </>
                             )
                         )}
                     </div>
