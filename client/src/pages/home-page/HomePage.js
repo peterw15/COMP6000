@@ -211,7 +211,7 @@ function HomePage(props) {
             <Carousel className='justify-content-center'>
               {popularEvents.map(event => 
                 <Carousel.Item className='justify-content-center'>
-                  <Row className='justify-content-center'>
+                  <Row className='justify-content-center' style={{paddingRight:"35px"}}>
                   {event}
                   <br />
                   </Row>

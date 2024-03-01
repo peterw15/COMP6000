@@ -100,7 +100,7 @@ app.post('/myevents', (req, res) => {
 })
 
 app.post('/popularEvents', (req, res) => {
-  const results = connection.query("select COUNT(r.EventID), e.EventID, eventName, eventDateTime, location, description, organiser, price,imageURL from Event e JOIN EventRegistration r ON e.EventID = r.EventID GROUP BY e.EventID ORDER BY COUNT(r.EventID) DESC LIMIT 5", 
+  const results = connection.query("select COUNT(r.EventID), e.EventID, eventName, eventDateTime, location, description, organiser, price,imageURL, firstName, lastName from Event e JOIN EventRegistration r ON e.EventID = r.EventID JOIN User u ON e.organiser = u.UserID GROUP BY e.EventID ORDER BY COUNT(r.EventID) DESC LIMIT 5", 
   function (err) {
     if (err) throw err;
     res.send(results._rows[0]);
@@ -108,7 +108,7 @@ app.post('/popularEvents', (req, res) => {
 })
 
 app.post('/recommendedEventByTag', (req, res) => {
-  const results = connection.query("select COUNT(et.EventID), e.EventID, eventName, eventDateTime, location, description, organiser, price,imageURL from  Event e JOIN EventTags et ON et.EventID = e.EventID JOIN UserTags ut ON ut.tag = et.tag AND ut.UserID = ? GROUP BY e.EventID ORDER BY COUNT(et.EventID) DESC LIMIT 1;", [userIDGLOBAL],
+  const results = connection.query("select COUNT(et.EventID), e.EventID, eventName, eventDateTime, location, description, organiser, price,imageURL, firstName, lastName from  Event e JOIN EventTags et ON et.EventID = e.EventID JOIN UserTags ut ON ut.tag = et.tag AND ut.UserID = ? JOIN User u ON e.organiser = u.UserID GROUP BY e.EventID ORDER BY COUNT(et.EventID) DESC LIMIT 1;", [userIDGLOBAL],
   function (err) {
     if (err) throw err;
     res.send(results._rows[0]);
@@ -117,7 +117,7 @@ app.post('/recommendedEventByTag', (req, res) => {
 
 
 app.post('/upcomingevents', (req, res) => {
-  const results = connection.query("SELECT * FROM Event INNER JOIN EventRegistration ON Event.EventID=EventRegistration.EventID WHERE EventRegistration.UserID = ? ORDER BY eventDateTime LIMIT 1", [userIDGLOBAL], function (err) {
+  const results = connection.query("SELECT * FROM Event INNER JOIN EventRegistration ON Event.EventID=EventRegistration.EventID JOIN User u ON organiser = u.UserID WHERE EventRegistration.UserID = ? ORDER BY eventDateTime LIMIT 1", [userIDGLOBAL], function (err) {
     if (err) throw err;
     res.send(results._rows[0]);
   })
