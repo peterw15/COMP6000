@@ -108,11 +108,13 @@ function joinEvent(EventID, button) {
     
     return (
         <>
+        <html className="eventHtml" style={{fontFamily: "roboto"}}>
             <HeaderBar />
+            <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'/> 
             <div className="searchPage">
                 <br />
                 <br />
-                <div className="searchPageHeader"> Search Events</div>
+                <div className="searchPageHeader" style={{fontFamily: "roboto"}}> Search Events</div>
                 <div className="searchPageForm">
                     <input
                         type="text"
@@ -126,7 +128,7 @@ function joinEvent(EventID, button) {
                     <button id="searchButton" className="searchPageButton" onClick={handleSearch}>
                         Search
                     </button>
-                    <div class="searchPageDropDown" style={{ display: searchResults.length > 0 ? 'block' : 'none' }}>
+                    <div class="searchPageDropDown" style={{ display: searchResults.length > 0 ? 'block' : 'none' , fontFamily: "roboto"}}>
                         <label htmlFor="sortBy">Sort By:</label>
                         <select id="sortBy" onChange={(e) => handleSort(e.target.value)} defaultValue="">
                             <option value="" disabled hidden>Select an option</option>
@@ -143,7 +145,7 @@ function joinEvent(EventID, button) {
                     <br />
 
                     {/* Display search results */}
-                    <div className="searchPageResults">
+                    <div className="searchPageResults" style={{fontFamily: "roboto"}}>
                         {searchResults.length > 0 ? (
                             <Container>
                                 {searchResults.map((result, index) => (
@@ -160,6 +162,7 @@ function joinEvent(EventID, button) {
                     </div>
                 </div>
             </div>
+            </html>
         </>
     );
 }

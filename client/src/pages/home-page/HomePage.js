@@ -182,7 +182,8 @@ function HomePage(props) {
 
   return (
     <>
-      <html className="eventHtml" style={{ backgroundImage: `url(${background})`, minHeight: "1080px", backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed"  }}>
+      <html className="eventHtml" style={{ backgroundImage: `url(${background})`, minHeight: "1080px", backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed", fontFamily: "roboto"}}>
+      <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'/> 
         <HeaderBar />
         <Container className="mainContainer">
           <div className="eventsHeader" style={{marginBottom: "30px", marginTop: "100px"}}> Home</div>
