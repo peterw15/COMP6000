@@ -61,18 +61,18 @@ export default function HeaderBar(props) {
                             <Nav>
                                 <NavDropdown id="nav-dropdown-dark-example" title="Events" menuVariant="dark" >
                                     <NavDropdown.Item href="events">Browse Events</NavDropdown.Item>
-                                    <NavDropdown.Item href="joinedevents">Your Joined Events</NavDropdown.Item>
+                                    <NavDropdown.Item href="joinedevents">Joined Events</NavDropdown.Item>
                                     <NavDropdown.Item href="createevent">Create Event </NavDropdown.Item>
-                                    <NavDropdown.Item href="manageevents">Manage My Events</NavDropdown.Item>
+                                    <NavDropdown.Item href="manageevents">Manage Events</NavDropdown.Item>
                                 </NavDropdown>
                             </Nav>
-                            <Nav>
+                            {/* <Nav>
                                 <NavDropdown id="nav-dropdown-dark-example" title="Societies" menuVariant="dark" >
                                     <NavDropdown.Item href="societies">Browse Societies</NavDropdown.Item>
                                     <NavDropdown.Item href="createSocieties">Create Society </NavDropdown.Item>
                                     <NavDropdown.Item href="#action/3.3">Your Joined Societies</NavDropdown.Item>
                                 </NavDropdown>
-                            </Nav>
+                            </Nav> */}
                             <Nav>
                                 <Nav.Link href="/search">Search<img src={searchIcon} class="icon"></img></Nav.Link>
                             </Nav>

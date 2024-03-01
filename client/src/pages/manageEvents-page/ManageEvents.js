@@ -167,7 +167,7 @@ function ManageEvents() {
                         </Button>
                     </Modal.Footer>
                 </Modal >
-                <div className="eventsHeader">Manage Your Created Events!</div>
+                <div className="eventsHeader">Manage Events</div>
                 <Row classname="mainRow">{events}</Row>
             </Container>
 

@@ -5,6 +5,13 @@ import Axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import HeaderBar from '../general-components/HeaderBar/HeaderBar.js';
 import { format } from 'date-fns';
+import { Card, Container, Row, Col, Button } from 'react-bootstrap';
+import thumbnail from './Images/basketball.png';
+import locationPin from './Icons/locationPin.png';
+import calendar from './Icons/calendar.png';
+import pound from './Icons/pound.png';
+import avatar from './Icons/avatar.png';
+import tick from './Icons/check-mark.png';
 
 function SearchPage() {
     const navigate = useNavigate();
@@ -14,6 +21,58 @@ function SearchPage() {
     const [organiserTerm, setOrganiserTerm] = useState('');
     const [priceTerm, setPriceTerm] = useState('');
     const [searchResults, setSearchResults] = useState([]);
+    const [searched, setSearched] = useState(false);
+
+function SearchResultCard({result}) {
+    console.log(result);
+    return (
+        <Card className="eventsCard">
+            <Container flex>
+                <Row className="cardRow">
+                    <Col className="imgCol" lg="2">
+                        <Card.Img src={result.imageURL} className="cardImg"></Card.Img>
+                    </Col>
+                    <Col className="infoCol" >
+                        <Row className="infoRow">
+                            <img className="cardIcon" src={locationPin}></img>
+                            <div className="infoLabel">{result.location}</div>
+                            <img className="cardIcon" src={calendar}></img>
+                            <div className="infoLabel">{format(new Date(result.eventDateTime), "EEE MMM dd yyyy HH:mm:ss")}</div>
+                        </Row>
+                        <Row className="infoRow">
+                            <img className="cardIcon" src={pound}></img>
+                            <div className="infoLabel">{result.price}</div>
+                            <img className="cardIcon" src={avatar}></img>
+                            <div className="infoLabel">{result.organiserFirstName} {result.organiserLastName}</div>
+                        </Row>
+                    </Col>
+                </Row>
+                <br />
+                <Row className="cardTitleRow">
+                    <Card.Title className="cardTitle">{result.eventName}</Card.Title>
+                </Row>
+                <br />
+            </Container>
+            <Card.Body className = "cardBody">
+                <Card.Text className="cardText">{result.description}</Card.Text>
+            </Card.Body>
+            <Row className="buttonRow">
+                <Button className="joinButton" id = {result.EventID + "button"} onClick={() => joinEvent(result.EventID, this)}>Join</Button>
+                <img src={tick} id ={result.EventID + "tick"} className= "joinedIcon" hidden></img>
+            </Row>
+        </Card>
+    )
+}
+
+function joinEvent(EventID, button) {
+    Axios.post('http://localhost:3001/joinEvent', {
+        EventID: EventID
+    }).then(res => {
+
+    })
+    document.getElementById(EventID + "button").hidden = true;
+    document.getElementById(EventID + "tick").hidden = false;
+}
 
     const handleSearch = async () => {
         try {
@@ -24,6 +83,7 @@ function SearchPage() {
                 organiserTerm: organiserTerm,
                 priceTerm: priceTerm
             });
+            setSearched(true); // Set searched flag to true
     
             setSearchResults(response.data.results);
         } catch (error) {
@@ -31,15 +91,20 @@ function SearchPage() {
         }
     };
 
+
+
     const handleSort = (sortBy) => {
         const sortedResults = [...searchResults].sort((a, b) => {
-            if (a[sortBy] < b[sortBy]) return -1;
-            if (a[sortBy] > b[sortBy]) return 1;
-            return 0;
+            if (sortBy === 'price') {
+                return parseFloat(a[sortBy]) - parseFloat(b[sortBy]);
+            } else {
+                if (a[sortBy] < b[sortBy]) return -1;
+                if (a[sortBy] > b[sortBy]) return 1;
+                return 0;
+            }
         });
         setSearchResults(sortedResults);
     };
-    
     
     return (
         <>
@@ -47,7 +112,7 @@ function SearchPage() {
             <div className="searchPage">
                 <br />
                 <br />
-                <div className="searchPageHeader"> Search </div>
+                <div className="searchPageHeader"> Search Events</div>
                 <div className="searchPageForm">
                     <input
                         type="text"
@@ -61,7 +126,7 @@ function SearchPage() {
                     <button id="searchButton" className="searchPageButton" onClick={handleSearch}>
                         Search
                     </button>
-                    <div class="searchPageDropDown">
+                    <div class="searchPageDropDown" style={{ display: searchResults.length > 0 ? 'block' : 'none' }}>
                         <label htmlFor="sortBy">Sort By:</label>
                         <select id="sortBy" onChange={(e) => handleSort(e.target.value)} defaultValue="">
                             <option value="" disabled hidden>Select an option</option>
@@ -72,44 +137,27 @@ function SearchPage() {
                             <option value="price">Price</option>
                         </select>
                     </div>
+                    <br />
+                    <br />
+                    <br />
+                    <br />
 
                     {/* Display search results */}
                     <div className="searchPageResults">
                         {searchResults.length > 0 ? (
-                            <table className="searchPageResults">
-                                <thead>
-                                    <tr>
-                                        <th>Event</th>
-                                        <th>Date Time</th>
-                                        <th>Location</th>
-                                        <th>Description</th>
-                                        <th>Organiser</th>
-                                        <th>Price</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {searchResults.map((result, index) => (
-                                        <tr key={index}>
-                                            <td>{result.eventName}</td>
-                                            <td>{format(new Date(result.eventDateTime), "EEEE do MMMM HH:mm")}</td>
-                                            <td>{result.location}</td>
-                                            <td>{result.description}</td>
-                                            <td>{result.organiser}</td>
-                                            <td>{"£" + result.price}</td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
+                            <Container>
+                                {searchResults.map((result, index) => (
+                                <SearchResultCard key={index} result={result} />
+                                ))}
+                            </Container>
                         ) : (
-                            <p>No results found.</p>
+                            searched && searchResults.length === 0 &&(
+                                <>
+                                    <p>No results found.</p>
+                                </>
+                            )
                         )}
                     </div>
-
-                    <Link to="/home">
-                        <button id="backToHome" className="searchPageButton">
-                            Back to Home
-                        </button>
-                    </Link>
                 </div>
             </div>
         </>

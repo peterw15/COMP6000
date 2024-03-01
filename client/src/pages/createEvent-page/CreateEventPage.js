@@ -283,7 +283,7 @@ function CreateEventPage() {
                                                 <Col className="createEventFormCol">
                                                     <br />
                                                     <h2 className="createEventFormLabel">What would you like your event to be called?</h2>
-                                                    <Row className='justify-content-center'><Form.Control type="text" id="eventName" style={{ marginTop: "5%", width: "33%" }} className='eventInput' onChange={handleChange} /></Row> <br />
+                                                    <Row className='justify-content-center'><Form.Control type="text" id="eventName" style={{ marginTop: "3%", width: "33%" }} className='eventInput' onChange={handleChange} /></Row> <br />
                                                 </Col>
                                             </Row>
                                         </Container>
@@ -295,7 +295,7 @@ function CreateEventPage() {
                                                     <br />
                                                     <h2 className="createEventFormLabel">What is the date/time of your event?</h2>
                                                     <Row className='justify-content-center'>
-                                                        <Form.Control id="eventDate" type="date" style={{ marginTop: "5%", width: "33%" }} className='eventInput' onChange={handleChange} />
+                                                        <Form.Control id="eventDate" type="date" style={{ marginTop: "3%", width: "33%" }} className='eventInput' onChange={handleChange} />
                                                     </Row> <br />
                                                     <Row className='justify-content-center'>
                                                         <Form.Control id="eventTime" type="time" style={{ width: "33%" }} className='eventInput' onChange={handleChange} />
@@ -310,7 +310,7 @@ function CreateEventPage() {
                                                 <Col className="createEventFormCol">
                                                     <br />
                                                     <h2 className="createEventFormLabel">Where will your event be located?</h2>
-                                                    <Row className='justify-content-center'><Form.Control id="location" style={{ marginTop: "5%", width: "33%" }} className='eventInput' onChange={handleChange} /></Row> <br />
+                                                    <Row className='justify-content-center'><Form.Control id="location" style={{ marginTop: "3%", width: "33%" }} className='eventInput' onChange={handleChange} /></Row> <br />
                                                 </Col>
                                             </Row>
                                         </Container>
@@ -321,7 +321,7 @@ function CreateEventPage() {
                                                 <Col className="createEventFormCol">
                                                     <br />
                                                     <h2 className="createEventFormLabel">How would you describe your event?</h2>
-                                                    <Row className='justify-content-center'><Form.Control id="description" as="textarea" style={{ marginTop: "5%", width: "50%", height: "100px" }} className='eventInput' onChange={handleChange} /></Row> <br />
+                                                    <Row className='justify-content-center'><Form.Control id="description" as="textarea" style={{ marginTop: "3%", width: "50%", height: "100px" }} className='eventInput' onChange={handleChange} /></Row> <br />
                                                 </Col>
                                             </Row>
                                         </Container>
@@ -332,7 +332,7 @@ function CreateEventPage() {
                                                 <Col className="createEventFormCol">
                                                     <br />
                                                     <h2 className="createEventFormLabel">How much will your event cost?</h2>
-                                                    <Row className='justify-content-center'><Form.Control id="price" style={{ marginTop: "5%", width: "33%" }} className='eventInput' onChange={handleChange} /></Row> <br />
+                                                    <Row className='justify-content-center'><Form.Control id="price" style={{ marginTop: "3%", width: "33%" }} className='eventInput' onChange={handleChange} /></Row> <br />
                                                 </Col>
                                             </Row>
                                         </Container>

@@ -218,15 +218,15 @@ function RegistrationPage() {
                                              <Collapse in={openStart}>
                                                 <Container fluid style={{width:"100%", height:"100%"}} className="formContainer">
                                                         <Row className="text-center" style={{height:"100%"}}>
-                                                            <Col style={{width:"33%"}} className="createEventCol"></Col>
+                                                            
                                                             <Col>
                                                             <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
                                                             </Col>
-                                                            <Col style={{width:"33%"}} className="createEventCol"></Col>
+                                                            
                                                         </Row>
                                                     </Container>
                                             </Collapse>
-                                                <h2 className="createEventHeader" style={{fontSize:"70px", margin:"0"}}>Let's Create an Account!</h2>
+                                                <h2 className="createEventHeader" style={{fontSize:"70px", margin:"0"}}>Create an Account</h2>
                                             </Container>
                                             <br />
                                             <Collapse in={open1}>

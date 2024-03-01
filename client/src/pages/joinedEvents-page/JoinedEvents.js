@@ -102,7 +102,7 @@ function MyEvents() {
         <html className="eventHtml" style={{ backgroundImage: `url(${background})`, minHeight: "1080px", backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed"  }}>
             <HeaderBar></HeaderBar>
             <Container className="mainContainer">
-                <div className="eventsHeader">Your Joined Events!</div>
+                <div className="eventsHeader">Joined Events</div>
                 <Row classname="mainRow">{events}</Row>
             </Container>
         </html>

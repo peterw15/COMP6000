@@ -99,6 +99,22 @@ app.post('/myevents', (req, res) => {
   })
 })
 
+app.post('/popularEvents', (req, res) => {
+  const results = connection.query("select COUNT(r.EventID), e.EventID, eventName, eventDateTime, location, description, organiser, price,imageURL from Event e JOIN EventRegistration r ON e.EventID = r.EventID GROUP BY e.EventID ORDER BY COUNT(r.EventID) DESC LIMIT 5", 
+  function (err) {
+    if (err) throw err;
+    res.send(results._rows[0]);
+  })
+})
+
+app.post('/recommendedEventByTag', (req, res) => {
+  const results = connection.query("select COUNT(et.EventID), e.EventID, eventName, eventDateTime, location, description, organiser, price,imageURL from  Event e JOIN EventTags et ON et.EventID = e.EventID JOIN UserTags ut ON ut.tag = et.tag AND ut.UserID = ? GROUP BY e.EventID ORDER BY COUNT(et.EventID) DESC LIMIT 1;", [userIDGLOBAL],
+  function (err) {
+    if (err) throw err;
+    res.send(results._rows[0]);
+  })
+})
+
 
 app.post('/upcomingevents', (req, res) => {
   const results = connection.query("SELECT * FROM Event INNER JOIN EventRegistration ON Event.EventID=EventRegistration.EventID WHERE EventRegistration.UserID = ? ORDER BY eventDateTime LIMIT 1", [userIDGLOBAL], function (err) {
@@ -288,15 +304,24 @@ app.post('/api/search', async (req, res) => {
     const searchTerm = req.body.searchTerm;
 
     const query = `
-    SELECT * FROM Event 
+    SELECT 
+      Event.*,
+      User.firstName AS organiserFirstName,
+      User.lastName AS organiserLastName
+    FROM 
+      Event 
+    JOIN 
+      User 
+    ON 
+      Event.organiser = User.UserID
     WHERE 
       eventName LIKE '%${searchTerm}%' OR
       description LIKE '%${searchTerm}%' OR
       location LIKE '%${searchTerm}%' OR
-      organiser LIKE '%${searchTerm}%' OR
+      User.firstName LIKE '%${searchTerm}%' OR
+      User.lastName LIKE '%${searchTerm}%' OR
       price LIKE '%${searchTerm}%'
   `;
-
 
     connection.query(query, (err, results) => {
       if (err) {
@@ -312,6 +337,7 @@ app.post('/api/search', async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
 
 
 app.post('/infoFromID', (req, res) => {

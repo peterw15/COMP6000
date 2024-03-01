@@ -87,13 +87,13 @@ function LoginPage() {
                                 </Row>
                                 <Row style={{ height: "1%" }}></Row>
                                 <Row className="text-center">
-                                    <Col></Col>
+                                    <Col style={{ width: "33%" }}></Col>
                                     <Col className="text-center" style={{alignContent: "center"}}>
                                         <Link to="/register" >
                                             <Button variant="outline-primary" id="createAccount" className="btn" style={{ height: "45px", width: "100px", fontSize: "80%", backgroundColor: "#252526", color: "#ffffff", borderColor: "#18cdc6" }}>Sign Up</Button>
                                         </Link>
                                     </Col>
-                                    <Col></Col>
+                                    <Col style={{ width: "33%" }}></Col>
                                 </Row>
                                 <Container>
                                     <Row></Row>
