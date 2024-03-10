@@ -9,7 +9,6 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
-import thumbnail from './Images/basketball.png';
 import locationPin from './Icons/locationPin.png';
 import calendar from './Icons/calendar.png';
 import pound from './Icons/pound.png';
@@ -62,7 +61,7 @@ function ManageEvents() {
                         <Container flex>
                             <Row className="cardRow">
                                 <Col className="imgCol" lg="2">
-                                    <Card.Img src={thumbnail} className="cardImg"></Card.Img>
+                                    <Card.Img src={i.imageURL} className="cardImg"></Card.Img>
                                 </Col>
                                 <Col className="infoCol" >
                                     <Row className="infoRow">
@@ -137,7 +136,8 @@ function ManageEvents() {
     }
 
     return (
-        <html className="eventHtml" style={{ backgroundImage: `url(${background})`, minHeight: "1080px", backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed" }}>
+        <html className="eventHtml" style={{ backgroundImage: `url(${background})`, minHeight: "1080px", backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed", fontFamily: "roboto" }}>
+        <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'/>  
             <HeaderBar></HeaderBar>
             <Container className="mainContainer">
                 <Modal show={show} onHide={handleClose} size="lg">

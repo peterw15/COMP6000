@@ -254,7 +254,7 @@ function CreateEventPage() {
 
     return (
         <>
-            <html style={{ height: "3200px", backgroundImage: `url(${background})`, backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed", fontFamily: "roboto" }} className='justify-content-center'>
+            <html style={{ height: "3200px", backgroundImage: `url(${background})`, backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed", fontFamily: "roboto" }}>
             <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'/>  
                 <HeaderBar></HeaderBar>
                 <Row style={{ width: "100%", height: "100%" }} className='justify-content-center'>
@@ -342,7 +342,7 @@ function CreateEventPage() {
                                             <Row className="text-center" style={{ height: "100%" }}>
                                                 <Col className="createEventFormCol">
                                                     <br />
-                                                    <h2 className="createEventFormLabel"> Please Select Your Interests: </h2>
+                                                    <h2 className="createEventFormLabel"> Please Select Some Tags: </h2>
                                                     <br />
                                                     <Row className='justify-content-center'>
                                                         <Container style={{ width: "70%", marginLeft: "0px", marginRight: "0px", paddingLeft: "50px", paddingRight: "0px" }}>
