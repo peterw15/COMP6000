@@ -115,6 +115,24 @@ app.post('/recommendedEventByTag', (req, res) => {
   })
 })
 
+const { exec } = require("child_process");
+
+app.post('/runPythonScript', (req, res) => {
+  exec("python comp6000/server/database/discover_k.py", (error, stdout, stderr) => {
+    if (error) {
+      console.error(`exec error: ${error}`);
+      return res.status(500).send(`Error executing Python script: ${stderr}`);
+    }
+    try {
+      const output = JSON.parse(stdout);
+      res.send(output);
+    } catch (parseError) {
+      res.status(500).send("Error parsing Python script output: " + parseError.message);
+    }
+  });
+});
+
+
 
 app.post('/upcomingevents', (req, res) => {
   const results = connection.query("SELECT * FROM Event INNER JOIN EventRegistration ON Event.EventID=EventRegistration.EventID JOIN User u ON organiser = u.UserID WHERE EventRegistration.UserID = ? ORDER BY eventDateTime LIMIT 1", [userIDGLOBAL], function (err) {
