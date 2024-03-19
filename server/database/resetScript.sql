@@ -1,9 +1,11 @@
 DROP TABLE IF EXISTS EventRegistration;
 DROP TABLE IF EXISTS EventTags;
 DROP TABLE IF EXISTS Event;
+DROP TABLE IF EXISTS UserTags;
 DROP TABLE IF EXISTS User;
-DROP TABLE IF EXISTS Societies;
 DROP TABLE IF EXISTS societiesTag;
+DROP TABLE IF EXISTS Societies;
+
 
 CREATE TABLE User (
   UserID bigint unsigned NOT NULL AUTO_INCREMENT,
@@ -53,13 +55,12 @@ CREATE TABLE UserTags (
 );
 
 CREATE TABLE Societies (
-    SocietiesID INT PRIMARY KEY AUTO_INCREMENT,
+    SocietyID INT PRIMARY KEY AUTO_INCREMENT,
     socName VARCHAR(255) NOT NULL,
-    socDateTime DATETIME NOT NULL,
     socLocation VARCHAR(255),
     socDescription TEXT,
-    socOrganiser VARCHAR(100),
-    socPrice DECIMAL(10, 2),
+    socPresident VARCHAR(100) NOT NULL,
+    socPrice DECIMAL(10, 2) NOT NULL,
     socLink VARCHAR(255)
 );
 

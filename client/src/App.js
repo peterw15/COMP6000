@@ -7,7 +7,8 @@ import EventsPage from "./pages/events-page/EventsPage";
 import JoinedEvents from "./pages/joinedEvents-page/JoinedEvents";
 import CreateEventPage from "./pages/createEvent-page/CreateEventPage";
 import SearchPage from "./pages/search-page/searchPage";
-import CreateSocietiesPage from "./pages/createSocieties-page/CreateSocietiesPage"; 
+import CreateSocietiesPage from "./pages/createSocieties-page/CreateSocietiesPage";
+import SocietyPage from "./pages/society-Page/SocietyPage";
 import ManageEvents from "./pages/manageEvents-page/ManageEvents";
 
 
@@ -27,6 +28,7 @@ function App() {
             <Route path="/createevent" element={<CreateEventPage />} />
             <Route path="/search" element={<SearchPage />} />
             <Route path="/createSocieties" element={<CreateSocietiesPage />} />
+            <Route path="/society" element={<SocietyPage />} />
             <Route path="/manageevents" element={<ManageEvents />} />
         </Routes>
     )
