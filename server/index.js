@@ -107,18 +107,18 @@ app.post('/popularEvents', (req, res) => {
   })
 })
 
-app.post('/recommendedEventByTag', (req, res) => {
-  const results = connection.query("select COUNT(et.EventID), e.EventID, eventName, eventDateTime, location, description, organiser, price,imageURL, firstName, lastName from  Event e JOIN EventTags et ON et.EventID = e.EventID JOIN UserTags ut ON ut.tag = et.tag AND ut.UserID = ? JOIN User u ON e.organiser = u.UserID GROUP BY e.EventID ORDER BY COUNT(et.EventID) DESC LIMIT 1;", [userIDGLOBAL],
-  function (err) {
-    if (err) throw err;
-    res.send(results._rows[0]);
-  })
-})
+// app.post('/recommendedEventByTag', (req, res) => {
+//   const results = connection.query("select COUNT(et.EventID), e.EventID, eventName, eventDateTime, location, description, organiser, price,imageURL, firstName, lastName from  Event e JOIN EventTags et ON et.EventID = e.EventID JOIN UserTags ut ON ut.tag = et.tag AND ut.UserID = ? JOIN User u ON e.organiser = u.UserID GROUP BY e.EventID ORDER BY COUNT(et.EventID) DESC LIMIT 1;", [userIDGLOBAL],
+//   function (err) {
+//     if (err) throw err;
+//     res.send(results._rows[0]);
+//   })
+// })
 
 const { exec } = require("child_process");
 
 app.post('/runPythonScript', (req, res) => {
-  exec("python comp6000/server/database/discover_k.py", (error, stdout, stderr) => {
+  exec("python3 /Users/lukeelliott/Documents/GitHub/COMP6000/server/database/discover_k.py", (error, stdout, stderr) => {
     if (error) {
       console.error(`exec error: ${error}`);
       return res.status(500).send(`Error executing Python script: ${stderr}`);

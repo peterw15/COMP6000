@@ -6,6 +6,8 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from flask import Flask, jsonify, request
 from sklearn.decomposition import PCA
+import numpy as np
+import json
 
 
 # Flask web app for frontend
@@ -131,41 +133,34 @@ def fetch_events_from_db():
 
 
 
+
 def visualize_clusters_pca(df, event_tags_matrix, kmeans):
-    # Reduce the dimensionality of the event tags matrix to 2 components for visualization
+    # Assuming PCA has been performed and we have a 2D projection of our data
     pca = PCA(n_components=2)
-    principalComponents = pca.fit_transform(event_tags_matrix)
-    
-    # Create a DataFrame with the principal components and cluster labels
-    pca_df = pd.DataFrame(data=principalComponents, columns=['Principal Component 1', 'Principal Component 2'])
-    pca_df['Cluster'] = df['Cluster'].values
-    
-    # Plotting the 2D projection 
+    reduced_data = pca.fit_transform(event_tags_matrix)
+
+    # Create a new DataFrame for plotting that includes PCA components, user IDs, and cluster labels
+    plot_df = pd.DataFrame(reduced_data, columns=['PC1', 'PC2'])
+    plot_df['UserID'] = df['UserID'].values
+    plot_df['Cluster'] = kmeans.labels_
+
+    # Plotting each user's data point
     plt.figure(figsize=(10, 8))
-    colors = ['r', 'g', 'b', 'y', 'c', 'm']
-    for cluster in range(kmeans.n_clusters):
-        cluster_subset = pca_df[pca_df['Cluster'] == cluster]
-        plt.scatter(cluster_subset['Principal Component 1'], cluster_subset['Principal Component 2'], s=100, c=colors[cluster], label=f'Cluster {cluster}')
-    
-    plt.title('Clusters of Users Based on Event Tags (PCA-reduced)')
+    sns.scatterplot(x='PC1', y='PC2', hue='Cluster', style='Cluster', s=100, data=plot_df, palette='viridis', alpha=0.5)
+
+    # Plotting centroids
+    centroids = pca.transform(kmeans.cluster_centers_)
+    plt.scatter(centroids[:, 0], centroids[:, 1], marker='X', s=200, c='red', label='Centroids')
+
+    # Adding annotations for a few points to avoid overcrowding (optional, can adjust the condition)
+    for i, row in plot_df.iterrows():
+        if i % 10 == 0:  # Adjust this condition to reduce/increase labels
+            plt.text(row['PC1'], row['PC2'], str(row['UserID']), color='black', ha='right', va='bottom')
+
     plt.xlabel('Principal Component 1')
     plt.ylabel('Principal Component 2')
+    plt.title('Clusters of Users Based on Event Tags (PCA-reduced)')
     plt.legend()
-    plt.show()
-    
-    # Creating a heatmap to visualize the distances or similarities between clusters
-    # Calculate the centroids of each cluster in the PCA-reduced space
-    centroids = kmeans.cluster_centers_
-    reduced_centroids = pca.transform(centroids)
-    
-    # Compute the pairwise distances between cluster centroids
-    from scipy.spatial.distance import pdist, squareform
-    distances = squareform(pdist(reduced_centroids, 'euclidean'))
-    
-    # Plotting the heatmap of distances
-    plt.figure(figsize=(8, 6))
-    sns.heatmap(distances, annot=True, fmt=".2f", cmap='viridis', xticklabels=[f'Cluster {i}' for i in range(kmeans.n_clusters)], yticklabels=[f'Cluster {i}' for i in range(kmeans.n_clusters)])
-    plt.title('Heatmap of Distances Between Cluster Centroids')
     plt.show()
 
     
