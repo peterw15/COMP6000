@@ -95,11 +95,38 @@ app.post('/societies', (req, res) => {
 
 app.post('/getSocietyInfo', (req,res) => {
   const {SocietyID} = req.body;
-  const results = connection.query("SELECT * FROM Societies WHERE SocietyID = ?", [SocietyID], function (err) {
+  const results = connection.query("SELECT * FROM Society s JOIN User u ON s.socPresident = u.UserID WHERE SocietyID = ?", [SocietyID], function (err) {
     if (err) throw err;
     res.send(results._rows[0]);
   })
 })
+
+app.post('/getSocietyEvents', (req,res) => {
+  const {SocietyID} = req.body;
+  const results = connection.query("SELECT * FROM Event e JOIN User u ON e.organiser = u.UserID WHERE societyID = ?", [SocietyID], function (err) {
+    if (err) throw err;
+    res.send(results._rows[0]);
+  })
+})
+
+app.post('/getSocietyMembers', (req,res) => {
+  const {SocietyID} = req.body;
+  const results = connection.query("SELECT * FROM User u JOIN SocietyRegistration s ON u.UserID = s.UserID WHERE societyID = ?", [SocietyID], function (err) {
+    if (err) throw err;
+    res.send(results._rows[0]);
+  })
+})
+
+app.post('/joinSociety', (req,res) => {
+  const {SocietyID} = req.body;
+  const results = connection.query("INSERT INTO SocietyRegistration VALUES (?,?)", [SocietyID, userIDGLOBAL], function (err) {
+    if (err) throw err;
+    res.send(results._rows[0]);
+  })
+})
+
+
+
 
 
 app.post('/myevents', (req, res) => {

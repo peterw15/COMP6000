@@ -29,8 +29,10 @@
 .societyHeader {
     color: #ffffff;
     font-size: 40px;
-    width: 100%;
+    width: 90% !important;
+    padding-bottom: 5px;
     text-align: center;
+    border-bottom: 1px solid #18cdc6;
 }
 
 .joinSocietyButton {

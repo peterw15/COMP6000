@@ -4,8 +4,9 @@ DROP TABLE IF EXISTS comp6000_09.EventTags;
 DROP TABLE IF EXISTS comp6000_09.Event;
 DROP TABLE IF EXISTS comp6000_09.User;
 DROP TABLE IF EXISTS comp6000_09.UserTags;
-DROP TABLE IF EXISTS comp6000_09.Societies;
-DROP TABLE IF EXISTS comp6000_09.societiesTag;
+DROP TABLE IF EXISTS comp6000_09.Society;
+DROP TABLE IF EXISTS comp6000_09.SocietyTags;
+DROP TABLE IF EXISTS comp6000_09.SocietyRegistration;
 SET FOREIGN_KEY_CHECKS = 1;
 
 CREATE TABLE User (
@@ -19,6 +20,16 @@ CREATE TABLE User (
   UNIQUE KEY `UserID` (`UserID`)
 );
 
+CREATE TABLE Society (
+    SocietyID INT PRIMARY KEY AUTO_INCREMENT,
+    socName VARCHAR(255) NOT NULL,
+    socLocation VARCHAR(255) NOT NULL,
+    socDescription TEXT NOT NULL,
+    socPresident VARCHAR(100) NOT NULL,
+    socPrice DECIMAL(10, 2),
+    socLink VARCHAR(255)
+);
+
 CREATE TABLE Event (
   EventID bigint unsigned NOT NULL AUTO_INCREMENT,
   eventName varchar(50) NOT NULL,
@@ -28,9 +39,11 @@ CREATE TABLE Event (
   organiser bigint unsigned NOT NULL,
   price decimal(10,2) NOT NULL,
   imageURL varchar(50) NOT NULL DEFAULT 'eventIcons/pin.png',
+  societyID INT,
   UNIQUE (eventName, eventDateTime, location, organiser),
   PRIMARY KEY (EventID),
-  FOREIGN KEY (organiser) REFERENCES User (UserID)
+  FOREIGN KEY (organiser) REFERENCES User (UserID),
+  FOREIGN KEY (societyID) REFERENCES Society (SocietyID)
 );
 
 CREATE TABLE EventRegistration (
@@ -39,6 +52,15 @@ CREATE TABLE EventRegistration (
   PRIMARY KEY (EventID,UserID),
   KEY UserID (UserID),
   FOREIGN KEY (EventID) REFERENCES Event (EventID),
+  FOREIGN KEY (UserID) REFERENCES User (UserID)
+);
+
+CREATE TABLE SocietyRegistration (
+  SocietyID INT NOT NULL,
+  UserID bigint unsigned NOT NULL,
+  PRIMARY KEY (SocietyID,UserID),
+  KEY UserID (UserID),
+  FOREIGN KEY (SocietyID) REFERENCES Society (SocietyID),
   FOREIGN KEY (UserID) REFERENCES User (UserID)
 );
 
@@ -56,21 +78,11 @@ CREATE TABLE UserTags (
   FOREIGN KEY (UserID) REFERENCES User (UserID)
 );
 
-CREATE TABLE Societies (
-    SocietyID INT PRIMARY KEY AUTO_INCREMENT,
-    socName VARCHAR(255) NOT NULL,
-    socLocation VARCHAR(255) NOT NULL,
-    socDescription TEXT NOT NULL,
-    socPresident VARCHAR(100) NOT NULL,
-    socPrice DECIMAL(10, 2),
-    socLink VARCHAR(255)
-);
-
-CREATE TABLE societiesTag (
+CREATE TABLE SocietyTags (
     tagID INT PRIMARY KEY AUTO_INCREMENT,
     SocietyID INT,
     tag VARCHAR(30) NOT NULL,
-    FOREIGN KEY (SocietyID) REFERENCES Societies(SocietyID)
+    FOREIGN KEY (SocietyID) REFERENCES Society(SocietyID)
 );
 
 
@@ -89,6 +101,8 @@ INSERT INTO comp6000_09.User (UserID, firstName, lastName, email, username, pass
 INSERT INTO comp6000_09.User (UserID, firstName, lastName, email, username, password) VALUES ("13", "Matthew", "Rodriguez", "matt.rodr@example.com", "mrodriguez", SHA2("mrodriguez", 256));
 INSERT INTO comp6000_09.User (UserID, firstName, lastName, email, username, password) VALUES ("14", "Amanda", "Hernandez", "amanda.h@example.com", "amandah", SHA2("amandah", 256));
 INSERT INTO comp6000_09.User (UserID, firstName, lastName, email, username, password) VALUES ("15", "Ryan", "Young", "ryan.y@example.com", "ryany", SHA2("ryany", 256));
+
+INSERT INTO Society (socName,socLocation, socDescription, socPresident,socPrice,socLink) VALUES ('Chess Society','Kennedy','A group of chess players of all skill level. We host weekly tournaments and offer tutoring for players of any skill level',1,0,'https://www.google.com');
 
 INSERT INTO comp6000_09.UserTags VALUES (1,"Arts");
 INSERT INTO comp6000_09.UserTags VALUES (1,"Music");
@@ -162,7 +176,7 @@ INSERT INTO comp6000_09.UserTags VALUES (15,"Music");
 INSERT INTO comp6000_09.UserTags VALUES (15,"Sports");
 INSERT INTO comp6000_09.UserTags VALUES (15,"On_Campus");
 
-INSERT INTO comp6000_09.Event (eventName,eventDateTime,location,description,organiser,price, imageURL) VALUES ("Boxing","2024-03-10 09:30:00","Sports Hall","Boxing for all skill levels!","1","3.50", "eventIcons/basketball.png");
+INSERT INTO comp6000_09.Event (eventName,eventDateTime,location,description,organiser,price, imageURL,societyID) VALUES ("Boxing","2024-03-10 09:30:00","Sports Hall","Boxing for all skill levels!","1","3.50", "eventIcons/basketball.png",1);
 INSERT INTO comp6000_09.Event (eventName, eventDateTime, location, description, organiser, price, imageURL) VALUES ("Basketball Tournament", "2024-03-10 09:00:00", "Basketball Court", "Join us for an exciting basketball tournament!", "2", "5.00", "eventIcons/basketball.png");
 INSERT INTO comp6000_09.Event (eventName, eventDateTime, location, description, organiser, price, imageURL) VALUES ("Yoga Class", "2024-03-05 18:30:00", "Yoga Studio", "Relax and unwind in our rejuvenating yoga class.", "3", "7.00", "eventIcons/mind.png");
 INSERT INTO comp6000_09.Event (eventName, eventDateTime, location, description, organiser, price, imageURL) VALUES ("Movie Night", "2024-03-08 20:00:00", "Auditorium", "Enjoy a movie night with friends and family!", "4", "3.00", "eventIcons/sofa.png");
@@ -175,8 +189,8 @@ INSERT INTO comp6000_09.Event (eventName, eventDateTime, location, description, 
 INSERT INTO comp6000_09.Event (eventName, eventDateTime, location, description, organiser, price, imageURL) VALUES ("Fashion Show", "2024-03-13 19:00:00", "Fashion Hall", "Witness the latest trends on the runway!", "11", "12.00", "eventIcons/tags.png");
 INSERT INTO comp6000_09.Event (eventName, eventDateTime, location, description, organiser, price, imageURL) VALUES ("Cooking Competition", "2024-03-14 14:00:00", "Culinary School", "Compete with other chefs and showcase your culinary skills.", "12", "20.00", "eventIcons/apple.png");
 INSERT INTO comp6000_09.Event (eventName, eventDateTime, location, description, organiser, price, imageURL) VALUES ("Hiking Adventure", "2024-03-15 09:00:00", "Nature Reserve", "Embark on an exciting hiking journey through scenic trails.", "13", "3", "eventIcons/pin.png");
-INSERT INTO comp6000_09.Event (eventName, eventDateTime, location, description, organiser, price, imageURL) VALUES ("Photography Workshop", "2024-03-16 10:30:00", "Photography Studio", "Learn photography techniques from professional photographers.", "14", "9.50", "eventIcons/monitor.png");
-INSERT INTO comp6000_09.Event (eventName, eventDateTime, location, description, organiser, price, imageURL) VALUES ("Science Fair", "2024-03-17 11:00:00", "Science Museum", "Explore fascinating scientific exhibits and experiments.", "15", "3.50", "eventIcons/science.png");
+INSERT INTO comp6000_09.Event (eventName, eventDateTime, location, description, organiser, price, imageURL,societyID) VALUES ("Photography Workshop", "2024-03-16 10:30:00", "Photography Studio", "Learn photography techniques from professional photographers.", "14", "9.50", "eventIcons/monitor.png",1);
+INSERT INTO comp6000_09.Event (eventName, eventDateTime, location, description, organiser, price, imageURL,societyID) VALUES ("Science Fair", "2024-03-17 11:00:00", "Science Museum", "Explore fascinating scientific exhibits and experiments.", "15", "3.50", "eventIcons/science.png",1);
 
 INSERT INTO comp6000_09.EventTags VALUES (1,"Sports");
 INSERT INTO comp6000_09.EventTags VALUES (1,"Social");
@@ -275,5 +289,9 @@ INSERT INTO comp6000_09.EventRegistration VALUES (10, 15);
 INSERT INTO comp6000_09.EventRegistration VALUES (10, 1);
 INSERT INTO comp6000_09.EventRegistration VALUES (10, 11);
 
-INSERT INTO Societies (socName,socLocation, socDescription, socPresident,socPrice,socLink) VALUES ('Chess Society','Kennedy','A group of chess players of all skill level. We host weekly tournaments and offer tutoring for players of any skill level',1,0,'www.google.com');
+INSERT INTO comp6000_09.SocietyRegistration VALUES (1, 12);
+INSERT INTO comp6000_09.SocietyRegistration VALUES (1, 7);
+INSERT INTO comp6000_09.SocietyRegistration VALUES (1, 3);
+INSERT INTO comp6000_09.SocietyRegistration VALUES (1, 8);
+
 
