@@ -3,6 +3,8 @@
 const express = require("express");
 const cors = require("cors");
 var mysql2 = require('mysql2');
+const { exec } = require("child_process");
+
 
 var connection = mysql2.createConnection({
   host: "dragon.kent.ac.uk",
@@ -115,22 +117,32 @@ app.post('/popularEvents', (req, res) => {
 //   })
 // })
 
-const { exec } = require("child_process");
+// const { exec } = require("child_process");
 
-app.post('/runPythonScript', (req, res) => {
-  exec("python3 /Users/lukeelliott/Documents/GitHub/COMP6000/server/database/discover_k.py", (error, stdout, stderr) => {
-    if (error) {
-      console.error(`exec error: ${error}`);
-      return res.status(500).send(`Error executing Python script: ${stderr}`);
-    }
-    try {
-      const output = JSON.parse(stdout);
-      res.send(output);
-    } catch (parseError) {
-      res.status(500).send("Error parsing Python script output: " + parseError.message);
-    }
-  });
-});
+// app.post('/runPythonScript', (req, res) => {
+//   exec("python3 /Users/lukeelliott/Documents/GitHub/COMP6000/server/database/discover_k.py", (error, stdout, stderr) => {
+//     if (error) {
+//       console.error(`exec error: ${error}`);
+//       return res.status(500).send(`Error executing Python script: ${stderr}`);
+//     }
+//     try {
+//       const output = JSON.parse(stdout);
+//       res.send(output);
+//     } catch (parseError) {
+//       res.status(500).send("Error parsing Python script output: " + parseError.message);
+//     }
+//   });
+// });
+
+// app.post('/runHelloScript', (req, res) => {
+//   exec("python3 /Users/lukeelliott/Documents/GitHub/COMP6000/server/database/test.py", (error, stdout, stderr) => {
+//     if (error) {
+//       console.error(`exec error: ${error}`);
+//       return res.status(500).send(`Error executing Python script: ${stderr}`);
+//     }
+//     res.send(stdout); // This will send "hello" back to the client if the script runs successfully
+//   });
+// });
 
 
 
@@ -411,6 +423,12 @@ app.post('/updateEvent', (req, res) => {
   }
 })
 
-
-
-
+app.post('/runKmeansScript', (req, res) => {
+  exec("python3 /Users/lukeelliott/Documents/GitHub/COMP6000/server/kmeans.py", (error, stdout, stderr) => {
+    if (error) {
+      console.error(`exec error: ${error}`);
+      return res.status(500).send(`Error executing Python script: ${stderr}`);
+    }
+    res.send(stdout); // This will send "hello" back to the client if the script runs successfully
+  });
+});

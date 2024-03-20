@@ -20,6 +20,8 @@ function HomePage(props) {
   const [popularEvents,setPopularEvents] = useState([]);
   const [recommendedEvent, setRecommendedEvent] = useState([]);
   const navigate = useNavigate();
+  const [pythonOutput, setPythonOutput] = useState('');
+
 
   useEffect(() => {
     Axios.get('http://localhost:3001/loggedIn', {}).then(res => {
@@ -28,9 +30,11 @@ function HomePage(props) {
         navigate("/login");
       }
       else {
+        // getRecommendedEvent();
         getMyEvents();
         getPopularEvents();
-        getRecommendedEvent();
+        runKmeansScript();
+        
       }
     });
   }, [])
@@ -83,53 +87,117 @@ function HomePage(props) {
     });
   }
 
-  const getRecommendedEvent = () => {
-    Axios.post('http://localhost:3001/recommendedEventByTag').then(res => {
-      var eventsData = res.data.map(function (i) {
-        var date = new Date(i.eventDateTime);
-        date = date.toDateString() + " " + date.toLocaleTimeString();
-        var price = i.price;
-          if (price == 0.00) {
-            price = "Free";
-          }
-        return (
-          <Card className="eventsCard" style={{marginLeft: "200px"}}>
-                        <Container flex>
-                            <Row className="cardRow">
-                                <Col className="imgCol" lg="2">
-                                    <Card.Img src={i.imageURL} className="cardImg"></Card.Img>
-                                </Col>
-                                <Col className="infoCol" >
-                                    <Row className="infoRow">
-                                        <img className="cardIcon" src={locationPin}></img>
-                                        <div className="infoLabel">{i.location}</div>
-                                        <img className="cardIcon" src={calendar}></img>
-                                        <div className="infoLabel">{date}</div>
-                                    </Row>
-                                    <Row className="infoRow">
-                                        <img className="cardIcon" src={pound}></img>
-                                        <div className="infoLabel">{price}</div>
-                                        <img className="cardIcon" src={avatar}></img>
-                                        <div className="infoLabel">{i.firstName + " " + i.lastName}</div>
-                                    </Row>
-                                </Col>
-                            </Row>
-                            <br />
-                            <Row className="cardTitleRow">
-                                <Card.Title className="cardTitle">{i.eventName}</Card.Title>
-                            </Row>
-                            <br />
-                        </Container>
-                        <Card.Body className="cardBody">
-                            <Card.Text className="cardText">{i.description}</Card.Text>
-                        </Card.Body>
-                    </Card>
-        );
-      });
-      console.log(eventsData);
-      setRecommendedEvent(eventsData);
-    });
-  }
+  // const getRecommendedEvent = () => {
+  //   Axios.post('http://localhost:3001/recommendedEventByTag').then(res => {
+  //     var eventsData = res.data.map(function (i) {
+  //       var date = new Date(i.eventDateTime);
+  //       date = date.toDateString() + " " + date.toLocaleTimeString();
+  //       var price = i.price;
+  //         if (price == 0.00) {
+  //           price = "Free";
+  //         }
+  //       return (
+  //         <Card className="eventsCard" style={{marginLeft: "200px"}}>
+  //                       <Container flex>
+  //                           <Row className="cardRow">
+  //                               <Col className="imgCol" lg="2">
+  //                                   <Card.Img src={i.imageURL} className="cardImg"></Card.Img>
+  //                               </Col>
+  //                               <Col className="infoCol" >
+  //                                   <Row className="infoRow">
+  //                                       <img className="cardIcon" src={locationPin}></img>
+  //                                       <div className="infoLabel">{i.location}</div>
+  //                                       <img className="cardIcon" src={calendar}></img>
+  //                                       <div className="infoLabel">{date}</div>
+  //                                   </Row>
+  //                                   <Row className="infoRow">
+  //                                       <img className="cardIcon" src={pound}></img>
+  //                                       <div className="infoLabel">{price}</div>
+  //                                       <img className="cardIcon" src={avatar}></img>
+  //                                       <div className="infoLabel">{i.firstName + " " + i.lastName}</div>
+  //                                   </Row>
+  //                               </Col>
+  //                           </Row>
+  //                           <br />
+  //                           <Row className="cardTitleRow">
+  //                               <Card.Title className="cardTitle">{i.eventName}</Card.Title>
+  //                           </Row>
+  //                           <br />
+  //                       </Container>
+  //                       <Card.Body className="cardBody">
+  //                           <Card.Text className="cardText">{i.description}</Card.Text>
+  //                       </Card.Body>
+  //                   </Card>
+  //       );
+  //     });
+  //     console.log(eventsData);
+  //     setRecommendedEvent(eventsData);
+  // //   });
+  // const getRecommendedEvent = () => {
+  //   Axios.get(`http://localhost:3001/get-recommended-events/`).then(res => {
+  //     const eventsData = res.data.map(i => {
+  //       let date = new Date(i.eventDateTime);
+  //       date = date.toDateString() + " " + date.toLocaleTimeString();
+  //       let price = i.price;
+  //       if (price === 0.00) {
+  //         price = "Free";
+  //       }
+
+  //       return (
+  //         <Card className="eventsCard" style={{marginLeft: "200px"}}>
+  //           <Container flex>
+  //             <Row className="cardRow">
+  //               <Col className="imgCol" lg="2">
+  //                 <Card.Img src={i.imageURL} className="cardImg"></Card.Img>
+  //               </Col>
+  //               <Col className="infoCol">
+  //                 <Row className="infoRow">
+  //                   <img className="cardIcon" src={locationPin}></img>
+  //                   <div className="infoLabel">{i.location}</div>
+  //                   <img className="cardIcon" src={calendar}></img>
+  //                   <div className="infoLabel">{date}</div>
+  //                 </Row>
+  //                 <Row className="infoRow">
+  //                   <img className="cardIcon" src={pound}></img>
+  //                   <div className="infoLabel">{price}</div>
+  //                   <img className="cardIcon" src={avatar}></img>
+  //                   <div className="infoLabel">{i.firstName + " " + i.lastName}</div>
+  //                 </Row>
+  //               </Col>
+  //             </Row>
+  //             <br />
+  //             <Row className="cardTitleRow">
+  //               <Card.Title className="cardTitle">{i.eventName}</Card.Title>
+  //             </Row>
+  //             <br />
+  //           </Container>
+  //           <Card.Body className="cardBody">
+  //             <Card.Text className="cardText">{i.description}</Card.Text>
+  //           </Card.Body>
+  //         </Card>
+  //       );
+  //     });
+  //     console.log(eventsData);
+  //     setRecommendedEvent(eventsData);
+  //   }).catch(err => console.log(err));
+  // };
+
+  const runKmeansScript = () => {
+    Axios.post('http://localhost:3001/runKmeansScript').then(res => {
+      console.log(res.data); // This should log "hello" to the console
+      setPythonOutput(res.data); // Assuming res.data contains the "hello" string
+    }).catch(err => console.log(err));
+  };
+
+  // const getPythonScriptOutput = () => {
+  //   Axios.post('http://localhost:3001/runHelloScript').then(res => {
+  //     setPythonOutput(res.data); // Assuming res.data contains the "hello" string
+  //   }).catch(err => console.log(err));
+  // };
+  
+
+  
+  
 
   const getPopularEvents = () => {
     Axios.post('http://localhost:3001/popularEvents').then(res => {
@@ -179,53 +247,55 @@ function HomePage(props) {
     
     });
   }
-
-  return (
-    <>
-      <html className="eventHtml" style={{ backgroundImage: `url(${background})`, minHeight: "1080px", backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed", fontFamily: "roboto"}}>
-      <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'/> 
-        <HeaderBar />
-        <Container className="mainContainer">
-          <div className="eventsHeader" style={{marginBottom: "30px", marginTop: "100px"}}> Home</div>
-          <Row classname="mainRow" style={{paddingRight: "10px"}}>
-            <Col style={{padding: "0px"}}>
-              <Row className='justify-content-center' style={{textAlign: "center", marginLeft: "0px"}}>
-                <h2 class="headerText">Your Next Event</h2>
-                <br /> <br /> <br />
-              </Row>
-              {nextEvent}
-            </Col>
-            <Col style={{padding: "0px"}}>
-            <Row className='justify-content-center' style={{textAlign: "center"}}>
-                <h2 class="headerText">Recommended For You</h2>
-                <br /> <br /> <br />
-              </Row>
-              {recommendedEvent}
-            </Col>
-          </Row>
-          <Row classname="mainRow">
-            <Row className='justify-content-center' style={{textAlign: "center"}}>
-              <h2 style={{color: "#ffffff"}}>Popular Events</h2>
-              <br /> <br /> <br />
+    return (
+      <>
+        <html className="eventHtml" style={{ backgroundImage: `url(${background})`, minHeight: "1080px", backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed", fontFamily: "roboto"}}>
+        <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'/> 
+          <HeaderBar />
+          <Container className="mainContainer">
+            <div className="eventsHeader" style={{marginBottom: "30px", marginTop: "100px"}}> Home</div>
+            <Row className="mainRow" style={{paddingRight: "10px"}}>
+              <Col style={{padding: "0px"}}>
+                <Row className='justify-content-center' style={{textAlign: "center", marginLeft: "0px"}}>
+                  <h2 className="headerText">Your Next Event</h2>
+                  <br /> <br /> <br />
+                </Row>
+                {nextEvent}
+              </Col>
+              <Col style={{padding: "0px"}}>
+                <Row className='justify-content-center' style={{textAlign: "center"}}>
+                  <h2 className="headerText">Recommended For You</h2>
+                  <br /> <br /> <br />
+                </Row>
+                {recommendedEvent}
+                {/* Display the output from the Python script here */}
+                <div style={{ marginTop: "20px", color: "white", fontSize: "20px" }}>
+                  {pythonOutput}
+                </div>
+              </Col>
             </Row>
-            <br />
-            <Carousel className='justify-content-center'>
-              {popularEvents.map(event => 
-                <Carousel.Item className='justify-content-center'>
-                  <Row className='justify-content-center' style={{paddingRight:"35px"}}>
-                  {event}
-                  <br />
-                  </Row>
-                </Carousel.Item>
-              )}
-            </Carousel>
-          </Row>
-        </Container>
-
-      </html>
-
-    </>
-  );
+            <Row className="mainRow">
+              <Row className='justify-content-center' style={{textAlign: "center"}}>
+                <h2 style={{color: "#ffffff"}}>Popular Events</h2>
+                <br /> <br /> <br />
+              </Row>
+              <br />
+              <Carousel className='justify-content-center'>
+                {popularEvents.map((event, index) => 
+                  <Carousel.Item key={index} className='justify-content-center'>
+                    <Row className='justify-content-center' style={{paddingRight:"35px"}}>
+                    {event}
+                    <br />
+                    </Row>
+                  </Carousel.Item>
+                )}
+              </Carousel>
+            </Row>
+          </Container>
+        </html>
+      </>
+    );
+    
 }
 
 
