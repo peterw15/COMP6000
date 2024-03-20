@@ -91,6 +91,14 @@ app.post('/societies', (req, res) => {
   })
 })
 
+app.post('/getSocietyInfo', (req,res) => {
+  const {SocietyID} = req.body;
+  const results = connection.query("SELECT * FROM Societies WHERE SocietyID = ?", [SocietyID], function (err) {
+    if (err) throw err;
+    res.send(results._rows[0]);
+  })
+})
+
 
 app.post('/myevents', (req, res) => {
   const results = connection.query("SELECT * FROM Event INNER JOIN EventRegistration ON Event.EventID=EventRegistration.EventID WHERE EventRegistration.UserID = ?", [userIDGLOBAL], function (err) {

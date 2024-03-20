@@ -57,21 +57,20 @@ CREATE TABLE UserTags (
 );
 
 CREATE TABLE Societies (
-    SocietiesID INT PRIMARY KEY AUTO_INCREMENT,
+    SocietyID INT PRIMARY KEY AUTO_INCREMENT,
     socName VARCHAR(255) NOT NULL,
-    socDateTime DATETIME NOT NULL,
-    socLocation VARCHAR(255),
-    socDescription TEXT,
-    socOrganiser VARCHAR(100),
+    socLocation VARCHAR(255) NOT NULL,
+    socDescription TEXT NOT NULL,
+    socPresident VARCHAR(100) NOT NULL,
     socPrice DECIMAL(10, 2),
     socLink VARCHAR(255)
 );
 
 CREATE TABLE societiesTag (
     tagID INT PRIMARY KEY AUTO_INCREMENT,
-    SocietiesID INT,
+    SocietyID INT,
     tag VARCHAR(30) NOT NULL,
-    FOREIGN KEY (SocietiesID) REFERENCES Societies(SocietiesID)
+    FOREIGN KEY (SocietyID) REFERENCES Societies(SocietyID)
 );
 
 
@@ -275,4 +274,6 @@ INSERT INTO comp6000_09.EventRegistration VALUES (1, 6);
 INSERT INTO comp6000_09.EventRegistration VALUES (10, 15);
 INSERT INTO comp6000_09.EventRegistration VALUES (10, 1);
 INSERT INTO comp6000_09.EventRegistration VALUES (10, 11);
+
+INSERT INTO Societies (socName,socLocation, socDescription, socPresident,socPrice,socLink) VALUES ('Chess Society','Kennedy','A group of chess players of all skill level. We host weekly tournaments and offer tutoring for players of any skill level',1,0,'www.google.com');
 

@@ -1,0 +1,41 @@
+.societyLabel {
+    color : #ffffff;
+    font-size: 20px;
+    font-weight: 100;
+}
+
+.societyMemberList {
+  background-color: #202020;
+  padding: 0px !important;
+}
+
+/* Hiding scrollbar for Chrome, Safari and Opera */
+.societyMemberList::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hiding scrollbar for IE, Edge and Firefox */
+.societyMemberList {
+  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none;  /* IE and Edge */
+}
+
+.memberListItem {
+    background-color: #252526 !important;
+    color: #ffffff !important;
+    border-color: #202020 !important;
+}
+
+.societyHeader {
+    color: #ffffff;
+    font-size: 40px;
+    width: 100%;
+    text-align: center;
+}
+
+.joinSocietyButton {
+    height: 60px;
+    background-color: #252526 !important;
+    border-color: #18cdc6 !important;
+
+}
