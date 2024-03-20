@@ -184,20 +184,10 @@ function HomePage(props) {
 
   const runKmeansScript = () => {
     Axios.post('http://localhost:3001/runKmeansScript').then(res => {
-      console.log(res.data); // This should log "hello" to the console
-      setPythonOutput(res.data); // Assuming res.data contains the "hello" string
+      console.log(res.data); 
+      setPythonOutput(res.data);
     }).catch(err => console.log(err));
   };
-
-  // const getPythonScriptOutput = () => {
-  //   Axios.post('http://localhost:3001/runHelloScript').then(res => {
-  //     setPythonOutput(res.data); // Assuming res.data contains the "hello" string
-  //   }).catch(err => console.log(err));
-  // };
-  
-
-  
-  
 
   const getPopularEvents = () => {
     Axios.post('http://localhost:3001/popularEvents').then(res => {

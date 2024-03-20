@@ -4,6 +4,11 @@ import pandas as pd
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import MultiLabelBinarizer
 
+#HOW TO RUN KMEANS 
+#CHANGE THE FILE LOCATION TO YOUR LOCAL ONE. --> bottom of index.js
+#OPEN A NEW TERMINAL. python3 kmeans.py
+#IF ANY ERRORS. pip3 install --- (said error of missing module)
+#CURRENT BUGS --> refreshing or SQL ending shows data sometimes not? WIP.
 # DATABASE SETUP
 database_setup = {
     'host': 'dragon.kent.ac.uk',
