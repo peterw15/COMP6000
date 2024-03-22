@@ -27,6 +27,9 @@ function SocietyPage() {
 
     const [queryParameters] = useSearchParams();
 
+    const [isPresident,setIsPresident] = useState(false);
+    const [inSociety, setInSociety] = useState(false);
+
     const paramID = queryParameters.get('id');
 
 
@@ -37,12 +40,38 @@ function SocietyPage() {
                 navigate("/login");
             }
             else {
+                isInSociety(paramID);
                 getSociety(paramID);
                 getEvents(paramID);
                 getMembers(paramID);
             }
-        });
+        })
     }, [])
+
+    function isInSociety(SocietyID) {
+        Axios.post('http://localhost:3001/isInSociety', {SocietyID}).then(res => {
+            const result = res.data;
+            if(!result) {
+                setButtonState(<Button className="joinSocietyButton" onClick={joinSociety}>Join Society</Button>);
+                setInSociety(false);
+            }
+            else {
+                setButtonState(<div style={{color:"#ffffff", borderTop:"1px solid #18cdc6",paddingTop:"20px",fontSize:"20px"}}>You are a member of this society</div>);
+                setInSociety(true);
+                Axios.post('http://localhost:3001/isSocietyPresident', {SocietyID}).then(res => {
+                    const isPresident = res.data;
+                    if(isPresident) {
+                        setAnnounceButtonState(<Button className="joinSocietyButton" onClick={joinSociety}>Create Announcement</Button>)
+                        setIsPresident(true);
+                    }
+                    else {
+                        setAnnounceButtonState("");
+                        setIsPresident(false);
+                    }
+                });
+            }
+        })
+    }
 
     function getSociety(SocietyID) {
         Axios.post('http://localhost:3001/getSocietyInfo', {SocietyID}).then(res => {
@@ -120,7 +149,13 @@ function SocietyPage() {
     function joinSociety() {
         const SocietyID = paramID;
         Axios.post('http://localhost:3001/joinSociety', {SocietyID}).then(res => {
-            console.log(res);
+            const result = res.data;
+            if(result) {
+                setButtonState(<div style={{color:"#ffffff", borderTop:"1px solid #18cdc6",paddingTop:"20px",fontSize:"20px"}}>Successfully Joined Society</div>);
+            }
+            else {
+                setButtonState(<div style={{color:"red", borderTop:"1px solid #18cdc6",paddingTop:"20px",fontSize:"20px"}}>Your are already a member of this society</div>);
+            }
         })
     }
 
@@ -132,6 +167,9 @@ function SocietyPage() {
     const [societyPrice, setSocietyPrice] = useState("");
     const [upcomingEvents, setUpcomingEvents] = useState([]);
     const [members, setMembers] = useState([]);
+
+    const [buttonState, setButtonState] = useState([]);
+    const [announceButtonState,setAnnounceButtonState] = useState([]);
 
     return (
         <html className="eventHtml" style={{ backgroundImage: `url(${background})`, width:"100vw",height:"100vh",maxHeight: "100vh", backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed", fontFamily: "roboto" }}>
@@ -151,11 +189,15 @@ function SocietyPage() {
                         <div className="societyLabel" style={{fontSize: "18px", color: "#252526"}}>{societyDescription}</div>
                     </Row>
                     <Row style={{height:"8%",width: "90%",justifyContent: "center",alignItems: "center",marginTop: "20px",marginLeft:"5%",marginRight:"5%",color: "#ffffff",fontSize:"20px"}}>
-                        <Button className="joinSocietyButton" onClick={joinSociety}>Join Society</Button>
+                        {buttonState}
                     </Row>
                 </Col>
                 <Col sm={6} style={{marginLeft: "20px",height:"800px",textAlign:"center",justifyContent: "center", alignItems: "center", backgroundColor:"#252526"}}>
-                    <Row style={{justifyContent: "center", backgroundColor:"#202020", height:"37%", paddingTop: "15px"}}><h2 className="societyHeader">Anouncements</h2></Row>
+                    <Row style={{justifyContent: "center", backgroundColor:"#202020", height:"10%", paddingTop: "15px"}}><h2 className="societyHeader">Anouncements</h2></Row>
+                    <Row style={{justifyContent: "center", backgroundColor:"#202020", height:"22%", paddingTop: "15px"}}></Row>
+                    <Row style={{justifyContent: "center", backgroundColor:"#202020", height:"5%", paddingTop: "15px"}}>
+                        {announceButtonState}
+                    </Row>
                     <br />
                     <Row style={{justifyContent: "center", backgroundColor:"#202020", height:"10%",paddingTop: "15px"}}><h2 className="societyHeader">Upcoming Events</h2></Row>
                     <Row style={{justifyContent: "center", backgroundColor:"#202020", height:"50%",paddingTop: "15px"}}>

@@ -85,6 +85,13 @@ CREATE TABLE SocietyTags (
     FOREIGN KEY (SocietyID) REFERENCES Society(SocietyID)
 );
 
+CREATE TABLE SocietyAnnouncements (
+    announcementID INT PRIMARY KEY AUTO_INCREMENT,
+    SocietyID INT,
+    announcement TEXT NOT NULL,
+    FOREIGN KEY (SocietyID) REFERENCES Society(SocietyID)
+);
+
 
 INSERT INTO comp6000_09.User (UserID, firstName, lastName, email, username, password) VALUES ("1","Test","Test","Test@gmail.com", "Test", sha2("Test", 256)); 
 INSERT INTO comp6000_09.User (UserID, firstName, lastName, email, username, password) VALUES ("2","Peter","Wright","pw@gmail.com", "Peter", sha2("Peter", 256)); 

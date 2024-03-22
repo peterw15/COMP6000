@@ -120,8 +120,12 @@ app.post('/getSocietyMembers', (req,res) => {
 app.post('/joinSociety', (req,res) => {
   const {SocietyID} = req.body;
   const results = connection.query("INSERT INTO SocietyRegistration VALUES (?,?)", [SocietyID, userIDGLOBAL], function (err) {
-    if (err) throw err;
-    res.send(results._rows[0]);
+    if (err) {
+      res.send(false);
+    }
+    else {
+      res.send(true);
+    }
   })
 })
 
@@ -191,6 +195,34 @@ app.post('/createSocieties', (req, res) => {
 
 
 })
+
+app.post('/isInSociety', (req, res) => {
+  const {SocietyID} = req.body;
+  const results = connection.query("SELECT * FROM SocietyRegistration WHERE UserID = ? AND SocietyID = ?", [userIDGLOBAL,SocietyID], function (err, result) {
+    if (err) throw err;
+    if (result.length == 0) {
+      res.send(false);
+    }
+    else {
+      res.send(true);
+    }
+  })
+});
+
+app.post('/isSocietyPresident', (req, res) => {
+  const {SocietyID} = req.body;
+  const results = connection.query("SELECT * FROM Society WHERE socPresident = ? AND SocietyID = ?", [userIDGLOBAL,SocietyID], function (err, result) {
+    if (err) throw err;
+    if (result.length == 0) {
+      res.send(false);
+    }
+    else {
+      res.send(true);
+    }
+  })
+});
+
+
 
 app.post('/getEventID', (req, res) => {
   const { eventName, eventDateTime, location, description, organiser, price } = req.body;
