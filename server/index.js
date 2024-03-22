@@ -119,9 +119,23 @@ app.post('/getSocietyMembers', (req,res) => {
 
 app.post('/getSocietyAnnouncements', (req,res) => {
   const {SocietyID} = req.body;
-  const results = connection.query("SELECT * FROM SocietyAnnouncement WHERE SocietyID = ?", [SocietyID], function (err) {
+  const results = connection.query("SELECT * FROM SocietyAnnouncement WHERE SocietyID = ? ORDER BY announcementDateTime DESC", [SocietyID], function (err) {
     if (err) throw err;
     res.send(results._rows[0]);
+  })
+})
+
+app.post('/createSocietyAnnouncement', (req,res) => {
+  const {SocietyID,announcement} = req.body;
+  const results = connection.query("INSERT INTO SocietyAnnouncement (SocietyID,announcementDateTime,announcement) VALUES (?,NOW(),?)", [SocietyID,announcement], function (err) {
+    if (err) {
+      console.log(err);
+      res.send(false);
+    }
+    else{
+      res.send(true);
+    }
+
   })
 })
 

@@ -20,6 +20,7 @@ import locationPin from './Icons/locationPin.png';
 import calendar from './Icons/calendar.png'
 import pound from './Icons/pound.png'
 import avatar from './Icons/avatar.png'
+import Modal from 'react-bootstrap/Modal';
 
 function SocietyPage() {
 
@@ -29,6 +30,9 @@ function SocietyPage() {
 
     const [isPresident,setIsPresident] = useState(false);
     const [inSociety, setInSociety] = useState(false);
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     const paramID = queryParameters.get('id');
 
@@ -62,7 +66,7 @@ function SocietyPage() {
                 Axios.post('http://localhost:3001/isSocietyPresident', {SocietyID}).then(res => {
                     const isPresident = res.data;
                     if(isPresident) {
-                        setAnnounceButtonState(<Button className="joinSocietyButton" style={{width:"60%", height:"40px"}}onClick={joinSociety}>Create Announcement</Button>)
+                        setAnnounceButtonState(<Button className="joinSocietyButton" style={{width:"60%", height:"40px"}}onClick={handleShow}>Create Announcement</Button>)
                         setIsPresident(true);
                     }
                     else {
@@ -161,8 +165,6 @@ function SocietyPage() {
 
     }
 
-
-
     function joinSociety() {
         const SocietyID = paramID;
         Axios.post('http://localhost:3001/joinSociety', {SocietyID}).then(res => {
@@ -176,6 +178,24 @@ function SocietyPage() {
         })
     }
 
+    function createAnnouncement() {
+        const SocietyID = paramID;
+        const announcement = document.getElementById('newAnnouncement').value;
+        console.log(announcement);
+        Axios.post('http://localhost:3001/createSocietyAnnouncement', {SocietyID,announcement}).then(res => {
+            const result = res.data;
+            console.log(result);
+            if(result) {
+                setCreateAnnouncementMessage(<div style={{color:"#ffffff", borderTop:"1px solid #18cdc6",paddingTop:"20px",fontSize:"20px"}}>Successfully Created Announcement</div>);
+            }
+            else {
+                setCreateAnnouncementMessage(<div style={{color:"#ffffff", borderTop:"1px solid #18cdc6",paddingTop:"20px",fontSize:"20px"}}>Error Creating Anouncement: Please Try Again</div>);
+            }
+        })
+
+    }
+
+
     const [societyName, setSocietyName] = useState("");
     const [societyLocation, setSocietyLocation] = useState("");
     const [societyPresident, setSocietyPresident] = useState("");
@@ -186,6 +206,7 @@ function SocietyPage() {
    
     const [members, setMembers] = useState([]);
     const [announcements, setAnnouncements] = useState([]);
+    const [createAnnouncementMessage, setCreateAnnouncementMessage] = useState(<Button onClick={createAnnouncement} style={{width:"200px",height:"50px",backgroundColor:"#202020",borderColor:"#18cdc6"}}>Create Announcement</Button>);
 
     const [buttonState, setButtonState] = useState([]);
     const [announceButtonState,setAnnounceButtonState] = useState([]);
@@ -195,6 +216,20 @@ function SocietyPage() {
         <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'/>  
             <HeaderBar></HeaderBar>
             <Container fluid style={{marginLeft:"10%", marginRight:"10%",backgroundColor: "rgba(37, 37, 38, 0.7)", maxHeight: "100vh", textAlign: "center", justifyContent: "center"}}>
+            <Modal show={show} onHide={handleClose} size="lg">
+                    <Modal.Header closeButton style={{backgroundColor:"#202020"}}>
+                        <Modal.Title style={{color: "#ffffff"}}>Create an Announcement</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body style={{backgroundColor:"#202020"}}>
+                        <form>
+                            <label for="AnnouncementLabel" style={{color: "#ffffff"}}>Announcement:</label>
+                            <input type="text" class="form-control" id="newAnnouncement" style={{color: "#ffffff",backgroundColor:"#252526",borderColor:"#18cdc6"}}/>
+                        </form>
+                    </Modal.Body>
+                    <Modal.Footer style={{backgroundColor:"#202020",paddingRight:"0px"}}>
+                        <Row>{createAnnouncementMessage}</Row>
+                    </Modal.Footer>
+                </Modal >
                 <Row style={{marginTop:"100px", justifyContent: "center", alignItems: "center"}}>
                 <Col sm={3} style={{marginLeft: "20px",paddingTop: "40px",height:"800px",textAlign:"center",justifyContent: "center", alignItems: "center", backgroundColor:"#202020"}}>
                     <Row style={{alignItems: "center", justifyContent: "center"}}><Image src={basketball} style={{width:"150px"}}roundedCircle></Image></Row>
