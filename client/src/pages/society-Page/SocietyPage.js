@@ -44,6 +44,7 @@ function SocietyPage() {
                 getSociety(paramID);
                 getEvents(paramID);
                 getMembers(paramID);
+                getAnnouncements(paramID);
             }
         })
     }, [])
@@ -61,7 +62,7 @@ function SocietyPage() {
                 Axios.post('http://localhost:3001/isSocietyPresident', {SocietyID}).then(res => {
                     const isPresident = res.data;
                     if(isPresident) {
-                        setAnnounceButtonState(<Button className="joinSocietyButton" onClick={joinSociety}>Create Announcement</Button>)
+                        setAnnounceButtonState(<Button className="joinSocietyButton" style={{width:"60%", height:"40px"}}onClick={joinSociety}>Create Announcement</Button>)
                         setIsPresident(true);
                     }
                     else {
@@ -146,6 +147,22 @@ function SocietyPage() {
 
     }
 
+    function getAnnouncements(SocietyID) {
+        Axios.post('http://localhost:3001/getSocietyAnnouncements', {SocietyID}).then(res => {
+            var announcementData = res.data.map(function (i) {
+                var date = new Date(i.announcementDateTime);
+                date = date.toDateString() + " " + date.toLocaleTimeString();
+                return(
+                    <ListGroup.Item className="memberListItem" style={{width:"90%", marginBottom: "5px",textAlign:"left"}}>{date + " - " + i.announcement}</ListGroup.Item>
+                )
+            })
+            setAnnouncements(announcementData);
+        })
+
+    }
+
+
+
     function joinSociety() {
         const SocietyID = paramID;
         Axios.post('http://localhost:3001/joinSociety', {SocietyID}).then(res => {
@@ -166,7 +183,9 @@ function SocietyPage() {
     const [societyDescription, setSocietyDescription] = useState("");
     const [societyPrice, setSocietyPrice] = useState("");
     const [upcomingEvents, setUpcomingEvents] = useState([]);
+   
     const [members, setMembers] = useState([]);
+    const [announcements, setAnnouncements] = useState([]);
 
     const [buttonState, setButtonState] = useState([]);
     const [announceButtonState,setAnnounceButtonState] = useState([]);
@@ -180,11 +199,11 @@ function SocietyPage() {
                 <Col sm={3} style={{marginLeft: "20px",paddingTop: "40px",height:"800px",textAlign:"center",justifyContent: "center", alignItems: "center", backgroundColor:"#202020"}}>
                     <Row style={{alignItems: "center", justifyContent: "center"}}><Image src={basketball} style={{width:"150px"}}roundedCircle></Image></Row>
                     <br />
-                    <Row style={{alignItems: "center", justifyContent: "center"}}><h2 className="societyHeader">{societyName}</h2></Row>
+                    <Row className="societyRow"><h2 className="societyHeader">{societyName}</h2></Row>
                     <Row style={{alignItems: "flex-start", justifyContent: "left"}}><a href={societyLink} className="societyLabel">{societyLink}</a></Row>
-                    <Row style={{alignItems: "center", justifyContent: "center"}}><div className="societyLabel">{societyLocation}</div></Row>
-                    <Row style={{alignItems: "center", justifyContent: "center"}}><div className="societyLabel">{societyPresident}</div></Row>
-                    <Row style={{alignItems: "center", justifyContent: "center"}}><div className="societyLabel">some tags or something</div></Row>
+                    <Row className="societyRow"><div className="societyLabel">{societyLocation}</div></Row>
+                    <Row className="societyRow"><div className="societyLabel">{societyPresident}</div></Row>
+                    <Row className="societyRow"><div className="societyLabel">some tags or something</div></Row>
                     <Row style={{height:"40%",width: "90%",justifyContent: "center",alignItems: "center",marginTop: "20px",marginLeft:"5%",marginRight:"5%",color: "#ffffff",fontSize:"20px", fontFamily: "roboto", backgroundColor:"#18cdc6"}}>
                         <div className="societyLabel" style={{fontSize: "18px", color: "#252526"}}>{societyDescription}</div>
                     </Row>
@@ -194,14 +213,18 @@ function SocietyPage() {
                 </Col>
                 <Col sm={6} style={{marginLeft: "20px",height:"800px",textAlign:"center",justifyContent: "center", alignItems: "center", backgroundColor:"#252526"}}>
                     <Row style={{justifyContent: "center", backgroundColor:"#202020", height:"10%", paddingTop: "15px"}}><h2 className="societyHeader">Anouncements</h2></Row>
-                    <Row style={{justifyContent: "center", backgroundColor:"#202020", height:"22%", paddingTop: "15px"}}></Row>
-                    <Row style={{justifyContent: "center", backgroundColor:"#202020", height:"5%", paddingTop: "15px"}}>
+                    <Row style={{justifyContent: "center", backgroundColor:"#202020", height:"22%", paddingTop: "15px"}}>
+                        <ListGroup className="societyMemberList" style={{overflowY: "scroll", height:"98%",maxheight:"98%",alignItems:"center"}}>
+                            {announcements}
+                        </ListGroup>
+                    </Row>
+                    <Row style={{justifyContent: "center", backgroundColor:"#202020", height:"10%", paddingTop: "15px"}}>
                         {announceButtonState}
                     </Row>
                     <br />
                     <Row style={{justifyContent: "center", backgroundColor:"#202020", height:"10%",paddingTop: "15px"}}><h2 className="societyHeader">Upcoming Events</h2></Row>
-                    <Row style={{justifyContent: "center", backgroundColor:"#202020", height:"50%",paddingTop: "15px"}}>
-                    <Carousel  style={{width:"100%", height:"90%",textAlign:"left"}}>
+                    <Row style={{justifyContent: "center", backgroundColor:"#202020", height:"45%",paddingTop: "15px"}}>
+                    <Carousel  style={{width:"100%", height:"100%",textAlign:"left"}}>
                         {upcomingEvents.map(event => 
                             <Carousel.Item className='justify-content-center'>
                             <Row className='justify-content-center' style={{paddingRight:"35px"}}>

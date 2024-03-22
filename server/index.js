@@ -117,6 +117,14 @@ app.post('/getSocietyMembers', (req,res) => {
   })
 })
 
+app.post('/getSocietyAnnouncements', (req,res) => {
+  const {SocietyID} = req.body;
+  const results = connection.query("SELECT * FROM SocietyAnnouncement WHERE SocietyID = ?", [SocietyID], function (err) {
+    if (err) throw err;
+    res.send(results._rows[0]);
+  })
+})
+
 app.post('/joinSociety', (req,res) => {
   const {SocietyID} = req.body;
   const results = connection.query("INSERT INTO SocietyRegistration VALUES (?,?)", [SocietyID, userIDGLOBAL], function (err) {

@@ -7,6 +7,7 @@ DROP TABLE IF EXISTS comp6000_09.UserTags;
 DROP TABLE IF EXISTS comp6000_09.Society;
 DROP TABLE IF EXISTS comp6000_09.SocietyTags;
 DROP TABLE IF EXISTS comp6000_09.SocietyRegistration;
+DROP TABLE IF EXISTS comp6000_09.SocietyAnnouncement;
 SET FOREIGN_KEY_CHECKS = 1;
 
 CREATE TABLE User (
@@ -85,9 +86,10 @@ CREATE TABLE SocietyTags (
     FOREIGN KEY (SocietyID) REFERENCES Society(SocietyID)
 );
 
-CREATE TABLE SocietyAnnouncements (
+CREATE TABLE SocietyAnnouncement (
     announcementID INT PRIMARY KEY AUTO_INCREMENT,
     SocietyID INT,
+    announcementDateTime DATETIME NOT NULL,
     announcement TEXT NOT NULL,
     FOREIGN KEY (SocietyID) REFERENCES Society(SocietyID)
 );
@@ -300,5 +302,11 @@ INSERT INTO comp6000_09.SocietyRegistration VALUES (1, 12);
 INSERT INTO comp6000_09.SocietyRegistration VALUES (1, 7);
 INSERT INTO comp6000_09.SocietyRegistration VALUES (1, 3);
 INSERT INTO comp6000_09.SocietyRegistration VALUES (1, 8);
+
+INSERT INTO comp6000_09.SocietyAnnouncement (SocietyID, announcementDateTime,announcement) VALUES (1, "2024-03-17 10:00","THIS IS AN ANNOUNCEMENT THIS IS AN ANNOUNCEMENT THIS IS AN ANNOUNCEMENT THIS IS AN ANNOUNCEMENT THIS IS AN ANNOUNCEMENT THIS IS AN ANNOUNCEMENT");
+INSERT INTO comp6000_09.SocietyAnnouncement (SocietyID, announcementDateTime,announcement) VALUES (1,"2024-03-09 09:00" ,"Hello");
+INSERT INTO comp6000_09.SocietyAnnouncement (SocietyID, announcementDateTime,announcement) VALUES (1,"2024-03-09 09:00" ,"Hello");
+INSERT INTO comp6000_09.SocietyAnnouncement (SocietyID, announcementDateTime,announcement) VALUES (1,"2024-03-09 09:00" ,"Hello");
+INSERT INTO comp6000_09.SocietyAnnouncement (SocietyID, announcementDateTime,announcement) VALUES (1,"2024-03-09 09:00" ,"Hello");
 
 

@@ -41,3 +41,8 @@
     border-color: #18cdc6 !important;
 
 }
+
+.societyRow {
+    justify-content:center;
+    align-items: center;
+}
