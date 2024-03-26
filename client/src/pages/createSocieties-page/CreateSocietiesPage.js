@@ -1,3 +1,4 @@
+import './createSocietiesPageStyleSheet.css';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
 import { Link } from "react-router-dom";
@@ -7,18 +8,30 @@ import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Carousel from 'react-bootstrap/Carousel';
+import Image from 'react-bootstrap/Image';
+import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import { ListGroup } from 'react-bootstrap';
 import Collapse from 'react-bootstrap/Collapse';
+import Card from 'react-bootstrap/Card';
 import background from './background3.png';
-import './createSocietiesPageStyleSheet.css';
 
 var index = 0;
 
-function CreateSocietiesPage() {
+const checkState = {
+    Academic: false, Arts: false, Drinking: false, Mindfulness: false, Music: false, Off_Campus: false, On_Campus: false,
+    Outdoors: false, Science: false, Social: false, Sports: false
+};
+
+var checkedBoxes = 0;
+
+function CreateSocietyPage() {
 
     const navigate = useNavigate();
+
+    const icons = ["pin.png", "alcohol.png", "apple.png", "ball.png", "basketball.png", "bike.png", "book.png", "bus.png", "car.png",
+        "clock.png", "golf.png", "id.png", "mind.png", "monitor.png", "mouse.png", "music.png", "paintbrush.png", "pencil.png", "phone.png",
+        "abbacus.png", "present.png", "science.png", "shoe.png", "sofa.png", "tags.png", "target.png", "thermometer.png", "wallet.png", "water.png",];
 
 
     useEffect(() => {
@@ -33,57 +46,11 @@ function CreateSocietiesPage() {
         });
     })
 
-    var checkedBoxes = 0;
-
-    function onCheckboxChange(societies) {
-        const target = societies.target;
-        const label = target.id;
-        console.log(label);
-        var add = false;
-        if(checkState[label] == false) {
-            console.log("YES");
-            checkState[label] = true;
-            checkedBoxes++;
-            console.log(checkedBoxes);
-        }
-        else if(checkState[label] == true){
-            checkState[label] = false;
-            checkedBoxes--;
-            console.log(checkedBoxes);
-        }
-
-        if(checkedBoxes == 5) {
-            disableChecks();
-        }
-        else if(checkedBoxes == 4) {
-            enableChecks();
-        }
-        
-    }
-
-    function disableChecks() {
-        for(let i=0;i<tags.length;i++) {
-            const element = document.getElementById(tags[i]);
-            if(!checkState[element.id]) {
-                element.disabled = true;
-            }
-        }
-    }
-
-    function enableChecks() {
-        for(let i=0;i<tags.length;i++) {
-            const element = document.getElementById(tags[i]);
-            if(element.disabled) {
-                element.disabled = false;
-            }
-        }
-    }
-
     function gatherTags() {
         const trueTags = [];
-        for(let i=0;i<tags.length;i++) {
+        for (let i = 0; i < tags.length; i++) {
             const element = document.getElementById(tags[i]);
-            if(checkState[element.id]) {
+            if (checkState[element.id]) {
                 trueTags.push(tags[i]);
             }
         }
@@ -93,93 +60,92 @@ function CreateSocietiesPage() {
     const tags = ['Academic', 'Arts', 'Drinking', 'Mindfulness', 'Music', 'Off_Campus', 'On_Campus',
         'Outdoors', 'Science', 'Social', 'Sports'];
 
-    const checkState = {Academic : false , Arts : false, Drinking : false, Mindfulness : false, Music : false, Off_Campus : false, On_Campus : false,
-    Outdoors : false, Science : false, Social : false, Sports : false};
+    const colors = ['#3B7F89', '#E84849', '#4ABC96', '#49A0AE', '#E84849', '#65A844', '#6EC2CB', '#6CC077', '#089283', '#ED3351'
+        , '#F37C2A'];
 
-    function createSocieties () {
+    function createSociety() {
 
         const finalTags = gatherTags();
+        console.log(finalTags);
 
-        const socName = document.getElementById('societiesName').value;
-        const socDateTime = document.getElementById('societiesDateTime').value;
-        const socLocation = document.getElementById('societiesLocation').value;
-        const socDescription = document.getElementById('societiesDescription').value;
-        const socPrice = parseFloat(document.getElementById('societiesPrice').value);
-        const socLink = document.getElementById('societiesLink').value;
-        const socOrganiser = document.getElementById('societiesOrganizer').value;
+        const societyName = document.getElementById('societyName').value;
+        const societyDescription = document.getElementById('description').value;
+        const societyEmail = document.getElementById('email').value;
+        const societyWebsite = document.getElementById('website').value;
+        const societyImageURL = selectedIcon;
 
-        
-        
-            Axios.get('http://localhost:3001/loggedIn', {}).then(res => {
+        console.log(societyImageURL);
+
+        Axios.get('http://localhost:3001/loggedIn', {}).then(res => {
             const organiser = parseInt(res.data);
-            Axios.post('http://localhost:3001/createSocieties', { socName, socDateTime, socLocation, socDescription, socOrganiser, socPrice, socLink }).then(res => 
+            Axios.post('http://localhost:3001/createSociety', { societyName, societyDescription, societyEmail, societyWebsite, organiser, societyImageURL }).then(res =>
                 res.data ? console.log("SUCCESS") : console.log("FAIL")).catch(error => console.log(error)).then(
-            Axios.post('http://localhost:3001/getSocietiesID', { socName, socDateTime, socLocation, socDescription, socOrganiser, socPrice, socLink }).then(res => {
-                
-                const SocietiesID = res.data[0].SocietiesID;
+                    Axios.post('http://localhost:3001/getSocietyID', { societyName, societyDescription, societyEmail, societyWebsite, organiser, societyImageURL }).then(res => {
 
-                for(let i=0;i<finalTags.length;i++) {
-                    const tag = finalTags[i];
-                    Axios.post('http://localhost:3001/addSocietiesTag', {SocietiesID,tag}).then(res =>
-                        res.data ? console.log("SUCCESS") : console.log("FAIL")).catch(error => console.log(error));
-                }
-            }));
+                        const SocietyID = res.data[0].SocietyID;
+
+                        for (let i = 0; i < finalTags.length; i++) {
+                            const tag = finalTags[i];
+                            Axios.post('http://localhost:3001/addSocietyTag', { SocietyID, tag }).then(res =>
+                                res.data ? console.log("SUCCESS") : console.log("FAIL")).catch(error => console.log(error));
+                        }
+
+                        navigate("/managesocieties");
+                    }));
         });
     }
 
     const ref = useRef(0);
 
-    const onNext = () => {
-        ref.current.next();
-    }
 
-    const onPrev = () => {
-        ref.current.prev();
-    }
-
-    const [socName, setSocName] = useState("");
-    const [socDateTime, setSocDateTime] = useState("");
-    const [socLocation, setSocLocation] = useState("");
-    const [socDescription, setSocDescription] = useState("");
-    const [socPrice, setSocPrice] = useState("");
-    const [socTags, setSocTags] = useState([]);
-    const [socLink, setSocLink] = useState("");
-    
+    const [societyName, setSocietyName] = useState("");
+    const [societyDescription, setSocietyDescription] = useState("");
+    const [societyEmail, setSocietyEmail] = useState("");
+    const [societyWebsite, setSocietyWebsite] = useState("");
+    const [societyTags, setSocietyTags] = useState([]);
 
     function summaryFunction() {
-        setSocName(document.getElementById("societiesName").value);
-        setSocDateTime(document.getElementById("societiesDateTime").value);
-        setSocLocation(document.getElementById("societiesLocation").value);
-        setSocDescription(document.getElementById("societiesDescription").value);
-        setSocPrice(document.getElementById("societiesPrice").value);
-        setSocLink(document.getElementById("societiesLink").value);
-        setSocTags(gatherTags().map((tag) => tag + " | "));
+        setSocietyName(document.getElementById("societyName").value);
+        setSocietyDescription(document.getElementById("description").value);
+        setSocietyEmail(document.getElementById("email").value);
+        setSocietyWebsite(document.getElementById("website").value);
+        setSocietyTags(gatherTags().map((tag) => tag + " | "));
     }
 
-    const [openStart,setOpenStart] = useState(true);
-    const [open1,setOpen1] = useState(false);
-    const [open2,setOpen2] = useState(false);
-    const [open3,setOpen3] = useState(false);
-    const [open4,setOpen4] = useState(false);
-    const [open5,setOpen5] = useState(false);
-    const [open6,setOpen6] = useState(false);
-    const [open7,setOpen7] = useState(false);
+    const [openStart, setOpenStart] = useState(true);
+    const [open1, setOpen1] = useState(false);
+    const [open2, setOpen2] = useState(false);
+    const [open3, setOpen3] = useState(false);
+    const [open4, setOpen4] = useState(false);
+    const [open5, setOpen5] = useState(false);
+    const [open6, setOpen6] = useState(false);
 
     const [buttonLabel, setButtonLabel] = useState("Begin");
     const [buttonSubmit, setButtonSubmit] = useState(false);
 
-    function buttonHandler () {
-        if(!buttonSubmit) {
+    function buttonHandler() {
+        if (!buttonSubmit) {
             formAnim();
-        } 
-        else if(buttonSubmit) {
-            createSocieties();
+        }
+        else if (buttonSubmit) {
+            createSociety();
+        }
+    }
+
+    function onTagSelect(event) {
+        var tagId = event.target.id;
+        checkState[tagId] = !checkState[tagId];
+        if(checkState[tagId]) {
+            event.target.style.borderColor = "#18cdc6";
+        }
+        else {
+            event.target.style.borderColor = "transparent";
         }
     }
 
 
     function formAnim() {
-        switch(index) {
+        switch (index) {
             case 0:
                 setOpenStart(false);
                 setOpen1(true);
@@ -193,202 +159,177 @@ function CreateSocietiesPage() {
             case 2:
                 setOpen3(true);
                 index++;
+                window.scrollTo({ top: 300, left: 0, behavior: 'smooth' })
                 break;
             case 3:
                 setOpen4(true);
                 index++;
+                window.scrollTo({ top: 600, left: 0, behavior: 'smooth' })
                 break;
             case 4:
                 setOpen5(true);
                 index++;
+                window.scrollTo({ top: 900, left: 0, behavior: 'smooth' })
                 break;
             case 5:
                 setOpen6(true);
                 index++;
+                window.scrollTo({ top: 1200, left: 0, behavior: 'smooth' })
                 break;
             case 6:
                 summaryFunction();
-                setOpen7(true);
                 index++;
-                setButtonLabel("Create Event");
+                window.scrollTo({ top: 1800, left: 0, behavior: 'smooth' })
+                setButtonLabel("Create Society");
                 setButtonSubmit(true);
                 break;
-            
-
         }
-
     }
-  
- 
+
+    function handleChange(event) {
+
+        const value = event.target.value;
+
+        switch (event.target.id) {
+            case "societyName":
+                setSocietyName(value);
+                break;
+
+            case "description":
+                setSocietyDescription(value);
+                break;
+
+            case "email":
+                setSocietyEmail(value);
+                break;
+
+            case "website":
+                setSocietyWebsite(value);
+                break;
+        }
+    }
+
+    const [selectedIcon, setSelectedIcon] = useState("societyIcons/pin.png")
+
+    function iconSelect(event) {
+        document.getElementById(selectedIcon).style.borderColor = "transparent"
+        setSelectedIcon(event.target.id);
+        event.target.style.borderColor = "#18cdc6";
+    }
+
+
 
     return (
-            <>
-            <html style={{height:"2200px", backgroundImage: `url(${background})`,  backgroundSize : "cover", backgroundPosition:"center"}} className='justify-content-center'>
-
+        <>
+            <html style={{ height: "1600px", backgroundImage: `url(${background})`, backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed", fontFamily: "roboto" }}>
+            <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'/>  
                 <HeaderBar></HeaderBar>
-                <Row style={{width:"100%", height: "100%"}} className='justify-content-center'>
-                <Row style={{width:"80%", height: "100%"}} className="createEventbackground">
-                <Container fluid style={{height:"98%", width: "100%", marginTop:"2%"}} className="createEventFormContainer">
-                        <Row style={{width:"100%",height: "100%", margin:"0", backgroundColor: "#202020"}} className="text-center">
-                            <Col style={{width:"100%", height :"100%", margin:"0"}} className="createEventCol">
-                                <Container fluid style={{marginTop: "2%", width:"100%"}} className="createEventFormContainer">
-                                             <Collapse in={openStart}>
-                                                <Container fluid style={{width:"100%", height:"100%"}} className="formContainer">
-                                                        <Row className="text-center" style={{height:"100%"}}>
-                                                            <Col style={{width:"33%"}} className="createEventCol"></Col>
-                                                            <Col>
-                                                            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-                                                            </Col>
-                                                            <Col style={{width:"33%"}} className="createEventCol"></Col>
-                                                        </Row>
-                                                    </Container>
-                                            </Collapse>
-                                                <h2 className="createEventHeader" style={{fontSize:"70px", margin:"0"}}>Create Societies</h2>
-                                            </Container>
-                                            <br />
-                                            <Collapse in={open1}>
-                                                <Container fluid style={{width:"100%"}} className="formContainer">
-                                                    <Row className="text-center" style={{height:"100%"}}>
-                                                        <Col style={{width:"33%"}} className="createEventCol"></Col>
-                                                        <Col className="createEventFormCol">
-                                                            <br />
-                                                            <h2 className="createEventFormLabel">What would you like your society to be called?</h2>
-                                                            <Row className='justify-content-center'><Form.Control type="text" id="societiesName" style={{marginTop:"5%",width:"50%"}} className='center-block'/></Row> <br />
-                                                        </Col>
-                                                        <Col style={{width:"33%"}} className="createEventCol"></Col>
-                                                    </Row>
-                                                </Container>
-                                            </Collapse>
-                                            <Collapse in={open2}>
-                                                <Container fluid  className="text-center" style={{backgroundColor:"#202020", width:"100%"}}>
-                                                        <Row className="text-center" styke={{height:"100%"}}>
-                                                            <Col style={{width:"33%"}}className="createEventCol"></Col>
-                                                            <Col className="createEventFormCol">
-                                                                <br />
-                                                                <h2 className="createEventFormLabel">What is the date/time of your societies?</h2>
-                                                                <Row className='justify-content-center'><Form.Control id="societiesDateTime" style={{marginTop:"5%",width:"50%"}} className='center-block'/></Row> <br />
-                                                            </Col>
-                                                            <Col style={{width:"33%"}}className="createEventCol"></Col>
-                                                        </Row>
-                                                </Container>
-                                            </Collapse>
-                                            <Collapse in={open3}>
-                                                <Container fluid className="text-center" style={{backgroundColor:"#202020", width:"100%"}}>
-                                                    <Row className="text-center" styke={{height:"100%"}}>
-                                                        <Col style={{width:"33%"}}className="createEventCol"></Col>
-                                                        <Col className="createEventFormCol">
-                                                            <br />
-                                                            <h2 className="createEventFormLabel">Where will your societies be located?</h2>
-                                                            <Row className='justify-content-center'><Form.Control id="societiesLocation" style={{marginTop:"5%",width:"50%"}} /></Row> <br />
-                                                        </Col>
-                                                        <Col style={{width:"33%"}}className="createEventCol"></Col>
-                                                    </Row>
-                                                </Container>
-                                            </Collapse>
-                                            <Collapse in={open4}>
-                                                <Container fluid className="text-center" style={{backgroundColor:"#202020", width:"100%"}}>
-                                                        <Row className="text-center" styke={{height:"100%"}}>
-                                                            <Col style={{width:"33%"}}className="createEventCol"></Col>
-                                                            <Col className="createEventFormCol">
-                                                                <br />
-                                                                <h2 className="createEventFormLabel">How would you describe your societies?</h2>
-                                                                <Row className='justify-content-center'><Form.Control id="soicetiesDescription" style={{marginTop:"5%",width:"50%"}}  /></Row> <br />
-                                                            </Col>
-                                                            <Col style={{width:"33%"}}className="createEventCol"></Col>
-                                                        </Row>
-                                                </Container>
-                                            </Collapse>
-                                            <Collapse in={open5} fluid className="text-center">
-                                                <Container fluid className="text-center" style={{backgroundColor:"#202020", width:"100%"}}>
-                                                        <Row className="text-center" styke={{height:"100%"}}>
-                                                            <Col style={{width:"33%"}}className="createEventCol"></Col>
-                                                            <Col className="createEventFormCol">
-                                                                <br />
-                                                                <h2 className="createEventFormLabel">How much will your societies cost?</h2>
-                                                                <Row className='justify-content-center'><Form.Control id="societiesPrice" style={{marginTop:"5%",width:"50%"}} /></Row> <br />
-                                                            </Col>
-                                                            <Col style={{width:"33%"}}className="createEventCol"></Col>
-                                                        </Row>
-                                                </Container>
-                                            </Collapse>
-                                            <Collapse in={open6} fluid className="text-center">
-                                                <Container fluid className="text-center" style={{width:"100%"}}>
-                                                    <Row className="text-center" styke={{height:"100%"}}>
-                                                            <Col style={{width:"33%"}}className="createEventCol"></Col>
-                                                            <Col className="createEventFormCol">
-                                                                <br />
-                                                                <h2 className="createEventFormLabel"> Please Select Up to 5 Tags: </h2>
-                                                                <br/>
-                                                                <Row style={{width:"100%",height: "100%", margin:"0"}}>
-                                                                    <Col></Col>
-                                                                    <Col>
-                                                                        {
-                                                                            tags.map((tag) => (
-                                                                                <Row style={{width:"100%"}}>
-                                                                                <Form.Check
-                                                                                    type="checkbox"
-                                                                                    id={`${tag}`}
-                                                                                    label={`${tag}`}
-                                                                                    onChange={onCheckboxChange}
-                                                                                    style={{color:"#18cdc6"}}
-                                                                                />
-                                                                                <br />
-                                                                                </Row>
-                                                                            ))
-                                                                        }
-                                                                    <br/>
-                                                                    </Col>
-                                                                    <Col></Col>
-                                                                </Row>
-                                                            </Col>
-                                                            <Col style={{width:"33%"}}className="createEventCol"></Col>   
-                                                    </Row>
-                                                </Container>
-                                            </Collapse>
-                                            <Collapse in={open7} fluid className="text-center">
-                                                <Container fluid className="text-center" style={{width:"100%"}}>
-                                                        <Row className="text-center">
-                                                            <Col style={{width:"33%"}}className="createEventCol"></Col>
-                                                            <Col className="createEventFormCol">
-                                                                <br />
-                                                                <h2 className = "createEventFormLabel">Summary</h2>
-                                                                <Row className='justify-content-center'>
-                                                                    <ListGroup style={{width:"50%"}}>
-                                                                        <ListGroup.Item>Name: {socName}</ListGroup.Item>
-                                                                        <ListGroup.Item>Date/Time: {socDateTime}</ListGroup.Item>
-                                                                        <ListGroup.Item>Location: {socLocation}</ListGroup.Item>
-                                                                        <ListGroup.Item>Description: {socDescription}</ListGroup.Item>
-                                                                        <ListGroup.Item>Price: {socPrice}</ListGroup.Item>
-                                                                        <ListGroup.Item>Tags: {socTags}</ListGroup.Item>
-                                                                        <ListGroup.Item>Links: {socLink}</ListGroup.Item>
-                                                                    </ListGroup>
-                                                                </Row>
-                                                                <br/>
-                                                            </Col>
-                                                            <Col style={{width:"33%"}}className="createEventCol"></Col>
-                                                        </Row>
-                                                </Container>
-                                            </Collapse>     
-                                            <Container fluid  className="text-center" style={{width:"100%"}}>
-                                                <Row className="text-center" style={{height:"100%"}}>
-                                                    <Col style={{width:"33%"}}className="createEventCol"></Col>
-                                                    <Col style={{width:"33%", height:"100%"}} className='justify-content-center'>
-                                                        <br/>
-                                                            <Button variant="outline-primary" id="formButton" className="btn" onClick={formAnim} style={{backgroundColor:"#252526", width: "50%",color:"#ffffff", fontSize:"90%", borderColor :"#18cdc6"}}>{buttonLabel}</Button>
+                <Row style={{ width: "100%", height: "100%" }} className='justify-content-center'>
+                    <Row style={{ width: "80%", height: "100%" }} className="createSocietybackground">
+                        <Container fluid style={{ height: "98%", width: "100%", marginTop: "2%" }} className="createSocietyFormContainer">
+                            <Row style={{ width: "100%", height: "100%", margin: "0", backgroundColor: "#202020" }} className="text-center">
+                                <Col style={{ width: "100%", height: "100%", margin: "0" }} className="createSocietyCol">
+                                    <Container fluid style={{ marginTop: "2%", width: "100%" }} className="createSocietyFormContainer">
+                                        <Collapse in={openStart}>
+                                            <Container fluid style={{ width: "100%", height: "100%" }} className="formContainer">
+                                                <Row className="text-center" style={{ height: "100%" }}>
+                                                    <Col style={{ width: "33%" }} className="createSocietyCol"></Col>
+                                                    <Col>
+                                                        <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
                                                     </Col>
-                                                    <Col style={{width:"33%"}}className="createEventCol"></Col>
+                                                    <Col style={{ width: "33%" }} className="createSocietyCol"></Col>
                                                 </Row>
-                                        </Container>               
-                            </Col>
-                        </Row>
-                        
-                </Container>
+                                            </Container>
+                                        </Collapse>
+                                        <h2 className="createSocietyHeader" style={{ fontSize: "70px", margin: "0" }}>Create Society</h2>
+                                    </Container>
+                                    <br />
+                                    <Collapse in={open1}>
+                                        <Container fluid style={{ width: "100%" }} className="formContainer">
+                                            <Row className="text-center" style={{ height: "100%" }}>
+                                                <Col className="createSocietyFormCol">
+                                                    <br />
+                                                    <h2 className="createSocietyFormLabel">What would you like your society to be called?</h2>
+                                                    <Row className='justify-content-center'><Form.Control type="text" id="societyName" style={{ marginTop: "3%", width: "33%" }} className='societyInput' onChange={handleChange} /></Row> <br />
+                                                </Col>
+                                            </Row>
+                                        </Container>
+                                    </Collapse>
+                                    <Collapse in={open2}>
+                                        <Container fluid className="text-center" style={{ backgroundColor: "#202020", width: "100%" }}>
+                                            <Row className="text-center" styke={{ height: "100%" }}>
+                                                <Col className="createSocietyFormCol">
+                                                    <br />
+                                                    <h2 className="createSocietyFormLabel">Tell us about your society</h2>
+                                                    <Row className='justify-content-center'>
+                                                        <Form.Control id="description" as="textarea" style={{ marginTop: "3%", width: "50%", height: "100px" }} className='societyInput' onChange={handleChange} />
+                                                    </Row> <br />
+                                                </Col>
+                                            </Row>
+                                        </Container>
+                                    </Collapse>
+                                    <Collapse in={open3}>
+                                        <Container fluid className="text-center" style={{ backgroundColor: "#202020", width: "100%" }}>
+                                            <Row className="text-center" styke={{ height: "100%" }}>
+                                                <Col className="createSocietyFormCol">
+                                                    <br />
+                                                    <h2 className="createSocietyFormLabel">Enter society email</h2>
+                                                    <Row className='justify-content-center'><Form.Control id="email" style={{ marginTop: "3%", width: "33%" }} className='societyInput' onChange={handleChange} /></Row> <br />
+                                                </Col>
+                                            </Row>
+                                        </Container>
+                                    </Collapse>
+                                    <Collapse in={open4}>
+                                        <Container fluid className="text-center" style={{ backgroundColor: "#202020", width: "100%" }}>
+                                            <Row className="text-center" styke={{ height: "100%" }}>
+                                                <Col className="createSocietyFormCol">
+                                                    <br />
+                                                    <h2 className="createSocietyFormLabel">Enter society website (if any)</h2>
+                                                    <Row className='justify-content-center'><Form.Control id="website" style={{ marginTop: "3%", width: "33%" }} className='societyInput' onChange={handleChange} /></Row> <br />
+                                                </Col>
+                                            </Row>
+                                        </Container>
+                                    </Collapse>
+                                    <Collapse in={open5} fluid className="text-center">
+                                        <Container fluid className="text-center" style={{ width: "100%" }}>
+                                            <Row className="text-center" style={{ height: "100%" }}>
+                                                <Col className="createSocietyFormCol">
+                                                    <br />
+                                                    <h2 className="createSocietyFormLabel"> Please Select Some Tags: </h2>
+                                                    <br />
+                                                    <Row className='justify-content-center'>
+                                                        <Container style={{ width: "70%", marginLeft: "0px", marginRight: "0px", paddingLeft: "50px", paddingRight: "0px" }}>
+                                                            {tags.map((tag, index) =>
+                                                                <Alert id={`${tag}`} style={{ border: "5px solid transparent", padding: "5px",width: "10%", minWidth: "140px", marginLeft: "5px", marginRight: "5px", float: "left", backgroundColor: colors[index % colors.length], color: "#ffffff" }} onClick={onTagSelect}>
+                                                                    {tag}
+                                                                </Alert>
+                                                            )}
+                                                        </Container>
+                                                    </Row>
+                                                </Col>
+                                            </Row>
+                                        </Container>
+                                    </Collapse>
+                                    <Container fluid className="text-center" style={{ width: "100%" }}>
+                                        <Row className="text-center" style={{ height: "100%" }}>
+                                            <Col style={{ width: "33%", height: "100%" }} className='justify-content-center'>
+                                                <br />
+                                                <Button variant="outline-primary" id="formButton" className="formButton" onClick={buttonHandler} style={{ backgroundColor: "#252526", width: "33%", color: "#ffffff", height: "50px", fontSize: "20px", borderColor: "#18cdc6" }}>{buttonLabel}</Button>
+                                            </Col>
+                                        </Row>
+                                    </Container>
+                                </Col>
+                            </Row>
+
+                        </Container>
+                    </Row>
                 </Row>
-                </Row>
-                
-                </html>
-            </>
+
+            </html>
+        </>
     );
 }
 
-export default CreateSocietiesPage;
+export default CreateSocietyPage;
+
+

@@ -1,33 +1,57 @@
+.createSocietyFormCol {
+  width: 33%;
+  height: 100%;
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+  border-color: #18cdc6;
+  padding-top: 10px;
+  background-color: #252526;
+}
 
-.createEventFormCol {
-    width: 33%;
-    height: 100%;
-    border-top: 1px solid;
-    border-bottom: 1px solid;
-    border-color: #18cdc6;
-    padding-top: 10px;
-    background-color: #252526;
-  }
-  
-  .createEventFormLabel {
-    color:#18cdc6;
-    background-color: #252526;
-  }
-  
-  .createEventFormContainer, .createEventbackground, .createEventCol, div.justify-content-center.createEventCol{
-    background-color: #252526;
-  }
-  
-  h2.createEventHeader {
-    font-weight: bold;
-    color:#ffffff;
-    background-color: #252526;
-  }
-  
-  
-  .bg-backColor {
-    background-color: #252526;
-    color:#18cdc6;
-    border-color: #18cdc6;
-    border: 1px solid;
-  }
+.createSocietyFormLabel {
+  color: #ffffff !important;
+  background-color: #252526;
+}
+
+.createSocietyFormContainer,
+.createSocietybackground,
+.createSocietyCol,
+div.justify-content-center.createSocietyCol {
+  background-color: #252526;
+}
+
+h2.createSocietyHeader {
+  font-weight: bold;
+  color: #ffffff;
+  background-color: #252526;
+}
+
+.bg-backColor {
+  background-color: #252526;
+  color: #18cdc6;
+  border-color: #18cdc6;
+  border: 1px solid;
+}
+
+.societyInput {
+  color: #ffffff !important;
+  background-color: #202020 !important;
+  border-color: #18cdc6 !important;
+}
+
+.form-control:focus {
+  border-color: #18cdc6 !important;
+  box-shadow: 0 0 0 0.2rem #18cdc6 !important;
+} 
+
+.formButton {
+  background-color: #202020 !important;
+}
+
+.createSocietyCardImg {
+  width: 120px !important;
+  height: 120px !important;
+  padding: 10px !important;
+  margin-top: 20px !important;
+  margin: 10px !important;
+}
