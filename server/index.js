@@ -483,12 +483,19 @@ app.post('/updateEvent', (req, res) => {
   }
 })
 
+
 app.post('/runKmeansScript', (req, res) => {
-  exec("python3 /Users/lukeelliott/Documents/GitHub/COMP6000/server/kmeans.py", (error, stdout, stderr) => { // change me to work for your system 
-    if (error) {
-      console.error(`exec error: ${error}`);
-      return res.status(500).send(`Error executing Python script: ${stderr}`);
-    }
-    res.send(stdout);
-  });
+  // Make sure userIDGLOBAL is defined and not null
+  if (userIDGLOBAL) {
+    const path = `python3 /Users/lukeelliott/Documents/GitHub/COMP6000/server/kmeans.py ${userIDGLOBAL}`;
+    exec(path, (error, stdout, stderr) => {
+      if (error) {
+        console.error(`exec error: ${error}`);
+        return res.status(500).send(`Error executing Python script: ${stderr}`);
+      }
+      res.send(stdout);
+    });
+  } else {
+    res.status(400).send("User ID is not set");
+  }
 });

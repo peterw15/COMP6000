@@ -87,101 +87,6 @@ function HomePage(props) {
     });
   }
 
-  // const getRecommendedEvent = () => {
-  //   Axios.post('http://localhost:3001/recommendedEventByTag').then(res => {
-  //     var eventsData = res.data.map(function (i) {
-  //       var date = new Date(i.eventDateTime);
-  //       date = date.toDateString() + " " + date.toLocaleTimeString();
-  //       var price = i.price;
-  //         if (price == 0.00) {
-  //           price = "Free";
-  //         }
-  //       return (
-  //         <Card className="eventsCard" style={{marginLeft: "200px"}}>
-  //                       <Container flex>
-  //                           <Row className="cardRow">
-  //                               <Col className="imgCol" lg="2">
-  //                                   <Card.Img src={i.imageURL} className="cardImg"></Card.Img>
-  //                               </Col>
-  //                               <Col className="infoCol" >
-  //                                   <Row className="infoRow">
-  //                                       <img className="cardIcon" src={locationPin}></img>
-  //                                       <div className="infoLabel">{i.location}</div>
-  //                                       <img className="cardIcon" src={calendar}></img>
-  //                                       <div className="infoLabel">{date}</div>
-  //                                   </Row>
-  //                                   <Row className="infoRow">
-  //                                       <img className="cardIcon" src={pound}></img>
-  //                                       <div className="infoLabel">{price}</div>
-  //                                       <img className="cardIcon" src={avatar}></img>
-  //                                       <div className="infoLabel">{i.firstName + " " + i.lastName}</div>
-  //                                   </Row>
-  //                               </Col>
-  //                           </Row>
-  //                           <br />
-  //                           <Row className="cardTitleRow">
-  //                               <Card.Title className="cardTitle">{i.eventName}</Card.Title>
-  //                           </Row>
-  //                           <br />
-  //                       </Container>
-  //                       <Card.Body className="cardBody">
-  //                           <Card.Text className="cardText">{i.description}</Card.Text>
-  //                       </Card.Body>
-  //                   </Card>
-  //       );
-  //     });
-  //     console.log(eventsData);
-  //     setRecommendedEvent(eventsData);
-  // //   });
-  // const getRecommendedEvent = () => {
-  //   Axios.get(`http://localhost:3001/get-recommended-events/`).then(res => {
-  //     const eventsData = res.data.map(i => {
-  //       let date = new Date(i.eventDateTime);
-  //       date = date.toDateString() + " " + date.toLocaleTimeString();
-  //       let price = i.price;
-  //       if (price === 0.00) {
-  //         price = "Free";
-  //       }
-
-  //       return (
-  //         <Card className="eventsCard" style={{marginLeft: "200px"}}>
-  //           <Container flex>
-  //             <Row className="cardRow">
-  //               <Col className="imgCol" lg="2">
-  //                 <Card.Img src={i.imageURL} className="cardImg"></Card.Img>
-  //               </Col>
-  //               <Col className="infoCol">
-  //                 <Row className="infoRow">
-  //                   <img className="cardIcon" src={locationPin}></img>
-  //                   <div className="infoLabel">{i.location}</div>
-  //                   <img className="cardIcon" src={calendar}></img>
-  //                   <div className="infoLabel">{date}</div>
-  //                 </Row>
-  //                 <Row className="infoRow">
-  //                   <img className="cardIcon" src={pound}></img>
-  //                   <div className="infoLabel">{price}</div>
-  //                   <img className="cardIcon" src={avatar}></img>
-  //                   <div className="infoLabel">{i.firstName + " " + i.lastName}</div>
-  //                 </Row>
-  //               </Col>
-  //             </Row>
-  //             <br />
-  //             <Row className="cardTitleRow">
-  //               <Card.Title className="cardTitle">{i.eventName}</Card.Title>
-  //             </Row>
-  //             <br />
-  //           </Container>
-  //           <Card.Body className="cardBody">
-  //             <Card.Text className="cardText">{i.description}</Card.Text>
-  //           </Card.Body>
-  //         </Card>
-  //       );
-  //     });
-  //     console.log(eventsData);
-  //     setRecommendedEvent(eventsData);
-  //   }).catch(err => console.log(err));
-  // };
-
   const runKmeansScript = () => {
     Axios.post('http://localhost:3001/runKmeansScript').then(res => {
       console.log(res.data); 
@@ -258,7 +163,6 @@ function HomePage(props) {
                   <br /> <br /> <br />
                 </Row>
                 {recommendedEvent}
-                {/* Display the output from the Python script here */}
                 <div style={{ marginTop: "20px", color: "white", fontSize: "20px" }}>
                   {pythonOutput}
                 </div>
