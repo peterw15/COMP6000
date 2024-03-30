@@ -202,21 +202,21 @@ app.post('/createEvent', (req, res) => {
   });
 })
 
-app.post('/createSocieties', (req, res) => {
-  const { socName, socDataTime, socLocation, socDescription, socOrganiser, socPrice, socLink } = req.body;
-  const query = "INSERT INTO Societies (socName, socDataTime, socLocation, socDescription, socOrganiser, socPrice, socLink) VALUES (?,?,?,?,?,?,?)";
-
-  connection.query(query, [socName, socDataTime, socLocation, socDescription, socOrganiser, socPrice], (err) => {
+app.post('/createSociety', (req, res) => {
+  const { socName, socLocation, socDescription, socPresident, socPrice, socLink } = req.body;
+  const sql = 'INSERT INTO Society (socName, socLocation, socDescription, socPresident, socPrice, socLink) VALUES (?, ?, ?, ?, ?, ?)';
+  connection.query(sql, [socName, socLocation, socDescription, socPresident, socPrice, socLink], (err, result) => {
     if (err) {
-      console.error('Error creating societies: ' + err.stack);
-      res.status(500).send(false);
-      return;
+      console.error(err);
+      res.status(500).send('Error creating society');
+    } else {
+      console.log('Society created successfully');
+      res.status(200).send('Society created successfully');
     }
-    res.status(200).send(true);
-  })
+  });
+});
 
 
-})
 
 app.post('/isInSociety', (req, res) => {
   const {SocietyID} = req.body;

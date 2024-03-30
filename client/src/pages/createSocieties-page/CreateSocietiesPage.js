@@ -46,71 +46,35 @@ function CreateSocietyPage() {
         });
     })
 
-    function gatherTags() {
-        const trueTags = [];
-        for (let i = 0; i < tags.length; i++) {
-            const element = document.getElementById(tags[i]);
-            if (checkState[element.id]) {
-                trueTags.push(tags[i]);
-            }
-        }
-        return trueTags;
-    }
-
-    const tags = ['Academic', 'Arts', 'Drinking', 'Mindfulness', 'Music', 'Off_Campus', 'On_Campus',
-        'Outdoors', 'Science', 'Social', 'Sports'];
-
-    const colors = ['#3B7F89', '#E84849', '#4ABC96', '#49A0AE', '#E84849', '#65A844', '#6EC2CB', '#6CC077', '#089283', '#ED3351'
-        , '#F37C2A'];
-
     function createSociety() {
-
-        const finalTags = gatherTags();
-        console.log(finalTags);
-
-        const societyName = document.getElementById('societyName').value;
-        const societyDescription = document.getElementById('description').value;
-        const societyEmail = document.getElementById('email').value;
-        const societyWebsite = document.getElementById('website').value;
-        const societyImageURL = selectedIcon;
-
-        console.log(societyImageURL);
-
-        Axios.get('http://localhost:3001/loggedIn', {}).then(res => {
-            const organiser = parseInt(res.data);
-            Axios.post('http://localhost:3001/createSociety', { societyName, societyDescription, societyEmail, societyWebsite, organiser, societyImageURL }).then(res =>
-                res.data ? console.log("SUCCESS") : console.log("FAIL")).catch(error => console.log(error)).then(
-                    Axios.post('http://localhost:3001/getSocietyID', { societyName, societyDescription, societyEmail, societyWebsite, organiser, societyImageURL }).then(res => {
-
-                        const SocietyID = res.data[0].SocietyID;
-
-                        for (let i = 0; i < finalTags.length; i++) {
-                            const tag = finalTags[i];
-                            Axios.post('http://localhost:3001/addSocietyTag', { SocietyID, tag }).then(res =>
-                                res.data ? console.log("SUCCESS") : console.log("FAIL")).catch(error => console.log(error));
-                        }
-
-                        navigate("/managesocieties");
-                    }));
-        });
+        Axios.post('http://localhost:3001/createSociety', { 
+            socName: societyName, 
+            socLocation: societyLocation, 
+            socDescription: societyDescription, 
+            socPresident: societyPresident, 
+            socPrice: societyPrice, 
+            socLink: societyLink, 
+        }).then(res => {
+            console.log("Create society response:", res.data);
+            if (res.data) {
+                window.location.href = 'http://localhost:3000/home'; // Redirect to home page
+            } else {
+                console.log("FAIL: Create society failed.");
+            }
+        }).catch(error => console.log("Create society error:", error));
     }
-
+    
+    
     const ref = useRef(0);
-
 
     const [societyName, setSocietyName] = useState("");
     const [societyDescription, setSocietyDescription] = useState("");
     const [societyEmail, setSocietyEmail] = useState("");
     const [societyWebsite, setSocietyWebsite] = useState("");
-    const [societyTags, setSocietyTags] = useState([]);
-
-    function summaryFunction() {
-        setSocietyName(document.getElementById("societyName").value);
-        setSocietyDescription(document.getElementById("description").value);
-        setSocietyEmail(document.getElementById("email").value);
-        setSocietyWebsite(document.getElementById("website").value);
-        setSocietyTags(gatherTags().map((tag) => tag + " | "));
-    }
+    const [societyLocation, setSocietyLocation] = useState("");
+    const [societyPresident, setSocietyPresident] = useState("");
+    const [societyPrice, setSocietyPrice] = useState(0); // Assuming initial price is 0
+    const [societyLink, setSocietyLink] = useState("");
 
     const [openStart, setOpenStart] = useState(true);
     const [open1, setOpen1] = useState(false);
@@ -119,7 +83,7 @@ function CreateSocietyPage() {
     const [open4, setOpen4] = useState(false);
     const [open5, setOpen5] = useState(false);
     const [open6, setOpen6] = useState(false);
-
+    
     const [buttonLabel, setButtonLabel] = useState("Begin");
     const [buttonSubmit, setButtonSubmit] = useState(false);
 
@@ -129,17 +93,6 @@ function CreateSocietyPage() {
         }
         else if (buttonSubmit) {
             createSociety();
-        }
-    }
-
-    function onTagSelect(event) {
-        var tagId = event.target.id;
-        checkState[tagId] = !checkState[tagId];
-        if(checkState[tagId]) {
-            event.target.style.borderColor = "#18cdc6";
-        }
-        else {
-            event.target.style.borderColor = "transparent";
         }
     }
 
@@ -177,7 +130,6 @@ function CreateSocietyPage() {
                 window.scrollTo({ top: 1200, left: 0, behavior: 'smooth' })
                 break;
             case 6:
-                summaryFunction();
                 index++;
                 window.scrollTo({ top: 1800, left: 0, behavior: 'smooth' })
                 setButtonLabel("Create Society");
@@ -187,27 +139,43 @@ function CreateSocietyPage() {
     }
 
     function handleChange(event) {
-
-        const value = event.target.value;
-
-        switch (event.target.id) {
+        const { id, value } = event.target;
+    
+        switch (id) {
             case "societyName":
                 setSocietyName(value);
                 break;
-
+    
             case "description":
                 setSocietyDescription(value);
                 break;
-
+    
             case "email":
                 setSocietyEmail(value);
                 break;
-
+    
             case "website":
                 setSocietyWebsite(value);
                 break;
+    
+            case "location":
+                setSocietyLocation(value);
+                break;
+    
+            case "president":
+                setSocietyPresident(value);
+                break;
+    
+            case "price":
+                setSocietyPrice(parseFloat(value));
+                break;
+    
+            case "link":
+                setSocietyLink(value);
+                break;
         }
     }
+    
 
     const [selectedIcon, setSelectedIcon] = useState("societyIcons/pin.png")
 
@@ -290,22 +258,24 @@ function CreateSocietyPage() {
                                             </Row>
                                         </Container>
                                     </Collapse>
-                                    <Collapse in={open5} fluid className="text-center">
+                                    <Collapse in={open5}>
                                         <Container fluid className="text-center" style={{ width: "100%" }}>
                                             <Row className="text-center" style={{ height: "100%" }}>
                                                 <Col className="createSocietyFormCol">
                                                     <br />
-                                                    <h2 className="createSocietyFormLabel"> Please Select Some Tags: </h2>
+                                                    <h2 className="createSocietyFormLabel">Enter society president name</h2>
+                                                    <Row className='justify-content-center'><Form.Control type="text" id="president" style={{ marginTop: "3%", width: "33%" }} className='societyInput' onChange={handleChange} /></Row> <br />
+                                                </Col>
+                                            </Row>
+                                        </Container>
+                                    </Collapse>
+                                    <Collapse in={open6}>
+                                        <Container fluid className="text-center" style={{ width: "100%" }}>
+                                            <Row className="text-center" style={{ height: "100%" }}>
+                                                <Col className="createSocietyFormCol">
                                                     <br />
-                                                    <Row className='justify-content-center'>
-                                                        <Container style={{ width: "70%", marginLeft: "0px", marginRight: "0px", paddingLeft: "50px", paddingRight: "0px" }}>
-                                                            {tags.map((tag, index) =>
-                                                                <Alert id={`${tag}`} style={{ border: "5px solid transparent", padding: "5px",width: "10%", minWidth: "140px", marginLeft: "5px", marginRight: "5px", float: "left", backgroundColor: colors[index % colors.length], color: "#ffffff" }} onClick={onTagSelect}>
-                                                                    {tag}
-                                                                </Alert>
-                                                            )}
-                                                        </Container>
-                                                    </Row>
+                                                    <h2 className="createSocietyFormLabel">Enter society price</h2>
+                                                    <Row className='justify-content-center'><Form.Control type="text" id="price" style={{ marginTop: "3%", width: "33%" }} className='societyInput' onChange={handleChange} /></Row> <br />
                                                 </Col>
                                             </Row>
                                         </Container>
@@ -331,5 +301,3 @@ function CreateSocietyPage() {
 }
 
 export default CreateSocietyPage;
-
-
