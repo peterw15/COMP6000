@@ -70,7 +70,6 @@ function CreateSocietyPage() {
     const [societyName, setSocietyName] = useState("");
     const [societyDescription, setSocietyDescription] = useState("");
     const [societyEmail, setSocietyEmail] = useState("");
-    const [societyWebsite, setSocietyWebsite] = useState("");
     const [societyLocation, setSocietyLocation] = useState("");
     const [societyPresident, setSocietyPresident] = useState("");
     const [societyPrice, setSocietyPrice] = useState(0); // Assuming initial price is 0
@@ -83,6 +82,7 @@ function CreateSocietyPage() {
     const [open4, setOpen4] = useState(false);
     const [open5, setOpen5] = useState(false);
     const [open6, setOpen6] = useState(false);
+    const [open7, setOpen7] = useState(false);
     
     const [buttonLabel, setButtonLabel] = useState("Begin");
     const [buttonSubmit, setButtonSubmit] = useState(false);
@@ -130,8 +130,9 @@ function CreateSocietyPage() {
                 window.scrollTo({ top: 1200, left: 0, behavior: 'smooth' })
                 break;
             case 6:
+                setOpen7(true);
                 index++;
-                window.scrollTo({ top: 1800, left: 0, behavior: 'smooth' })
+                window.scrollTo({ top: 1500, left: 0, behavior: 'smooth' })
                 setButtonLabel("Create Society");
                 setButtonSubmit(true);
                 break;
@@ -154,8 +155,8 @@ function CreateSocietyPage() {
                 setSocietyEmail(value);
                 break;
     
-            case "website":
-                setSocietyWebsite(value);
+            case "link":
+                setSocietyLink(value);
                 break;
     
             case "location":
@@ -228,6 +229,17 @@ function CreateSocietyPage() {
                                             <Row className="text-center" styke={{ height: "100%" }}>
                                                 <Col className="createSocietyFormCol">
                                                     <br />
+                                                    <h2 className="createSocietyFormLabel">Enter society location</h2>
+                                                    <Row className='justify-content-center'><Form.Control id="location" style={{ marginTop: "3%", width: "33%" }} className='societyInput' onChange={handleChange} /></Row> <br />
+                                                </Col>
+                                            </Row>
+                                        </Container>
+                                    </Collapse>
+                                    <Collapse in={open3}>
+                                        <Container fluid className="text-center" style={{ backgroundColor: "#202020", width: "100%" }}>
+                                            <Row className="text-center" styke={{ height: "100%" }}>
+                                                <Col className="createSocietyFormCol">
+                                                    <br />
                                                     <h2 className="createSocietyFormLabel">Tell us about your society</h2>
                                                     <Row className='justify-content-center'>
                                                         <Form.Control id="description" as="textarea" style={{ marginTop: "3%", width: "50%", height: "100px" }} className='societyInput' onChange={handleChange} />
@@ -236,7 +248,7 @@ function CreateSocietyPage() {
                                             </Row>
                                         </Container>
                                     </Collapse>
-                                    <Collapse in={open3}>
+                                    <Collapse in={open4}>
                                         <Container fluid className="text-center" style={{ backgroundColor: "#202020", width: "100%" }}>
                                             <Row className="text-center" styke={{ height: "100%" }}>
                                                 <Col className="createSocietyFormCol">
@@ -247,18 +259,18 @@ function CreateSocietyPage() {
                                             </Row>
                                         </Container>
                                     </Collapse>
-                                    <Collapse in={open4}>
+                                    <Collapse in={open5}>
                                         <Container fluid className="text-center" style={{ backgroundColor: "#202020", width: "100%" }}>
                                             <Row className="text-center" styke={{ height: "100%" }}>
                                                 <Col className="createSocietyFormCol">
                                                     <br />
-                                                    <h2 className="createSocietyFormLabel">Enter society website (if any)</h2>
-                                                    <Row className='justify-content-center'><Form.Control id="website" style={{ marginTop: "3%", width: "33%" }} className='societyInput' onChange={handleChange} /></Row> <br />
+                                                    <h2 className="createSocietyFormLabel">Enter society link (if any)</h2>
+                                                    <Row className='justify-content-center'><Form.Control id="link" style={{ marginTop: "3%", width: "33%" }} className='societyInput' onChange={handleChange} /></Row> <br />
                                                 </Col>
                                             </Row>
                                         </Container>
                                     </Collapse>
-                                    <Collapse in={open5}>
+                                    <Collapse in={open6}>
                                         <Container fluid className="text-center" style={{ width: "100%" }}>
                                             <Row className="text-center" style={{ height: "100%" }}>
                                                 <Col className="createSocietyFormCol">
@@ -269,7 +281,7 @@ function CreateSocietyPage() {
                                             </Row>
                                         </Container>
                                     </Collapse>
-                                    <Collapse in={open6}>
+                                    <Collapse in={open7}>
                                         <Container fluid className="text-center" style={{ width: "100%" }}>
                                             <Row className="text-center" style={{ height: "100%" }}>
                                                 <Col className="createSocietyFormCol">
