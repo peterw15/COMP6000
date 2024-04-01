@@ -17,7 +17,7 @@ import Carousel from 'react-bootstrap/Carousel';
 function HomePage(props) {
 
   const [nextEvent, setNextEvent] = useState([]);
-  const [popularEvents,setPopularEvents] = useState([]);
+  const [popularEvents, setPopularEvents] = useState([]);
   const [recommendedEvent, setRecommendedEvent] = useState([]);
   const navigate = useNavigate();
   const [pythonOutput, setPythonOutput] = useState('');
@@ -30,7 +30,6 @@ function HomePage(props) {
         navigate("/login");
       }
       else {
-        // getRecommendedEvent();
         getMyEvents();
         getPopularEvents();
         runKmeansScript();
@@ -89,10 +88,15 @@ function HomePage(props) {
 
   const runKmeansScript = () => {
     Axios.post('http://localhost:3001/runKmeansScript').then(res => {
+      // console.log(res.data); 
+      //const events = res.data; 
+      //setRecommendedEvent(events);
       console.log(res.data); 
       setPythonOutput(res.data);
+      
     }).catch(err => console.log(err));
   };
+
 
   const getPopularEvents = () => {
     Axios.post('http://localhost:3001/popularEvents').then(res => {
@@ -158,15 +162,54 @@ function HomePage(props) {
                 {nextEvent}
               </Col>
               <Col style={{padding: "0px"}}>
-                <Row className='justify-content-center' style={{textAlign: "center"}}>
-                  <h2 className="headerText">Recommended For You</h2>
-                  <br /> <br /> <br />
-                </Row>
-                {recommendedEvent}
+              <Row className='justify-content-center' style={{ textAlign: "center" }}>
+  <h2 className="headerText">Recommended Events For You</h2>
+</Row>
+{pythonOutput.RecommendedEvents && pythonOutput.RecommendedEvents.length > 0 ? (
+  pythonOutput.RecommendedEvents.map((event, index) => (
+    <Card key={index} className="eventsCard" style={{marginLeft: "0px"}}>
+      <Container flex>
+        <Row className="cardRow">
+          <Col className="imgCol" lg="2">
+            {/* img */}
+            <Card.Img src={event.imageURL} className="cardImg" />
+          </Col>
+          <Col className="infoCol">
+            <Row className="infoRow">
+              <img className="cardIcon" src={locationPin}></img>
+              <div className="infoLabel">{event.location}</div>
+              <img className="cardIcon" src={calendar}></img>
+              <div className="infoLabel">{new Date(event.eventDateTime).toDateString() + " " + new Date(event.eventDateTime).toLocaleTimeString()}</div>
+            </Row>
+            <Row className="infoRow">
+              {/*price */}
+              <img className="cardIcon" src={pound}></img>
+              <div className="infoLabel">{event.price === 0 ? "Free" : `£${event.price}`}</div>
+              {/* organizer's  */}
+              <img className="cardIcon" src={avatar}></img>
+              <div className="infoLabel">{event.organiserName}</div>
+            </Row>
+          </Col>
+        </Row>
+        <br />
+        <Row className="cardTitleRow">
+          <Card.Title className="cardTitle">{event.eventName}</Card.Title>
+        </Row>
+        <br />
+      </Container>
+      <Card.Body className="cardBody">
+        <Card.Text className="cardText">{event.description}</Card.Text>
+      </Card.Body>
+    </Card>
+  ))
+) : (
+  <p>No recommended events found.</p>
+)}
+
                 <div style={{ marginTop: "20px", color: "white", fontSize: "20px" }}>
-                  {pythonOutput}
+                  {/* {pythonOutput} */}
                 </div>
-              </Col>
+              </Col>  
             </Row>
             <Row className="mainRow">
               <Row className='justify-content-center' style={{textAlign: "center"}}>

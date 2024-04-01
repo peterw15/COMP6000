@@ -485,7 +485,6 @@ app.post('/updateEvent', (req, res) => {
 
 
 app.post('/runKmeansScript', (req, res) => {
-  // Make sure userIDGLOBAL is defined and not null
   if (userIDGLOBAL) {
     const path = `python3 /Users/lukeelliott/Documents/GitHub/COMP6000/server/kmeans.py ${userIDGLOBAL}`;
     exec(path, (error, stdout, stderr) => {
@@ -493,7 +492,13 @@ app.post('/runKmeansScript', (req, res) => {
         console.error(`exec error: ${error}`);
         return res.status(500).send(`Error executing Python script: ${stderr}`);
       }
-      res.send(stdout);
+      try {
+        const data = JSON.parse(stdout);
+        res.json(data);
+      } catch (parseError) {
+        console.error(`Error parsing Python script output: ${parseError}`);
+        res.status(500).send('Error parsing Python script output');
+      }
     });
   } else {
     res.status(400).send("User ID is not set");

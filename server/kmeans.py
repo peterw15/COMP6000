@@ -19,11 +19,9 @@ def fetch_events():
     Returns a list of dictionaries with UserID and EventIDs for each user.
     """
     try:
-        # Connect to the database
         connection = mysql.connector.connect(**database_setup)
         cursor = connection.cursor(dictionary=True)
         
-        # Select user and all connected events through the EventRegistration table
         query = """
                 SELECT 
                     er.UserID, 
@@ -34,7 +32,6 @@ def fetch_events():
                     er.UserID;
                 """
         
-        # Execute the query
         cursor.execute(query)
         events = cursor.fetchall()
         
@@ -45,13 +42,49 @@ def fetch_events():
         if connection and connection.is_connected():
             cursor.close()
             connection.close()
-            print("MySQL Connection is now closed")
+
+def fetch_event_details(event_ids):
+    """
+    Fetches details for a list of event IDs, including organizer name, price, and image URL.
+    """
+    try:
+        connection = mysql.connector.connect(**database_setup)
+        cursor = connection.cursor(dictionary=True)
+        
+        format_strings = ','.join(['%s'] * len(event_ids))
+        cursor.execute(f"""
+            SELECT 
+                e.eventID, 
+                e.eventName, 
+                e.eventDateTime, 
+                e.location, 
+                e.description, 
+                e.price, 
+                u.firstName AS organiserFirstName, 
+                u.lastName AS organiserLastName,
+                e.imageURL
+            FROM 
+                Event e
+                JOIN User u ON e.organiser = u.UserID
+            WHERE 
+                e.eventID IN ({format_strings})
+            """, tuple(event_ids))
+        
+        event_details = cursor.fetchall()
+        # Formatting the organiser's name 
+        for event in event_details:
+            event['organiserName'] = f"{event.pop('organiserFirstName')} {event.pop('organiserLastName')}"
+        return event_details
+    except mysql.connector.Error as error:
+        print(f"Error fetching event details: {error}")
+        return []
+    finally:
+        if connection and connection.is_connected():
+            cursor.close()
+            connection.close()
+
 
 def recommend_events_for_user(signed_in_user_id):
-    """
-    Fetches events, runs KMeans clustering, and generates event recommendations
-    for the signed-in user based on the clusters.
-    """
     events = fetch_events()
     data = [
         {"UserID": user["UserID"], "EventIDs": list(map(int, user["EventIDs"].split(',')))}
@@ -59,7 +92,6 @@ def recommend_events_for_user(signed_in_user_id):
     ]
     df = pd.DataFrame(data)
 
-    # Ensure the signed-in user is in the dataset
     if signed_in_user_id not in df['UserID'].values:
         print("User has no event registrations.")
         return []
@@ -69,25 +101,23 @@ def recommend_events_for_user(signed_in_user_id):
     kmeans = KMeans(n_clusters=3, random_state=42)
     df['Cluster'] = kmeans.fit_predict(events_binarized)
 
-    # Find the cluster the user belongs to and the events they have attended
     user_cluster = df.loc[df['UserID'] == signed_in_user_id, 'Cluster'].iloc[0]
     attended_events = df.loc[df['UserID'] == signed_in_user_id, 'EventIDs'].iloc[0]
 
-    # Calculate the most popular event in each cluster
     df_events = pd.DataFrame(events_binarized, columns=mlb.classes_)
     cluster_event_sum = df_events.groupby(df['Cluster']).sum()
     popular_events_by_cluster = cluster_event_sum.apply(lambda x: x.nlargest(3).index.tolist(), axis=1)
 
-    # Recommend events not attended by the user in their cluster
     recommended_events = [event for event in popular_events_by_cluster.loc[user_cluster] if event not in attended_events]
 
-    return recommended_events
+    # Fetch and return information for each recommended event
+    event_details = fetch_event_details(recommended_events)
+    return {"UserID": signed_in_user_id, "RecommendedEvents": event_details}
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
-        signed_in_user_id = int(sys.argv[1])  # Get signed-in user ID from command-line
-        recommended_events = recommend_events_for_user(signed_in_user_id)
-        # Output the recommendations in JSON format
-        print(json.dumps({"UserID": signed_in_user_id, "RecommendedEvents": recommended_events}, indent=4))
+        signed_in_user_id = int(sys.argv[1])
+        recommended_events_info = recommend_events_for_user(signed_in_user_id)
+        print(json.dumps(recommended_events_info, default=str, indent=4))
     else:
         print("User ID was not provided as a command-line argument.")
