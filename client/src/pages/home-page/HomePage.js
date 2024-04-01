@@ -184,7 +184,7 @@ function HomePage(props) {
             <Row className="infoRow">
               {/*price */}
               <img className="cardIcon" src={pound}></img>
-              <div className="infoLabel">{event.price === 0 ? "Free" : `£${event.price}`}</div>
+              <div className="infoLabel">{event.price === 0 ? "Free" : `${event.price}`}</div>
               {/* organizer's  */}
               <img className="cardIcon" src={avatar}></img>
               <div className="infoLabel">{event.organiserName}</div>
