@@ -151,9 +151,28 @@ app.post('/joinSociety', (req,res) => {
   })
 })
 
+app.post('/myCreatedSocieties',(req,res) => {
+  const results = connection.query("SELECT * FROM Society WHERE socPresident = ?", [userIDGLOBAL], function (err) {
+    if (err) {
+      res.send(false);
+    }
+    else {
+      res.send(results._rows[0]);
+    }
+  })
+})
 
-
-
+app.post('/deleteSociety', (req,res) => {
+  const {SocietyID} = req.body;
+  const results = connection.query("DELETE FROM Society WHERE SocietyID = ?", [SocietyID], function (err) {
+    if (err) {
+      res.send(false);
+    }
+    else {
+      res.send(true);
+    }
+  })
+})
 
 app.post('/myevents', (req, res) => {
   const results = connection.query("SELECT * FROM Event INNER JOIN EventRegistration ON Event.EventID=EventRegistration.EventID WHERE EventRegistration.UserID = ?", [userIDGLOBAL], function (err) {

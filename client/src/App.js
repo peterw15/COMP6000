@@ -10,6 +10,7 @@ import SearchPage from "./pages/search-page/searchPage";
 import CreateSocietiesPage from "./pages/createSocieties-page/CreateSocietiesPage";
 import SocietyPage from "./pages/society-Page/SocietyPage";
 import ManageEvents from "./pages/manageEvents-page/ManageEvents";
+import ManageSocietiesPage from "./pages/manageSocieties-page/ManageSocietiesPage";
 
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
             <Route path="/createSocieties" element={<CreateSocietiesPage />} />
             <Route path="/society" element={<SocietyPage />} />
             <Route path="/manageevents" element={<ManageEvents />} />
+            <Route path="/manageSocieties" element={<ManageSocietiesPage />} />
         </Routes>
     )
 }
