@@ -1,5 +1,5 @@
 import './searchPageStyleSheet.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Axios from 'axios';
 import HeaderBar from '../general-components/HeaderBar/HeaderBar.js';
@@ -32,6 +32,7 @@ function SearchPage() {
     };
 
     const handleSearch = async () => {
+        const searchTerm = searchInputRef.current.value;
         try {
             await fetchJoinedEventIds(); // Await the fetching of joined event IDs
             const response = await Axios.post('http://localhost:3001/api/search', {
@@ -68,7 +69,7 @@ function SearchPage() {
         }
     }, [searchResults, joinedEventIds, searched]);
     
-    
+    const searchInputRef = useRef(null);
 
     function SearchResultCard({ result }) {
         return (
@@ -146,13 +147,11 @@ function SearchPage() {
             <Container className="searchMainContainer" style={{ marginTop: '20px' }}>
                 <div className="searchPageHeader" style={{ fontFamily: "Roboto" }}>Search Events</div>
                 <div className="searchPageForm">
-                    <input
-                        type="text"
-                        id="searchTerm"
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        className="searchPageFormInput"
-                    />
+                        <input
+                            type="text"
+                            ref={searchInputRef}
+                            className="searchPageFormInput"
+                        />
                     <br/>
                     <button id="searchButton" className="searchPageButton" onClick={handleSearch}>
                         Search
