@@ -1,8 +1,7 @@
 import './searchPageStyleSheet.css';
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import Axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Axios from 'axios';
 import HeaderBar from '../general-components/HeaderBar/HeaderBar.js';
 import { format } from 'date-fns';
 import { Card, Container, Row, Col, Button } from 'react-bootstrap';
@@ -12,6 +11,7 @@ import calendar from './Icons/calendar.png';
 import pound from './Icons/pound.png';
 import avatar from './Icons/avatar.png';
 import tick from './Icons/check-mark.png';
+import background from "./Images/circleBackground1.png";
 
 function SearchPage() {
     const navigate = useNavigate();
@@ -23,56 +23,58 @@ function SearchPage() {
     const [searchResults, setSearchResults] = useState([]);
     const [searched, setSearched] = useState(false);
 
-function SearchResultCard({result}) {
-    console.log(result);
-    return (
-        <Card className="eventsCard">
-            <Container flex>
-                <Row className="cardRow">
-                    <Col className="imgCol" lg="2">
-                        <Card.Img src={result.imageURL} className="cardImg"></Card.Img>
-                    </Col>
-                    <Col className="infoCol" >
-                        <Row className="infoRow">
-                            <img className="cardIcon" src={locationPin}></img>
-                            <div className="infoLabel">{result.location}</div>
-                            <img className="cardIcon" src={calendar}></img>
-                            <div className="infoLabel">{format(new Date(result.eventDateTime), "EEE MMM dd yyyy HH:mm:ss")}</div>
-                        </Row>
-                        <Row className="infoRow">
-                            <img className="cardIcon" src={pound}></img>
-                            <div className="infoLabel">{result.price}</div>
-                            <img className="cardIcon" src={avatar}></img>
-                            <div className="infoLabel">{result.organiserFirstName} {result.organiserLastName}</div>
-                        </Row>
-                    </Col>
+    function SearchResultCard({ result }) {
+        return (
+            <Card className="searchEventsCard">
+                <Container>
+                    <Row className="searchCardRow">
+                        <Col className="searchImgCol" lg="2">
+                            <Card.Img src={result.imageURL} className="searchCardImg"></Card.Img>
+                        </Col>
+                        <Col className="searchInfoCol">
+                            <Row className="searchInfoRow">
+                                <img className="searchCardIcon" src={locationPin} alt="Location Icon"></img>
+                                <div className="searchInfoLabel">{result.location}</div>
+                                <img className="searchCardIcon" src={calendar} alt="Calendar Icon"></img>
+                                <div className="searchInfoLabel">{format(new Date(result.eventDateTime), "EEE MMM dd yyyy HH:mm:ss")}</div>
+                            </Row>
+                            <Row className="searchInfoRow">
+                                <img className="searchCardIcon" src={pound} alt="Pound Icon"></img>
+                                <div className="searchInfoLabel">{result.price}</div>
+                                <img className="searchCardIcon" src={avatar} alt="Avatar Icon"></img>
+                                <div className="searchInfoLabel">{result.organiserFirstName} {result.organiserLastName}</div>
+                            </Row>
+                        </Col>
+                    </Row>
+                    <br />
+                    <Row className="searchCardTitleRow">
+                        <Card.Title className="searchCardTitle">{result.eventName}</Card.Title>
+                    </Row>
+                    <br />
+                    <br />
+                </Container>
+                <Card.Body className="searchCardBody">
+                    <Card.Text className="searchCardText">{result.description}</Card.Text>
+                </Card.Body>
+                <Row className="searchButtonRow">
+                    <Button className="searchJoinButton" id={result.EventID + "button"} onClick={() => joinEvent(result.EventID)}>Join</Button>
+                    <img src={tick} id={result.EventID + "tick"} className="searchJoinedIcon" alt="Joined Icon" hidden></img>
                 </Row>
-                <br />
-                <Row className="cardTitleRow">
-                    <Card.Title className="cardTitle">{result.eventName}</Card.Title>
-                </Row>
-                <br />
-            </Container>
-            <Card.Body className = "cardBody">
-                <Card.Text className="cardText">{result.description}</Card.Text>
-            </Card.Body>
-            <Row className="buttonRow">
-                <Button className="joinButton" id = {result.EventID + "button"} onClick={() => joinEvent(result.EventID, this)}>Join</Button>
-                <img src={tick} id ={result.EventID + "tick"} className= "joinedIcon" hidden></img>
-            </Row>
-        </Card>
-    )
-}
+            </Card>
+        );
+    }
+    
 
-function joinEvent(EventID, button) {
-    Axios.post('http://localhost:3001/joinEvent', {
-        EventID: EventID
-    }).then(res => {
-
-    })
-    document.getElementById(EventID + "button").hidden = true;
-    document.getElementById(EventID + "tick").hidden = false;
-}
+    function joinEvent(EventID) {
+        Axios.post('http://localhost:3001/joinEvent', {
+            EventID: EventID
+        }).then(res => {
+            document.getElementById(EventID + "button").hidden = true;
+            document.getElementById(EventID + "tick").hidden = false;
+        }).catch(error => {
+            console.log(error);
+        });
+    }
 
     const handleSearch = async () => {
         try {
@@ -83,38 +85,37 @@ function joinEvent(EventID, button) {
                 organiserTerm: organiserTerm,
                 priceTerm: priceTerm
             });
-            setSearched(true); // Set searched flag to true
-    
+            setSearched(true);
             setSearchResults(response.data.results);
         } catch (error) {
             console.log(error);
         }
     };
 
-
-
     const handleSort = (sortBy) => {
         const sortedResults = [...searchResults].sort((a, b) => {
             if (sortBy === 'price') {
                 return parseFloat(a[sortBy]) - parseFloat(b[sortBy]);
             } else {
-                if (a[sortBy] < b[sortBy]) return -1;
-                if (a[sortBy] > b[sortBy]) return 1;
-                return 0;
+                return a[sortBy].localeCompare(b[sortBy]);
             }
         });
         setSearchResults(sortedResults);
     };
-    
+
     return (
-        <>
-        <html className="eventHtml" style={{fontFamily: "roboto"}}>
-            <HeaderBar />
+        <html className="searchPage" style={{ 
+            backgroundImage: `url(${background})`, 
+            minHeight: "1080px", 
+            backgroundSize: "cover", 
+            backgroundPosition: "center", 
+            backgroundAttachment: "fixed", 
+            fontFamily: "Roboto" 
+        }}>
+            <HeaderBar></HeaderBar>
             <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'/> 
-            <div className="searchPage">
-                <br />
-                <br />
-                <div className="searchPageHeader" style={{fontFamily: "roboto"}}> Search Events</div>
+            <Container className="searchMainContainer" style={{ marginTop: '20px' }}>
+                <div className="searchPageHeader" style={{ fontFamily: "Roboto" }}>Search Events</div>
                 <div className="searchPageForm">
                     <input
                         type="text"
@@ -123,47 +124,37 @@ function joinEvent(EventID, button) {
                         onChange={(e) => setSearchTerm(e.target.value)}
                         className="searchPageFormInput"
                     />
-                    <br />
-                    <br />
+                    <br/>
                     <button id="searchButton" className="searchPageButton" onClick={handleSearch}>
                         Search
                     </button>
-                    <div class="searchPageDropDown" style={{ display: searchResults.length > 0 ? 'block' : 'none' , fontFamily: "roboto"}}>
-                        <label htmlFor="sortBy">Sort By:</label>
-                        <select id="sortBy" onChange={(e) => handleSort(e.target.value)} defaultValue="">
-                            <option value="" disabled hidden>Select an option</option>
-                            <option value="eventName">Event Name</option>
-                            <option value="eventDateTime">Date Time</option>
-                            <option value="location">Location</option>
-                            <option value="organiser">Organiser</option>
-                            <option value="price">Price</option>
-                        </select>
-                    </div>
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-
-                    {/* Display search results */}
-                    <div className="searchPageResults" style={{fontFamily: "roboto"}}>
-                        {searchResults.length > 0 ? (
+                    {searchResults.length > 0 && (
+                        <div className="searchPageDropDown" style={{ fontFamily: "Roboto" }}>
+                            <label htmlFor="sortBy">Sort By:</label>
+                            <select id="sortBy" onChange={(e) => handleSort(e.target.value)} defaultValue="">
+                                <option value="" disabled hidden>Select an option</option>
+                                <option value="eventName">Event Name</option>
+                                <option value="eventDateTime">Date Time</option>
+                                <option value="location">Location</option>
+                                <option value="organiserFirstName">Organiser</option>
+                                <option value="price">Price</option>
+                            </select>
+                        </div>
+                    )}
+                    <div className="searchPageResults" style={{ fontFamily: "Roboto" }}>
+                        {searched && searchResults.length > 0 ? (
                             <Container>
                                 {searchResults.map((result, index) => (
-                                <SearchResultCard key={index} result={result} />
+                                    <SearchResultCard key={index} result={result} />
                                 ))}
                             </Container>
                         ) : (
-                            searched && searchResults.length === 0 &&(
-                                <>
-                                    <p>No results found.</p>
-                                </>
-                            )
+                            searched && <p>No results found.</p>
                         )}
                     </div>
                 </div>
-            </div>
-            </html>
-        </>
+            </Container>
+        </html>
     );
 }
 

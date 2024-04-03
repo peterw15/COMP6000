@@ -1,21 +1,19 @@
 .searchPage {
     font-family: Arial, Helvetica, sans-serif;
-    width: 100%;
-    min-height: 100vh;
-    height: 100%;
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    background-repeat: no-repeat;
     justify-content: center !important;
-    background-color: #252526;
-    color: #ffffff;
   }
   
   .searchPageHeader {
     font-size: 80px;
     font-weight: bold;
     margin-bottom: 20px;
+    margin-top: 50px;
+    text-align: center;
+    color: #ffffff;
   }
+  
   
   .searchPageForm {
     display: flex;
@@ -49,17 +47,6 @@
     cursor: pointer;
   }
   
-  .searchPageResults {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  
-  .searchPageResults p {
-    margin: 20px;
-  }
-  
   .searchPageResults .container {
     display: flex;
     flex-wrap: wrap;
@@ -91,8 +78,26 @@
     color: #ffffff;
 }
 
-  
-.eventsCard {
+.searchEventsContainer {
+  min-width: 600px !important;
+  height:100%;
+  background-color: #252526;
+  justify-content: center;
+}
+
+.searchMainContainer {
+  min-width: 675px !important;
+  height:100%;
+  width: 100vw!important;
+  background-color: #252526 ;
+  justify-content: center;
+  padding: 0px;
+  margin-left: 0% !important;
+  margin-right: 0% !important;
+  min-height: 1080px;
+}
+
+.searchEventsCard {
   min-width: 600px !important;
   width:46% !important;
   background-color: #202020 !important;  
@@ -103,37 +108,32 @@
   padding: 0px !important;
 }
 
-.cardBody {
+.searchCardBody {
   background-color: #18cdc6;
   font-weight:500;
   width: 97% !important;
   margin : auto;
 }
 
-.cardText {
+
+.searchCardText {
   background-color: #18cdc6;
   color: #202020 !important;
-  
-
 }
 
-.cardText {
-  color: #18cdc6;
-}
-
-.cardTitle {
+.searchCardTitle {
   color: #ffffff !important;
   margin-top: 10px !important;
-  margin-bottom: 0px !important;
+  margin-bottom: 25px !important;
   font-size: 30px !important;
   padding-right: 0px !important;
-  padding-left: 12px !important;
-  
+  padding-left: -5px !important;
+  margin-left: -25px !important; /* Use negative margin to move the text left */
 }
 
-.cardTitleRow {
+.searchCardTitleRow {
   color: #ffffff !important;
-  margin-top: 10px !important;
+  margin-top: 35px !important;
   margin-bottom: 0px !important;
   font-size: 30px !important;
   padding-right: 0px !important;
@@ -142,14 +142,14 @@
   margin : auto;
 }
 
-.cardImg {
+.searchCardImg {
   width:85px !important;
   height:85px !important;
   padding: 0px !important;
   margin-top: 20px !important;
 }
 
-.selectedCardImg {
+.searchSelectedCardImg {
   width:85px !important;
   height:85px !important;
   padding: 0px !important;
@@ -157,57 +157,57 @@
   border: 1px solid #18cdc6 !important;
 }
 
-.cardRow {
+.searchCardRow {
   margin : 0px;
   width: 100%;
 }
 
-.imgCol {
+.searchImgCol {
   width: 100px !important;
-  padding: 0px !
+  padding: 0px !important;
 }
 
-.subHeading {
+.searchSubHeading {
   color:#18cdc6 !important;
   margin: 0;
 }
 
-.infoRow {
+.searchInfoRow {
   height:45% !important;
   margin-left: 20px !important;
   margin-top: 20px !important;
 }
 
-.infoCol {
+.searchInfoCol {
   margin-left: 10px !important;
   padding-left: 0px !important;
 }
 
-.cardIcon {
+.searchCardIcon {
   height: 25px !important;
   width: 25px !important;
   padding: 0px !important;
 }
 
-.joinedIcon {
+.searchJoinedIcon {
   height: 50px !important;
   width: 50px !important;
   padding: 0px !important;
   margin-bottom: 10px;
 }
 
-.infoLabel {
+.searchInfoLabel {
   color:#ffffff !important;
   width: 40% !important;
 }
 
-.mainRow {
+.searchMainRow {
   height: 100% !important;
   width:100% !important;
-  display: grid !important;;
+  display: grid !important;
 }
 
-.eventsHeader {
+.searchEventsHeader {
   Color: #ffffff;
   margin-top: 150px;
   margin-bottom: 100px;
@@ -216,10 +216,9 @@
   border-top : 1px solid #18cdc6;
   border-bottom : 1px solid #18cdc6;
   font-weight: bold;
-
 }
 
-.buttonRow {
+.searchButtonRow {
   margin:0px !important;
   width : 100%;
   justify-content: center;
@@ -227,7 +226,7 @@
   background-color: #202020;
 }
 
-.joinButton {
+.searchJoinButton {
   width: 20% !important;
   height: 50px !important;
   background-color: #252526 !important;
