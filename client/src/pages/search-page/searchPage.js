@@ -1,5 +1,5 @@
 import './searchPageStyleSheet.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Axios from 'axios';
 import HeaderBar from '../general-components/HeaderBar/HeaderBar.js';
@@ -22,6 +22,53 @@ function SearchPage() {
     const [priceTerm, setPriceTerm] = useState('');
     const [searchResults, setSearchResults] = useState([]);
     const [searched, setSearched] = useState(false);
+
+    const [joinedEventIds, setJoinedEventIds] = useState(new Set());
+    const fetchJoinedEventIds = () => {
+        return Axios.post('http://localhost:3001/myevents').then(res => {
+            const joinedIds = new Set(res.data.map(event => event.EventID));
+            setJoinedEventIds(joinedIds);
+        }).catch(error => console.log(error));
+    };
+
+    const handleSearch = async () => {
+        try {
+            await fetchJoinedEventIds(); // Await the fetching of joined event IDs
+            const response = await Axios.post('http://localhost:3001/api/search', {
+                searchTerm: searchTerm,
+                descriptionTerm: descriptionTerm,
+                locationTerm: locationTerm,
+                organiserTerm: organiserTerm,
+                priceTerm: priceTerm,
+            });
+            setSearched(true);
+            setSearchResults(response.data.results);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const updateButtonsToTicks = () => {
+        joinedEventIds.forEach(eventId => {
+            const button = document.getElementById(`${eventId}button`);
+            if (button) {
+                button.hidden = true; // Hide the button
+                const tickIcon = document.getElementById(`${eventId}tick`);
+                if (tickIcon) {
+                    tickIcon.hidden = false; // Show the tick icon
+                }
+            }
+        });
+    };
+
+    
+    useEffect(() => {
+        if (searched) { // Ensures this runs after search results have been updated and rendered
+            updateButtonsToTicks();
+        }
+    }, [searchResults, joinedEventIds, searched]);
+    
+    
 
     function SearchResultCard({ result }) {
         return (
@@ -71,24 +118,8 @@ function SearchPage() {
         Axios.post('http://localhost:3001/joinEvent', { EventID: EventID })
         document.getElementById(EventID + "button").hidden = true;
         document.getElementById(EventID + "tick").hidden = false;
-
     }
-    
-    const handleSearch = async () => {
-        try {
-            const response = await Axios.post('http://localhost:3001/api/search', {
-                searchTerm: searchTerm,
-                descriptionTerm: descriptionTerm,
-                locationTerm: locationTerm,
-                organiserTerm: organiserTerm,
-                priceTerm: priceTerm
-            });
-            setSearched(true);
-            setSearchResults(response.data.results);
-        } catch (error) {
-            console.log(error);
-        }
-    };
+
 
     const handleSort = (sortBy) => {
         const sortedResults = [...searchResults].sort((a, b) => {
