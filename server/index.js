@@ -85,6 +85,14 @@ app.post('/events', (req, res) => {
   })
 })
 
+app.post('/getSocieties', (req, res) => {
+  const results = connection.query("SELECT socName, socLocation, socDescription, socPresident, socPrice, socLink, SocietyID FROM Society JOIN User WHERE Society.socPresident = User.UserID", function (err) {
+    if (err) throw err;
+    console.log(results);
+    res.send(results._rows[0]);
+  })
+})
+
 app.post('/societies', (req, res) => {
   const results = connection.query("SELECT socName, socDateTime, socLocation, socDescription, socOrganiser, socPrice, socLink, SocietiesID FROM Societies JOIN User WHERE Societies.socOrganiser = User.UserID", function (err) {
     if (err) throw err;

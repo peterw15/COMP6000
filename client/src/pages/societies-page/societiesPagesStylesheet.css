@@ -1,66 +1,125 @@
-.societiesPages {
+.societiesPage {
     background-image: url('components/images/background2.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    height: 100vh;
+    height: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    font-family: 'Roboto', sans-serif;
 }
 
-.header {
-    color: #18cdc6;
-    font-size: 2em;
-}
 
-.societiesButton {
-    position: relative;
-    padding: 0;
-    background: none;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
+.mainContainer {
+    min-width: 675px !important;
+    height: 100%;
+    width: 100vw !important;
+    background-color: #252526;
     justify-content: center;
+    padding: 0px;
+    margin-left: 0% !important;
+    margin-right: 0% !important;
+    min-height: 1080px;
 }
 
-.ImgButton {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    object-fit: cover; 
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+.societiesCard {
+    min-width: 600px !important;
+    width: 46% !important;
+    height: auto !important; /* Adjust as needed */
+    background-color: #202020 !important;
+    color: #ffffff !important;
+    border-color: #202020 !important;
+    margin-bottom: 40px;
+    margin-left: 35px !important;
+    padding: 0px !important;
 }
 
-.societiesText {
-    font-size: 1.4em;
-    margin: 0;
-    padding-bottom: 60%;
+.societiesCardBody {
+    background-color: #18cdc6;
+    font-weight: 500;
+    width: 97% !important;
+    margin: auto;
 }
 
-.societiesButton.ripple::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 0;
-    height: 0;
-    background-color: rgba(24, 205, 199, 0.752);
-    border-radius: 50%;
-    opacity: 0.5;
-    animation: ripple-animation 2s ease-out;
+.societiesCardText {
+    color: #fff;
+    font-size: 16px;
+    margin: 10px 0;
 }
 
-@keyframes ripple-animation {
-    to {
-        width: 300%;
-        padding-bottom: 300%;
-        opacity: 0;
-    }
+
+.societiesCardTitle {
+    color: #ffffff !important;
+    margin-top: 10px !important;
+    margin-bottom: 0px !important;
+    font-size: 30px !important;
+    padding-right: 0px !important;
+    padding-left: 0px !important;
 }
+
+.societiesCardImg {
+    width: 85px !important;
+    height: 85px !important;
+    padding: 0px !important;
+    margin-top: 20px !important;
+}
+
+.societiesCardRow {
+    margin: 0px;
+    width: 100%;
+}
+
+.societiesImgCol {
+    width: 100px !important;
+    padding: 0px !important;
+}
+
+.societiesInfoRow {
+    margin-left: 20px !important;
+    margin-top: 20px !important;
+}
+
+.societiesInfoLabel {
+    color: #ffffff !important;
+    width: 40% !important;
+}
+
+.mainRow {
+    height: 100% !important;
+    width: 100% !important;
+    display: grid !important;
+}
+
+.societiesHeader {
+    color: #ffffff;
+    margin-top: 150px;
+    margin-bottom: 100px;
+    font-size: 80px;
+    text-align: center;
+    border-top: 1px solid #18cdc6;
+    border-bottom: 1px solid #18cdc6;
+    font-weight: bold;
+}
+
+.societiesJoinButton {
+    width: 20% !important;
+    height: 50px !important;
+    background-color: #252526 !important;
+    border-color: #18cdc6 !important;
+    color: #ffffff !important;
+}
+
+.societiesPrice {
+    display: block; /* Makes it take up the full width like a div */
+    margin-top: 0.5em; /* Adjust as needed to move the price down */
+}
+
+.societiesButtonContainer {
+    display: flex;
+    justify-content: center; /* This centers the button horizontally */
+    margin-right: 100px; /* Adds some space above the button, adjust as needed */
+}
+
+
