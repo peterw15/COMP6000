@@ -56,26 +56,24 @@ function SearchPage() {
                 <Card.Body className="searchCardBody">
                     <Card.Text className="searchCardText">{result.description}</Card.Text>
                 </Card.Body>
-                <Row className="searchButtonRow">
-                    <Button className="searchJoinButton" id={result.EventID + "button"} onClick={() => joinEvent(result.EventID)}>Join</Button>
-                    <img src={tick} id={result.EventID + "tick"} className="searchJoinedIcon" alt="Joined Icon" hidden></img>
+                <Row className="searchButtonRow">                  
+                    <Button className="joinButton" id ={`${result.EventID}button`} onClick={() => joinEvent(result.EventID)}>Join</Button>
+                    <img src={tick} id={`${result.EventID}tick`} className="joinedIcon" alt="Joined" hidden></img>
                 </Row>
+
             </Card>
         );
     }
-    
 
     function joinEvent(EventID) {
-        Axios.post('http://localhost:3001/joinEvent', {
-            EventID: EventID
-        }).then(res => {
-            document.getElementById(EventID + "button").hidden = true;
-            document.getElementById(EventID + "tick").hidden = false;
-        }).catch(error => {
-            console.log(error);
-        });
-    }
+        console.log("Button ID:", EventID + "button"); // Log the button ID
+        console.log("Tick ID:", EventID + "tick"); // Log the tick icon ID
+        Axios.post('http://localhost:3001/joinEvent', { EventID: EventID })
+        document.getElementById(EventID + "button").hidden = true;
+        document.getElementById(EventID + "tick").hidden = false;
 
+    }
+    
     const handleSearch = async () => {
         try {
             const response = await Axios.post('http://localhost:3001/api/search', {
@@ -145,7 +143,7 @@ function SearchPage() {
                         {searched && searchResults.length > 0 ? (
                             <Container>
                                 {searchResults.map((result, index) => (
-                                    <SearchResultCard key={index} result={result} />
+                                    <SearchResultCard key={result.EventID} result={result} />
                                 ))}
                             </Container>
                         ) : (
