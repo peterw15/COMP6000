@@ -26,10 +26,11 @@ CREATE TABLE Society (
     socName VARCHAR(255) NOT NULL,
     socLocation VARCHAR(255) NOT NULL,
     socDescription TEXT NOT NULL,
-    socPresident VARCHAR(100) NOT NULL,
+    socPresident bigint unsigned NOT NULL,
     socPrice DECIMAL(10, 2),
     socLink VARCHAR(255),
-    imageURL varchar(50) NOT NULL DEFAULT 'eventIcons/pin.png'
+    imageURL varchar(50) NOT NULL DEFAULT 'eventIcons/pin.png',
+    FOREIGN KEY (socPresident) REFERENCES User (UserID)
 );
 
 CREATE TABLE Event (
@@ -112,6 +113,8 @@ INSERT INTO comp6000_09.User (UserID, firstName, lastName, email, username, pass
 INSERT INTO comp6000_09.User (UserID, firstName, lastName, email, username, password) VALUES ("14", "Amanda", "Hernandez", "amanda.h@example.com", "amandah", SHA2("amandah", 256));
 INSERT INTO comp6000_09.User (UserID, firstName, lastName, email, username, password) VALUES ("15", "Ryan", "Young", "ryan.y@example.com", "ryany", SHA2("ryany", 256));
 
+INSERT INTO Society (socName,socLocation, socDescription, socPresident,socPrice,socLink) VALUES ('Chess Society','Kennedy','A group of chess players of all skill level. We host weekly tournaments and offer tutoring for players of any skill level',1,0,'https://www.google.com');
+INSERT INTO Society (socName,socLocation, socDescription, socPresident,socPrice,socLink,imageURL) VALUES ('Football','Kennedy','A group of chess players of all skill level. We host weekly tournaments and offer tutoring for players of any skill level',1,0,'https://www.google.com',"eventIcons/basketball.png");
 INSERT INTO Society (socName,socLocation, socDescription, socPresident,socPrice,socLink) VALUES ('Chess Society','Kennedy','A group of chess players of all skill level. We host weekly tournaments and offer tutoring for players of any skill level',1,0,'https://www.google.com');
 
 INSERT INTO comp6000_09.UserTags VALUES (1,"Arts");

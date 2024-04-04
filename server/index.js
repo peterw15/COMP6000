@@ -147,6 +147,23 @@ app.post('/createSocietyAnnouncement', (req,res) => {
   })
 })
 
+app.post('/createSocietyEvent', (req, res) => {
+  const { eventName, eventDateTime, location, description, organiser, price, imageURL,SocietyID } = req.body;
+
+  console.log(imageURL);
+
+  const query = "INSERT INTO Event (eventName,eventDateTime,location,description,organiser,price,imageURL,societyID) VALUES (?,?,?,?,?,?,?,?)";
+
+  connection.query(query, [eventName, eventDateTime, location, description, organiser, price, imageURL,SocietyID], (err) => {
+    if (err) {
+      console.error('Error creating event: ' + err.stack);
+      res.status(500).send(false);
+      return;
+    }
+    res.status(200).send(true);
+  });
+})
+
 app.post('/joinSociety', (req,res) => {
   const {SocietyID} = req.body;
   const results = connection.query("INSERT INTO SocietyRegistration VALUES (?,?)", [SocietyID, userIDGLOBAL], function (err) {

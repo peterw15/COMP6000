@@ -10,6 +10,7 @@ import locationPin from './Icons/locationPin.png';
 import calendar from './Icons/calendar.png';
 import pound from './Icons/pound.png';
 import avatar from './Icons/avatar.png';
+import background from "./Images/circleBackground1.png";
 
 function SocietiesPage() {
     const navigate = useNavigate();
@@ -87,13 +88,14 @@ function SocietiesPage() {
     
 
     return (
-        <div className="societiesPage" style={{ fontFamily: 'Roboto, sans-serif' }}>
-            <HeaderBar />
+        <html className="eventHtml" style={{ backgroundImage: `url(${background})`, minHeight: "1080px", backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed", fontFamily: "roboto" }}>
+        <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'/>  
+            <HeaderBar></HeaderBar>
             <Container className="mainContainer">
-                <div className="societiesHeader"> Societies </div>
-                <Row className="mainRow">{societiesList}</Row>
+                <div className="eventsHeader" style={{fontFamily: "roboto"}}>Societies</div>
+                <Row classname="mainRow">{societiesList}</Row>
             </Container>
-        </div>
+        </html>
     );
     
 }

@@ -1,5 +1,6 @@
 import './createEventPageStyleSheet.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
+import {useSearchParams} from "react-router-dom";
 import { useEffect, useState, useRef } from 'react';
 import { Link } from "react-router-dom";
 import Axios from 'axios';
@@ -25,7 +26,12 @@ const checkState = {
 
 var checkedBoxes = 0;
 
+
 function CreateEventPage() {
+
+    const [queryParameters] = useSearchParams();
+
+    const paramID = queryParameters.get('soc');
 
     const navigate = useNavigate();
 
@@ -68,6 +74,8 @@ function CreateEventPage() {
         const finalTags = gatherTags();
         console.log(finalTags);
 
+        const SocietyID = paramID;
+
         const eventName = document.getElementById('eventName').value;
         const eventDateTime = eventDate + " " + eventTime + ":00";
         console.log(eventDateTime);
@@ -80,7 +88,8 @@ function CreateEventPage() {
 
         Axios.get('http://localhost:3001/loggedIn', {}).then(res => {
             const organiser = parseInt(res.data);
-            Axios.post('http://localhost:3001/createEvent', { eventName, eventDateTime, location, description, organiser, price, imageURL }).then(res =>
+            if(SocietyID == null || SocietyID == undefined) {
+                Axios.post('http://localhost:3001/createEvent', { eventName, eventDateTime, location, description, organiser, price, imageURL }).then(res =>
                 res.data ? console.log("SUCCESS") : console.log("FAIL")).catch(error => console.log(error)).then(
                     Axios.post('http://localhost:3001/getEventID', { eventName, eventDateTime, location, description, organiser, price, imageURL }).then(res => {
 
@@ -93,7 +102,24 @@ function CreateEventPage() {
                         }
 
                         navigate("/manageevents");
+                }));
+            }
+            else {
+                Axios.post('http://localhost:3001/createSocietyEvent', { eventName, eventDateTime, location, description, organiser, price, imageURL,SocietyID }).then(res =>
+                res.data ? console.log("SUCCESS") : console.log("FAIL")).catch(error => console.log(error)).then(
+                    Axios.post('http://localhost:3001/getEventID', { eventName, eventDateTime, location, description, organiser, price, imageURL}).then(res => {
+
+                        const EventID = res.data[0].EventID;
+
+                        for (let i = 0; i < finalTags.length; i++) {
+                            const tag = finalTags[i];
+                            Axios.post('http://localhost:3001/addEventTag', { EventID, tag }).then(res =>
+                                res.data ? console.log("SUCCESS") : console.log("FAIL")).catch(error => console.log(error));
+                        }
+
+                        navigate("/manageevents");
                     }));
+            }
         });
     }
 
