@@ -18,6 +18,7 @@
 .createSocietyCol,
 div.justify-content-center.createSocietyCol {
   background-color: #252526;
+  height: auto;
 }
 
 h2.createSocietyHeader {

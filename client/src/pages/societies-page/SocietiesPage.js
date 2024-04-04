@@ -1,6 +1,6 @@
 // imports
 import React, { useEffect, useState } from 'react';
-import './societiesPagesStylesheet.css'; // Ensure this CSS is styled similarly to the eventsPageStyleSheet.css
+import './societiesPagesStylesheet.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Card, Container, Row, Col, Button } from 'react-bootstrap';
