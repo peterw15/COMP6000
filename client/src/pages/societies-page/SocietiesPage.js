@@ -40,6 +40,7 @@ function SocietiesPage() {
                                 </Col>
                                 <Col lg={10} className="societiesInfoCol">
                                     <Card.Title className="societiesCardTitle">{society.socName}</Card.Title>
+                                    <br />
                                     <Card.Text className="societiesCardText">{society.socDescription}</Card.Text>
                                     <div className="societiesExtraInfo">
                                         <span className="societiesLocation">{society.socLocation}</span>
