@@ -28,7 +28,8 @@ CREATE TABLE Society (
     socDescription TEXT NOT NULL,
     socPresident VARCHAR(100) NOT NULL,
     socPrice DECIMAL(10, 2),
-    socLink VARCHAR(255)
+    socLink VARCHAR(255),
+    imageURL varchar(50) NOT NULL DEFAULT 'eventIcons/pin.png'
 );
 
 CREATE TABLE Event (

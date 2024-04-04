@@ -86,7 +86,7 @@ app.post('/events', (req, res) => {
 })
 
 app.post('/getSocieties', (req, res) => {
-  const results = connection.query("SELECT socName, socLocation, socDescription, socPresident, socPrice, socLink, SocietyID FROM Society JOIN User WHERE Society.socPresident = User.UserID", function (err) {
+  const results = connection.query("SELECT * FROM Society JOIN User WHERE Society.socPresident = User.UserID", function (err) {
     if (err) throw err;
     console.log(results);
     res.send(results._rows[0]);
@@ -160,7 +160,7 @@ app.post('/joinSociety', (req,res) => {
 })
 
 app.post('/myCreatedSocieties',(req,res) => {
-  const results = connection.query("SELECT * FROM Society WHERE socPresident = ?", [userIDGLOBAL], function (err) {
+  const results = connection.query("SELECT * FROM Society JOIN User ON socPresident = UserID WHERE socPresident = ?", [userIDGLOBAL], function (err) {
     if (err) {
       res.send(false);
     }
@@ -170,17 +170,64 @@ app.post('/myCreatedSocieties',(req,res) => {
   })
 })
 
-app.post('/deleteSociety', (req,res) => {
-  const {SocietyID} = req.body;
-  const results = connection.query("DELETE FROM Society WHERE SocietyID = ?", [SocietyID], function (err) {
+app.post('/joinedSocieties',(req,res) => {
+  const results = connection.query("SELECT * FROM SocietyRegistration r JOIN Society s ON r.SocietyID = s.SocietyID JOIN User u ON socPresident = u.UserID WHERE r.UserID = ?", [userIDGLOBAL], function (err) {
     if (err) {
       res.send(false);
     }
     else {
-      res.send(true);
+      res.send(results._rows[0]);
     }
   })
 })
+
+app.post('/deleteSociety', (req, res) => {
+  try {
+    query = "DELETE FROM SocietyTags WHERE SocietyID = ?";
+    const results = connection.query(query, req.body.SocietyID, function (err) {
+      if (err) throw err;
+    })
+  } catch (error) {
+    console.error(error);
+  }
+  try {
+    query = "DELETE FROM SocietyRegistration WHERE SocietyID = ?";
+    const results = connection.query(query, req.body.SocietyID, function (err) {
+      if (err) throw err;
+    })
+  } catch (error) {
+    console.error(error);
+  }
+  try {
+    query = "DELETE FROM SocietyAnnouncement WHERE SocietyID = ?";
+    const results = connection.query(query, req.body.SocietyID, function (err) {
+      if (err) throw err;
+    })
+  } catch (error) {
+    console.error(error);
+  }
+  try {
+    query = "DELETE FROM Society WHERE SocietyID = ?";
+    const results = connection.query(query, req.body.SocietyID, function (err) {
+      if (err) throw err;
+    })
+  } catch (error) {
+    console.error(error);
+  }
+})
+
+
+
+app.post('/updateSociety', (req, res) => {
+
+  try {
+    query = "UPDATE Society SET socName = ?, socDescription = ?, socLocation = ?, socPrice = ?, socLink = ? WHERE SocietyID = ?"
+    connection.query(query, [req.body.socName, req.body.socDescription, req.body.socLocation, req.body.soPrice, req.body.socLink, req.body.SocietyID])
+  } catch (error) {
+    console.error(error);
+  }
+})
+
 
 app.post('/myevents', (req, res) => {
   const results = connection.query("SELECT * FROM Event INNER JOIN EventRegistration ON Event.EventID=EventRegistration.EventID WHERE EventRegistration.UserID = ?", [userIDGLOBAL], function (err) {
@@ -398,16 +445,21 @@ app.post('/leaveEvent', (req, res) => {
   catch (error) { }
 })
 
-app.post('/leaveSocieties', (req, res) => {
+app.post('/leaveSociety', (req, res) => {
   try {
-    const { SocietiesID } = req.body
-    const query = "DELETE FROM SocietiesRegistration WHERE EventID = ? AND UserID = ?";
+    const { SocietyID } = req.body
+    const query = "DELETE FROM SocietyRegistration WHERE SocietyID = ? AND UserID = ?";
     try {
-      connection.query(query, [SocietiesID, userIDGLOBAL], (err) => { });
+      connection.query(query, [SocietyID, userIDGLOBAL], (err) => { });
+      res.send(true);
     }
-    catch (error) { }
+    catch (error) { 
+      res.send(false);
+    }
   }
-  catch (error) { }
+  catch (error) { 
+    res.send(false);
+  }
 })
 
 

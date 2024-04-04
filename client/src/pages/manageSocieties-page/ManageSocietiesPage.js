@@ -54,8 +54,8 @@ function ManageSocieties() {
 
             console.log(res);
             var dataArray = res.data.map(function (i) {
-                var price = i.price;
-                if (price == 0.00) {
+                var price = i.socPrice;
+                if (price == 0.00 || price == null) {
                     price = "Free";
                 }
                 return (
@@ -68,9 +68,9 @@ function ManageSocieties() {
                                 <Col className="infoCol" >
                                     <Row className="infoRow">
                                         <img className="cardIcon" src={locationPin}></img>
-                                        <div className="infoLabel">{}</div>
-                                        <img className="cardIcon" src={calendar}></img>
-                                        <div className="infoLabel">{}</div>
+                                        <div className="infoLabel">{i.socLocation}</div>
+                                        <img className="cardIcon" src={avatar}></img>
+                                        <div className="infoLabel">{i.firstName + " " + i.lastName}</div>
                                     </Row>
                                     <Row className="infoRow">
                                         <img className="cardIcon" src={pound}></img>
@@ -106,7 +106,14 @@ function ManageSocieties() {
     }
 
     function deleteSociety(SocietyID, button) {
-        Axios.post('http://localhost:3001/deleteSociety', { SocietyID: SocietyID })
+        Axios.post('http://localhost:3001/getSocietyEvents', {SocietyID}).then(res => {
+            res.data.map(function (i) {
+                alert(i.EventID);
+                Axios.post('http://localhost:3001/deleteEvent',{EventID : i.EventID});
+            })
+        }).then(
+            Axios.post('http://localhost:3001/deleteSociety', { SocietyID : SocietyID})
+        )
     }
 
     const goHome = () => {
@@ -119,9 +126,9 @@ function ManageSocieties() {
 
         if (document.getElementById("SocietyName").value.length > 0) { socName = document.getElementById("SocietyName").value } else { socName = SocietyName };
         if (document.getElementById("SocietyDescription").value.length > 0) { socDesc = document.getElementById("SocietyDescription").value } else { socDesc = SocietyDescription };
-        if (document.getElementById("SocietyLocation").value.length > 0) { socLocation = document.getElementById("SocietyLocation").value } else { socLocation = socLocation };
-        if (document.getElementById("SocietyPrice").value.length > 0) { socPrice = document.getElementById("SocietyPrice").value } else { socPrice = socPrice };
-        if ((document.getElementById("SocietyLink").value !== "") && (document.getElementById("SocietyLink").value !== "")) {socLink = document.getElementById("SocietyLink").value} else { socLink = socLink };
+        if (document.getElementById("SocietyLocation").value.length > 0) { socLocation = document.getElementById("SocietyLocation").value } else { socLocation = SocietyLocation };
+        if (document.getElementById("SocietyPrice").value.length > 0) { socPrice = document.getElementById("SocietyPrice").value } else { socPrice = SocietyPrice };
+        if ((document.getElementById("SocietyLink").value !== "") && (document.getElementById("SocietyLink").value !== "")) {socLink = document.getElementById("SocietyLink").value} else { socLink = SocietyLink };
 
 
 

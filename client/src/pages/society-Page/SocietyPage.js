@@ -61,7 +61,7 @@ function SocietyPage() {
                 setInSociety(false);
             }
             else {
-                setButtonState(<div style={{color:"#ffffff", borderTop:"1px solid #18cdc6",paddingTop:"20px",fontSize:"20px"}}>You are a member of this society</div>);
+                setButtonState(<Button className="joinSocietyButton" onClick={leaveSociety}>Leave Society</Button>);
                 setInSociety(true);
                 Axios.post('http://localhost:3001/isSocietyPresident', {SocietyID}).then(res => {
                     const isPresident = res.data;
@@ -87,8 +87,7 @@ function SocietyPage() {
             setSocietyLocation(result.socLocation);
             setSocietyPrice(result.socPrice);
             setSocietyDescription(result.socDescription);
-
-            
+            setSocietyImageURL(result.imageURL);
         }) 
     }
 
@@ -173,7 +172,20 @@ function SocietyPage() {
                 setButtonState(<div style={{color:"#ffffff", borderTop:"1px solid #18cdc6",paddingTop:"20px",fontSize:"20px"}}>Successfully Joined Society</div>);
             }
             else {
-                setButtonState(<div style={{color:"red", borderTop:"1px solid #18cdc6",paddingTop:"20px",fontSize:"20px"}}>Your are already a member of this society</div>);
+                setButtonState(<div style={{color:"red", borderTop:"1px solid #18cdc6",paddingTop:"20px",fontSize:"20px"}}>Your are a member of this society</div>);
+            }
+        })
+    }
+
+    function leaveSociety() {
+        const SocietyID = paramID;
+        Axios.post('http://localhost:3001/leaveSociety', {SocietyID}).then(res => {
+            const result = res.data;
+            if(result) {
+                setButtonState(<div style={{color:"#ffffff", borderTop:"1px solid #18cdc6",paddingTop:"20px",fontSize:"20px"}}>Successfully Left Society</div>);
+            }
+            else {
+                setButtonState(<div style={{color:"red", borderTop:"1px solid #18cdc6",paddingTop:"20px",fontSize:"20px"}}>Error Leaving Society, Please Try Again</div>);
             }
         })
     }
@@ -202,6 +214,7 @@ function SocietyPage() {
     const [societyLink, setSocietyLink] = useState("");
     const [societyDescription, setSocietyDescription] = useState("");
     const [societyPrice, setSocietyPrice] = useState("");
+    const [societyImageURL, setSocietyImageURL] = useState("");
     const [upcomingEvents, setUpcomingEvents] = useState([]);
    
     const [members, setMembers] = useState([]);
@@ -232,13 +245,13 @@ function SocietyPage() {
                 </Modal >
                 <Row style={{marginTop:"100px", justifyContent: "center", alignItems: "center"}}>
                 <Col sm={3} style={{marginLeft: "20px",paddingTop: "40px",height:"800px",textAlign:"center",justifyContent: "center", alignItems: "center", backgroundColor:"#202020"}}>
-                    <Row style={{alignItems: "center", justifyContent: "center"}}><Image src={basketball} style={{width:"150px"}}roundedCircle></Image></Row>
+                    <Row style={{alignItems: "center", justifyContent: "center"}}><Image src={societyImageURL} style={{width:"150px"}}roundedCircle></Image></Row>
                     <br />
                     <Row className="societyRow"><h2 className="societyHeader">{societyName}</h2></Row>
                     <Row style={{alignItems: "flex-start", justifyContent: "left"}}><a href={societyLink} className="societyLabel">{societyLink}</a></Row>
                     <Row className="societyRow"><div className="societyLabel">{societyLocation}</div></Row>
                     <Row className="societyRow"><div className="societyLabel">{societyPresident}</div></Row>
-                    <Row className="societyRow"><div className="societyLabel">some tags or something</div></Row>
+                    <Row className="societyRow"><div className="societyLabel">{"£" + societyPrice}</div></Row>
                     <Row style={{height:"40%",width: "90%",justifyContent: "center",alignItems: "center",marginTop: "20px",marginLeft:"5%",marginRight:"5%",color: "#ffffff",fontSize:"20px", fontFamily: "roboto", backgroundColor:"#18cdc6"}}>
                         <div className="societyLabel" style={{fontSize: "18px", color: "#252526"}}>{societyDescription}</div>
                     </Row>
