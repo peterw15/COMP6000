@@ -1,6 +1,6 @@
 // imports
 import React, { useEffect, useState } from 'react';
-import './societiesPagesStylesheet.css'; // Ensure this CSS is styled similarly to the eventsPageStyleSheet.css
+import './societiesPagesStylesheet.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Card, Container, Row, Col, Button } from 'react-bootstrap';
@@ -44,9 +44,11 @@ function SocietiesPage() {
                                     <div className="societiesExtraInfo">
                                         <span className="societiesLocation">{society.socLocation}</span>
                                         <br />
-                                        <span className="societiesPrice">{society.socPrice == 0 ? 'Price: Free' : "Price: " + society.socPrice}</span>
+                                        <span className="societiesPrice">{society.socPrice == 0 ? 'Free' : "£" + society.socPrice}</span>
                                     </div>
-                                    <Button className="societiesJoinButton">Join</Button>
+                                    <div className="societiesButtonContainer">
+                                        <Button className="societiesJoinButton">Join</Button>
+                                    </div>
                                 </Col>
                             </Row>
                         </Container>
